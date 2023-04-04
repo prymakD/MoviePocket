@@ -1,16 +1,22 @@
 package com.moviePocket.entities;
 
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "user")
-@Getter @Setter @NoArgsConstructor
 public class User {
 
     @Id
@@ -26,17 +32,22 @@ public class User {
     @Column(nullable = false)
     private String email;
 
-    @Column(nullable = false)
-    private String role;
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "users_roles",
+            joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "id")}
+    )
+    private List<Role> roles = new ArrayList<>();
 
     @Lob
     private String bio;
 
-    public User(String username, String password, String email, String role) {
+    public User(String username, String email, String password,  List<Role> roles) {
         this.username = username;
         this.password = password;
         this.email = email;
-        this.role = role;
+        this.roles = roles;
 
     }
 
