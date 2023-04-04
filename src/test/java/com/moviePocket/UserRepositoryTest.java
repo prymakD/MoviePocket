@@ -25,7 +25,6 @@ public class UserRepositoryTest {
         user.setUsername("danpry");
         user.setPassword("laskjdflkjlskdjf");
         user.setBio("I'm a movie lover");
-        user.setRole("USER");
 
         User savedUser = repo.save(user);
 
