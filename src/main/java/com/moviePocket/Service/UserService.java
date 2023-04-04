@@ -5,5 +5,8 @@ import com.moviePocket.entities.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 public interface UserService extends UserDetailsService {
-    User save(UserRegistrationDto registrationDto);
+    void save(UserRegistrationDto registrationDto);
+
+    User findUserByEmail(String email);
+
 }
