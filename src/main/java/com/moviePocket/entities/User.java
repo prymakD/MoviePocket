@@ -1,8 +1,11 @@
 package com.moviePocket.entities;
 
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.*;
-import lombok.*;
 
 
 @Entity
@@ -23,12 +26,18 @@ public class User {
     @Column(nullable = false)
     private String email;
 
+    @Column(nullable = false)
+    private String role;
+
     @Lob
     private String bio;
 
-    public User(String username, String password) {
+    public User(String username, String password, String email, String role) {
         this.username = username;
         this.password = password;
+        this.email = email;
+        this.role = role;
+
     }
 
 }
