@@ -18,7 +18,6 @@ public class Movie {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
     private String title;
 
     private Float avgRating;
@@ -33,14 +32,12 @@ public class Movie {
 
     private LocalDate releaseDate;
 
-    @Lob
     private String plot;
 
     private Integer runtime;
 
     private BigDecimal imdbRating;
 
-    @Column(nullable = false, unique = true)
     private Integer tmdbId;
 
     private String posterUrl;
