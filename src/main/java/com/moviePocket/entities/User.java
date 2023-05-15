@@ -32,6 +32,12 @@ public class User {
     @Column(nullable = false)
     private String email;
 
+    @Column(nullable = false)
+    private Boolean emailVerification;
+
+    @Column(nullable = false)
+    private String activationCode;;
+
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(
             name = "users_roles",
@@ -51,4 +57,76 @@ public class User {
 
     }
 
+    public User(String username, String email, String password,  List<Role> roles, String activationCode) {
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.roles = roles;
+        this.activationCode = activationCode;
+        this.emailVerification = false;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public Boolean getEmailVerification() {
+        return emailVerification;
+    }
+
+    public void setEmailVerification(Boolean emailVerification) {
+        this.emailVerification = emailVerification;
+    }
+
+    public String getActivationCode() {
+        return activationCode;
+    }
+
+    public void setActivationCode(String activationCode) {
+        this.activationCode = activationCode;
+    }
+
+    public List<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
+    }
+
+    public String getBio() {
+        return bio;
+    }
+
+    public void setBio(String bio) {
+        this.bio = bio;
+    }
 }
