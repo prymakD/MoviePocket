@@ -13,7 +13,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.mail.MessagingException;
 import java.util.Arrays;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -28,18 +30,31 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    @Autowired
+    private EmailSenderService emailSenderService;
 
 
     @Override
-    public void save(UserRegistrationDto userDto) {
+    public void save(UserRegistrationDto userDto) throws MessagingException {
         Role role = roleRepository.findByName(TbConstants.Roles.USER);
 
         if (role == null)
             role = roleRepository.save(new Role(TbConstants.Roles.USER));
 
         User user = new User(userDto.getUsername(), userDto.getEmail(), passwordEncoder.encode(userDto.getPassword()),
-                Arrays.asList(role));
+                Arrays.asList(role), UUID.randomUUID().toString());
+        sendMail(user);
         userRepository.save(user);
+    }
+
+    private void sendMail(User user) throws MessagingException {
+        String message = String.format(
+                "Hello, %s! \n" +
+                        "Welcome to MoviePocket. Please, visit next link: http://localhost:8080/activate/%s",
+                user.getUsername(),
+                user.getActivationCode()
+        );
+        emailSenderService.sendMailWithAttachment(user.getEmail(),message,"MoviePocket Email Verification");
     }
 
 
@@ -62,5 +77,18 @@ public class UserServiceImpl implements UserService {
     @Override
     public User findUserByEmail(String email) {
         return userRepository.findByEmail(email);
+    }
+
+    @Override
+    public boolean activateUser(String code) {
+        User user = userRepository.findByActivationCode(code);
+        if (user != null){
+            user.setEmailVerification(Boolean.TRUE);
+            user.setActivationCode("");
+            userRepository.save(user);
+            return true;
+        }
+        else
+            return false;
     }
 }
