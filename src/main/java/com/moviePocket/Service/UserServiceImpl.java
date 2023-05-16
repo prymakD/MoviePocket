@@ -50,25 +50,27 @@ public class UserServiceImpl implements UserService {
     private void sendMail(User user) throws MessagingException {
         String message = String.format(
                 "Hello, %s! \n" +
-                        "Welcome to MoviePocket. Please, visit next link: http://localhost:8080/activate/%s",
+                        "Welcome to MoviePocket. We want to make sure it's really you. Please, visit next link: http://localhost:8080/activate/%s",
                 user.getUsername(),
                 user.getActivationCode()
         );
         emailSenderService.sendMailWithAttachment(user.getEmail(),message,"MoviePocket Email Verification");
     }
 
-
-
     @Override
     public UserDetails loadUserByUsername(String usernameOrEmail) throws UsernameNotFoundException {
 
         User user = userRepository.findByEmail(usernameOrEmail);
-        if (user != null) {
-            return new org.springframework.security.core.userdetails.User(user.getEmail()
-                    , user.getPassword(),
-                    user.getRoles().stream()
-                            .map((role) -> new SimpleGrantedAuthority(role.getName()))
-                            .collect(Collectors.toList()));
+        if (user != null ) {
+            if(user.getEmailVerification()){
+                return new org.springframework.security.core.userdetails.User(user.getEmail()
+                        , user.getPassword(),
+                        user.getRoles().stream()
+                                .map((role) -> new SimpleGrantedAuthority(role.getName()))
+                                .collect(Collectors.toList()));
+            }else {
+                throw new UsernameNotFoundException("You have not verified your email");
+            }
         } else {
             throw new UsernameNotFoundException("Invalid email or password");
         }
