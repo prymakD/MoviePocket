@@ -53,11 +53,20 @@ public class UserServiceImpl implements UserService {
         emailSenderService.sendMailWithAttachment(user.getEmail(),message,"MoviePocket Email Verification");
     }
 
-
-    public boolean setNewPassword(String token,String pas){
+    public boolean setNewLostPassword(String token,String pas){
         User user = userRepository.findByActivationCode(token);
         if(user!=null && user.getEmailVerification()) {
             user.setPassword(passwordEncoder.encode(pas));
+            userRepository.save(user);
+            return true;
+        }else
+            return false;
+    }
+
+    public boolean setNewPassword(String email, String passwordOld,String passwordNew){
+        User user = userRepository.findByEmail(email);
+        if(user!=null && user.getEmailVerification() && passwordEncoder.matches(passwordOld,user.getPassword())) {
+            user.setPassword(passwordEncoder.encode(passwordNew));
             userRepository.save(user);
             return true;
         }else

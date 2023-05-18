@@ -16,7 +16,9 @@ public interface UserService extends UserDetailsService {
 
     boolean setToken(String mail) throws MessagingException;
 
-    boolean setNewPassword(String token,String pas);
+    boolean setNewLostPassword(String token,String pas);
+
+    boolean setNewPassword(String email, String passwordOld,String passwordNew);
 
     boolean deleteUser(String email,String pas);
 
