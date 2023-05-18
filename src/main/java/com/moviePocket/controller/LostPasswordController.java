@@ -35,8 +35,7 @@ public class LostPasswordController {
 
     @PostMapping("/reset")
     public String resetPassword(@RequestParam("token") String token,@RequestParam("password") String password) {
-        System.out.println(token);
-        System.out.println(userService.setNewPassword(token,password));
+        userService.setNewLostPassword(token,password);
         return "login";
     }
 

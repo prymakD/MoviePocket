@@ -44,6 +44,26 @@ public class UserEditController {
     }
 
 
+    @GetMapping("/newpas")
+    public String newPasswordGetForm() {
+        return "set_new_pas";
+    }
+
+    @PostMapping("/newpas")
+    public String newPasswordPostForm(@RequestParam("passwordold") String passwordOld,
+                                      @RequestParam("password0") String passwordNew0,
+                                      @RequestParam("password1") String passwordNew1) {
+        if(passwordNew0.equals(passwordNew1) && !passwordOld.equals(passwordNew1)){
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            userService.setNewPassword(authentication.getName(),passwordOld,passwordNew0);
+            return "user_edit";
+        }
+
+        return "set_new_pas";
+    }
+
+
+
 
 
 
