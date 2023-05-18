@@ -43,11 +43,7 @@ public class UserServiceImpl implements UserService {
 
         User user = new User(userDto.getUsername(), userDto.getEmail(), passwordEncoder.encode(userDto.getPassword()),
                 Arrays.asList(role), UUID.randomUUID().toString());
-        sendMail(user);
         userRepository.save(user);
-    }
-
-    private void sendMail(User user) throws MessagingException {
         String message = String.format(
                 "Hello, %s! \n" +
                         "Welcome to MoviePocket. We want to make sure it's really you. Please, visit next link: http://localhost:8080/activate/%s",
@@ -55,6 +51,36 @@ public class UserServiceImpl implements UserService {
                 user.getActivationCode()
         );
         emailSenderService.sendMailWithAttachment(user.getEmail(),message,"MoviePocket Email Verification");
+    }
+
+
+    public boolean setNewPassword(String token,String pas){
+        User user = userRepository.findByActivationCode(token);
+        if(user!=null && user.getEmailVerification()) {
+            user.setPassword(passwordEncoder.encode(pas));
+            userRepository.save(user);
+            return true;
+        }else
+            return false;
+    }
+
+
+
+    public boolean setToken(String mail) throws MessagingException {
+        User user = userRepository.findByEmail(mail);
+        if (user != null && user.getEmailVerification()){
+            user.setActivationCode(UUID.randomUUID().toString());
+            userRepository.save(user);
+            String message = String.format(
+                    "Hello, %s! \n" +
+                            "We want to make sure it's really you. Please, visit next link: http://localhost:8080/lostpassword/reset?token=%s",
+                    user.getUsername(),
+                    user.getActivationCode()
+            );
+            emailSenderService.sendMailWithAttachment(user.getEmail(),message,"Reset Password");
+            return true;
+        }
+        return false;
     }
 
     @Override

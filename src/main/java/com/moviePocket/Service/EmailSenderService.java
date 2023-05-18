@@ -28,7 +28,5 @@ public class EmailSenderService {
         mimeMessageHelper.setSubject(subject);
 
         javaMailSender.send(mimeMessage);
-        System.out.printf("Mail with attachment sent successfully..");
-
     }
 }
