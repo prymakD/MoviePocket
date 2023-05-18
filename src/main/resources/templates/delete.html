@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1" name="viewport">
@@ -12,20 +12,19 @@
 <div class="container">
   <div class="row mt-5">
     <div class="col-6 mx-auto">
-      <h1>Enter your email</h1>
+      <h1>Enter your password</h1>
       <form
               method="post"
               role="form"
-              th:action="@{/lostpassword/}"
+              th:action="@{/user/edit/delete/}"
       >
         <div class="mb-3">
-          <label class="form-label">Email</label>
-          <input class="form-control" id="username" name="username" placeholder="Enter email address"
-                 type="email">
+          <label class="col-sm-2 col-form-label" for="password">Password</label>
+          <input class="form-control" id="password" name="password" placeholder="Enter password"
+                 type="password">
         </div>
         <div class="mb-3">
-          <button class="btn btn-primary mb-3" type="submit">Set</button>
-          or <a class="link-primary" th:href="@{/login}">Login</a>
+          <button class="btn btn-primary mb-3" type="submit">Delete</button>
         </div>
       </form>
     </div>

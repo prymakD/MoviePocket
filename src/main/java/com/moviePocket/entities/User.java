@@ -36,7 +36,10 @@ public class User {
     private Boolean emailVerification;
 
     @Column(nullable = false)
-    private String activationCode;;
+    private String activationCode;
+
+    @Column(nullable = false)
+    private boolean accountActive;;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(
@@ -64,6 +67,15 @@ public class User {
         this.roles = roles;
         this.activationCode = activationCode;
         this.emailVerification = false;
+        this.accountActive = true;
+    }
+
+    public boolean isAccountActive() {
+        return accountActive;
+    }
+
+    public void setAccountActive(boolean accountActive) {
+        this.accountActive = accountActive;
     }
 
     public Long getId() {

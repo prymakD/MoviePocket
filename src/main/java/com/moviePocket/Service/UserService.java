@@ -18,4 +18,6 @@ public interface UserService extends UserDetailsService {
 
     boolean setNewPassword(String token,String pas);
 
+    boolean deleteUser(String email,String pas);
+
 }
