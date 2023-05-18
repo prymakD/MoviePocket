@@ -64,6 +64,21 @@ public class UserServiceImpl implements UserService {
             return false;
     }
 
+    public boolean deleteUser(String email,String pas){
+        User user = findUserByEmail(email);
+        if(user != null){
+            if(passwordEncoder.matches(pas,user.getPassword())){
+                user.setAccountActive(false);
+                user.setEmail(user.getEmail()+ " not active");
+                user.setPassword("");
+                userRepository.save(user);
+                return true;
+            }
+        }
+        return false;
+    }
+
+
 
 
     public boolean setToken(String mail) throws MessagingException {

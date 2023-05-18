@@ -1,14 +1,61 @@
-<!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
-    <meta charset="UTF-8">
-    <title>Welcome to My Application</title>
-    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"  />
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" rel="stylesheet">
+
+    <title>Registration</title>
+
 </head>
 <body>
-<div class="container-fluid text-center">
-    <h1>Welcome to my application</h1>
-    <a class="h2" th:href="@{/users}">Manage Users</a>
+<div class="container">
+    <div class="row mt-5">
+        <div class="col-6 mx-auto">
+            <form
+                    method="post"
+                    role="form"
+                    th:action="@{/registration}"
+                    th:object="${user}"
+            >
+                <h1>Settings</h1>
+
+                <div class="mb-3">
+                    <label class="form-label" for="username">Userame</label>
+                    <input class="form-control" id="username" name="username" type="text">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="email">Email</label>
+                    <input class="form-control" id="email" name="email" type="email">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="bio">BIO</label>
+                    <input class="form-control" id="bio" name="bio" type="text">
+                </div>
+                <div class="mb-3">
+                    <button class="btn btn-primary mb-3" type="submit">Save</button>
+                    or <a class="link-primary" th:href="@{/user/}">Back</a>
+                </div>
+            </form>
+            <form
+                    method="get"
+                    role="form"
+                    th:action="@{/user/edit/delete}"
+            >
+                <div>
+                    <button class="btn btn-primary mb-3" type="submit" color="red">Delete</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
 </div>
+
+
+<script crossorigin="anonymous"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+
 </body>
 </html>
