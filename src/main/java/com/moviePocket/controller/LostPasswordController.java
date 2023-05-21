@@ -23,7 +23,7 @@ public class LostPasswordController {
 
     @PostMapping("/")
     public String setMail(@RequestParam("username") String username) throws MessagingException {
-        userService.setToken(username);
+        userService.setTokenPassword(username);
         return "lost_pas";
     }
 
@@ -34,9 +34,12 @@ public class LostPasswordController {
     }
 
     @PostMapping("/reset")
-    public String resetPassword(@RequestParam("token") String token,@RequestParam("password") String password) {
-        userService.setNewLostPassword(token,password);
-        return "login";
+    public String resetPassword(@RequestParam("token") String token,@RequestParam("password0") String password0,@RequestParam("password1") String password1) {
+        if(password0.equals(password1)) {
+            userService.setNewLostPassword(token, password0);
+            return "login";
+        }
+        return "new_pas";
     }
 
 }

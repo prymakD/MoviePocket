@@ -13,22 +13,24 @@
 <div class="container">
     <div class="row mt-5">
         <div class="col-6 mx-auto">
-            <form
-                    method="post"
-                    role="form"
-                    th:action="@{/registration}"
-                    th:object="${user}"
-            >
+
                 <h1>Settings</h1>
 
                 <div class="mb-3">
                     <label class="form-label" for="username">Userame</label>
                     <input class="form-control" id="username" name="username" type="text">
                 </div>
+            <form
+                    method="post"
+                    role="form"
+                    th:action="@{/user/edit/newemail}"
+            >
                 <div class="mb-3">
                     <label class="form-label" for="email">Email</label>
                     <input class="form-control" id="email" name="email" type="email">
                 </div>
+                <button class="btn btn-primary mb-3" type="submit" color="red">Set</button>
+            </form>
                 <div class="mb-3">
                     <label class="form-label" for="bio">BIO</label>
                     <input class="form-control" id="bio" name="bio" type="text">
@@ -37,7 +39,6 @@
                     <button class="btn btn-primary mb-3" type="submit">Save</button>
                     or <a class="link-primary" th:href="@{/user/}">Back</a>
                 </div>
-            </form>
             <form
                     method="get"
                     role="form"
