@@ -39,7 +39,32 @@ public class User {
     private String activationCode;
 
     @Column(nullable = false)
-    private boolean accountActive;;
+    private boolean accountActive;
+
+    @Column(nullable = true)
+    private String newEmail;
+
+    @Column(nullable = true)
+    private String tokenLostPassword;
+
+    @Column(nullable = true)
+    private String newEmailToken;
+
+    public String getTokenLostPassword() {
+        return tokenLostPassword;
+    }
+
+    public void setTokenLostPassword(String tokenLostPassword) {
+        this.tokenLostPassword = tokenLostPassword;
+    }
+
+    public String getNewEmailToken() {
+        return newEmailToken;
+    }
+
+    public void setNewEmailToken(String newEmailToken) {
+        this.newEmailToken = newEmailToken;
+    }
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(
@@ -140,5 +165,13 @@ public class User {
 
     public void setBio(String bio) {
         this.bio = bio;
+    }
+
+    public String getNewEmail() {
+        return newEmail;
+    }
+
+    public void setNewEmail(String newEmail) {
+        this.newEmail = newEmail;
     }
 }

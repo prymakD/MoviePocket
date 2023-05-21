@@ -54,9 +54,10 @@ public class UserServiceImpl implements UserService {
     }
 
     public boolean setNewLostPassword(String token,String pas){
-        User user = userRepository.findByActivationCode(token);
+        User user = userRepository.findByTokenLostPassword(token);
         if(user!=null && user.getEmailVerification()) {
             user.setPassword(passwordEncoder.encode(pas));
+            user.setTokenLostPassword("");
             userRepository.save(user);
             return true;
         }else
@@ -90,18 +91,49 @@ public class UserServiceImpl implements UserService {
 
 
 
-    public boolean setToken(String mail) throws MessagingException {
+    public boolean setTokenPassword(String mail) throws MessagingException {
         User user = userRepository.findByEmail(mail);
         if (user != null && user.getEmailVerification()){
-            user.setActivationCode(UUID.randomUUID().toString());
+            user.setTokenLostPassword(UUID.randomUUID().toString());
             userRepository.save(user);
             String message = String.format(
                     "Hello, %s! \n" +
                             "We want to make sure it's really you. Please, visit next link: http://localhost:8080/lostpassword/reset?token=%s",
                     user.getUsername(),
-                    user.getActivationCode()
+                    user.getTokenLostPassword()
             );
             emailSenderService.sendMailWithAttachment(user.getEmail(),message,"Reset Password");
+            return true;
+        }
+        return false;
+    }
+
+    public boolean setTokenEmail(String oldEmail, String newEmail) throws MessagingException {
+        User user = userRepository.findByEmail(oldEmail);
+        if (user != null ) {
+            user.setNewEmail(newEmail);
+            user.setNewEmailToken(UUID.randomUUID().toString());
+            userRepository.save(user);
+            String message = String.format(
+                    "Hello, %s! \n" +
+                            "We want to make sure it's really you. Please, visit next link: http://localhost:8080/user/edit/newemail/%s",
+                    user.getUsername(),
+                    user.getNewEmailToken()
+            );
+            emailSenderService.sendMailWithAttachment(user.getNewEmail(),message,"Reset Password");
+            return true;
+        }
+        return false;
+    }
+
+
+    public boolean activateNewEmail(String token) {
+        User user = userRepository.findByNewEmailToken(token);
+        if (user != null ) {
+            user.setEmail(user.getNewEmail());
+            user.setNewEmail("");
+            user.setNewEmailToken("");
+            userRepository.save(user);
             return true;
         }
         return false;

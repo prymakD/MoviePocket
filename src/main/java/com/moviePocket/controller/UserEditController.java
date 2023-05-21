@@ -62,6 +62,18 @@ public class UserEditController {
         return "set_new_pas";
     }
 
+    @PostMapping("/newemail")
+    public String newEmailGetForm(@RequestParam("email") String email) throws MessagingException {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        userService.setTokenEmail(authentication.getName(),email);
+        return "user_edit";
+    }
+
+    @GetMapping("/newemail/{token}")
+    public String activate(@PathVariable String token) {
+        userService.activateNewEmail(token);
+        return "user_edit";
+    }
 
 
 

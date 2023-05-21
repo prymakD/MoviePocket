@@ -12,7 +12,7 @@
 <div class="container">
   <div class="row mt-5">
     <div class="col-6 mx-auto">
-      <h1>Enter your email</h1>
+      <h1>Enter your new password</h1>
       <form
               method="post"
               role="form"
@@ -20,8 +20,11 @@
       >
         <div class="mb-3">
           <input type="hidden" name="token" th:value="${token}">
-          <label class="col-sm-2 col-form-label" for="password">Password</label>
-          <input class="form-control" id="password" name="password" placeholder="Enter new password"
+          <label class="col-sm-2 col-form-label" for="password0">Password</label>
+          <input class="form-control" id="password0" name="password0" placeholder="Enter new password"
+                 type="password">
+          <label class="col-sm-2 col-form-label" for="password1"></label>
+          <input class="form-control" id="password1" name="password1" placeholder="Repeat password"
                  type="password">
         </div>
         <div class="mb-3">

@@ -14,12 +14,17 @@ public interface UserService extends UserDetailsService {
 
     boolean activateUser(String code);
 
-    boolean setToken(String mail) throws MessagingException;
+    boolean setTokenPassword(String mail) throws MessagingException;
 
     boolean setNewLostPassword(String token,String pas);
 
     boolean setNewPassword(String email, String passwordOld,String passwordNew);
 
     boolean deleteUser(String email,String pas);
+    boolean setTokenEmail(String oldEmail, String newEmail) throws MessagingException;
+
+    boolean activateNewEmail(String token);
+
+
 
 }
