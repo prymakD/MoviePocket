@@ -1,5 +1,7 @@
-package com.moviePocket.Service;
+package com.moviePocket.Service.impl;
 
+import com.moviePocket.Service.UserService;
+import com.moviePocket.Service.impl.EmailSenderService;
 import com.moviePocket.controller.dto.UserRegistrationDto;
 import com.moviePocket.entities.Role;
 import com.moviePocket.entities.User;

@@ -1,11 +1,9 @@
 package com.moviePocket.controller;
 
-import com.moviePocket.Service.EmailSenderService;
 import com.moviePocket.Service.UserService;
 import com.moviePocket.controller.dto.UserRegistrationDto;
 import com.moviePocket.entities.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;

@@ -1,4 +1,4 @@
-package com.moviePocket.Service;
+package com.moviePocket.Service.impl;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.moviePocket.controller.dto.MovieDto;
