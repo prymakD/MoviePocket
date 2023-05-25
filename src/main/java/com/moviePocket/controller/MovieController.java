@@ -1,12 +1,10 @@
 package com.moviePocket.controller;
 
-import com.moviePocket.Service.MovieServiceImpl;
+import com.moviePocket.Service.RatingMovieService;
+import com.moviePocket.Service.impl.MovieServiceImpl;
 import com.moviePocket.controller.dto.MovieDto;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -16,7 +14,8 @@ public class MovieController {
 
     @Autowired
     private MovieServiceImpl movieService;
-
+    @Autowired
+    private RatingMovieService ratingMovieService;
 
     @GetMapping("/{movieId}")
     public MovieDto getMovieInfo(@PathVariable("movieId") Long movieId) {
@@ -27,4 +26,12 @@ public class MovieController {
     public List<MovieDto> getAllSearchedMovies(@PathVariable String query) {
         return movieService.searchMovie(query);
     }
+
+    @GetMapping("/rating")
+    public String s(@RequestParam("id") String id){
+        return ratingMovieService.getAllMovieRating(Long.valueOf(id));
+    }
+
+
+
 }

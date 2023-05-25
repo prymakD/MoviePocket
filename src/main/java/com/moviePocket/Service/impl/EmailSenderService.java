@@ -1,4 +1,4 @@
-package com.moviePocket.Service;
+package com.moviePocket.Service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
