@@ -44,4 +44,9 @@ public class WatchedMovieController {
                 authentication.getName());
     }
 
+    @GetMapping("/")
+    public String s(){
+        return "ok";
+    }
+
 }

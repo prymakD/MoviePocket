@@ -45,7 +45,7 @@ public class FavoriteMovieServiceImpl implements FavoriteMovieService {
                 userRepository.findByEmail(email));
         List<Long> listIdMovie = new ArrayList<>();
         for (FavoriteMovie favoriteMovies : favoriteMoviesList) {
-            listIdMovie.add(favoriteMovies.getId());
+            listIdMovie.add(favoriteMovies.getIdMovie());
         }
         return listIdMovie;
     }
