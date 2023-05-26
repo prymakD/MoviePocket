@@ -142,12 +142,14 @@ public class UserServiceImpl implements UserService {
     }
 
     public boolean setNewUsername(String email, String username){
+    if(userRepository.findByUsername(username) == null) {
         User user = userRepository.findByEmail(email);
-        if (user != null ) {
+        if (user != null) {
             user.setUsername(username);
             userRepository.save(user);
             return true;
         }
+    }
         return false;
     }
 
