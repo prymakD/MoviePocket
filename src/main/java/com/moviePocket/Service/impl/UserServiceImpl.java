@@ -1,7 +1,6 @@
 package com.moviePocket.Service.impl;
 
 import com.moviePocket.Service.UserService;
-import com.moviePocket.Service.impl.EmailSenderService;
 import com.moviePocket.controller.dto.UserRegistrationDto;
 import com.moviePocket.entities.Role;
 import com.moviePocket.entities.User;
@@ -122,7 +121,7 @@ public class UserServiceImpl implements UserService {
                     user.getUsername(),
                     user.getNewEmailToken()
             );
-            emailSenderService.sendMailWithAttachment(user.getNewEmail(),message,"Reset Password");
+            emailSenderService.sendMailWithAttachment(user.getNewEmail(),message,"New Mail Confirmation");
             return true;
         }
         return false;
