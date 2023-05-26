@@ -15,11 +15,18 @@
         <div class="col-6 mx-auto">
 
                 <h1>Settings</h1>
+            <form
+                    method="post"
+                    role="form"
+                    th:action="@{/user/edit/newusername}"
+            >
 
                 <div class="mb-3">
                     <label class="form-label" for="username">Userame</label>
                     <input class="form-control" id="username" name="username" type="text">
                 </div>
+                <button class="btn btn-primary mb-3" type="submit" color="red">Set</button>
+            </form>
             <form
                     method="post"
                     role="form"
@@ -31,14 +38,18 @@
                 </div>
                 <button class="btn btn-primary mb-3" type="submit" color="red">Set</button>
             </form>
+            <form
+                    method="post"
+                    role="form"
+                    th:action="@{/user/edit/newbio}"
+            >
                 <div class="mb-3">
                     <label class="form-label" for="bio">BIO</label>
                     <input class="form-control" id="bio" name="bio" type="text">
                 </div>
-                <div class="mb-3">
-                    <button class="btn btn-primary mb-3" type="submit">Save</button>
-                    or <a class="link-primary" th:href="@{/user/}">Back</a>
-                </div>
+
+                <button class="btn btn-primary mb-3" type="submit" color="red">Set</button>
+            </form>
             <form
                     method="get"
                     role="form"
