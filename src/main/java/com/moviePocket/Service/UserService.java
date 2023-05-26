@@ -25,6 +25,10 @@ public interface UserService extends UserDetailsService {
 
     boolean activateNewEmail(String token);
 
+    boolean setNewUsername(String email, String username);
+
+    boolean setNewBio(String email, String bio);
+
 
 
 }

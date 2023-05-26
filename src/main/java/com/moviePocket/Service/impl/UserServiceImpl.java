@@ -141,6 +141,27 @@ public class UserServiceImpl implements UserService {
         return false;
     }
 
+    public boolean setNewUsername(String email, String username){
+        User user = userRepository.findByEmail(email);
+        if (user != null ) {
+            user.setUsername(username);
+            userRepository.save(user);
+            return true;
+        }
+        return false;
+    }
+
+    public boolean setNewBio(String email, String bio){
+        User user = userRepository.findByEmail(email);
+        if (user != null ) {
+            user.setBio(bio);
+            userRepository.save(user);
+            return true;
+        }
+        return false;
+    }
+
+
     @Override
     public UserDetails loadUserByUsername(String usernameOrEmail) throws UsernameNotFoundException {
 

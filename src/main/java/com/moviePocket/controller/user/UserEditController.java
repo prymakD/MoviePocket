@@ -75,6 +75,21 @@ public class UserEditController {
     }
 
 
+    @PostMapping("/newusername")
+    public String newSetNewUsername(@RequestParam("username") String username) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        userService.setNewUsername(authentication.getName(),username);
+        return "user_edit";
+    }
+
+
+    @PostMapping("/newbio")
+    public String newSetNewBio(@RequestParam("bio") String bio) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        userService.setNewBio(authentication.getName(),bio);
+        return "user_edit";
+    }
+
 
 
 
