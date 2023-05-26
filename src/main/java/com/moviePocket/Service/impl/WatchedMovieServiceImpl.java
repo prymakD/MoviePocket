@@ -46,7 +46,7 @@ public class WatchedMovieServiceImpl implements WatchedMovieService {
                 userRepository.findByEmail(email));
         List<Long> listIdMovie = new ArrayList<>();
         for (WatchedMovie watched : watchedList) {
-            listIdMovie.add(watched.getId());
+            listIdMovie.add(watched.getIdMovie());
         }
         return listIdMovie;
     }

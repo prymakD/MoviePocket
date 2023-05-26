@@ -43,7 +43,7 @@ public class DislikedMovieServiceImpl implements DislikedMovieService {
                 userRepository.findByEmail(email));
         List<Long> listIdMovie = new ArrayList<>();
         for (DislikedMovie dislikedMovie : favoriteMoviesList) {
-            listIdMovie.add(dislikedMovie.getId());
+            listIdMovie.add(dislikedMovie.getIdMovie());
         }
         return listIdMovie;
     }
