@@ -35,7 +35,7 @@ public class User {
     @Column(nullable = false)
     private Boolean emailVerification;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String activationCode;
 
     @Column(nullable = false)

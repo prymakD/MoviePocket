@@ -48,4 +48,7 @@ public class DislikedMovieServiceImpl implements DislikedMovieService {
         return listIdMovie;
     }
 
+    public String getAllCountByIdMovie(Long idMovie){
+        return String.valueOf(dislikedMovieRepository.getAllCountByIdMovie(idMovie));
+    }
 }

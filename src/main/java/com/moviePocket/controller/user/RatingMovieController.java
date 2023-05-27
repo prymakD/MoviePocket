@@ -21,24 +21,24 @@ public class RatingMovieController {
     @Autowired
     RatingMovieService ratingMovieService;
     @PostMapping("/set")
-    public void setDislikedMovie(@RequestParam("id") Long id,@RequestParam("id") int rating){
+    public void setRatingMovie(@RequestParam("id") Long id,@RequestParam("rating") int rating){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         ratingMovieService.setNewRatingMovie(
                 authentication.getName(),id,rating);
     }
     @PostMapping("/del")
-    public void delDislikedMovie(@RequestParam("id") Long id){
+    public void delRatingMovie(@RequestParam("id") Long id){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         ratingMovieService.removeFromRatingMovie(authentication.getName(),id);
     }
     @GetMapping("/get")
-    public float getDislikedMovie(@RequestParam("id") Long id){
+    public float getRatingMovie(@RequestParam("id") Long id){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return ratingMovieService.getFromRatingMovie(
                 authentication.getName(),id);
     }
     @GetMapping("/all")
-    public List<RatingMovie> allDislikedMovie(){
+    public List<RatingMovie> allRatingMovie(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return ratingMovieService.getAllUserRatingMovie(
                 authentication.getName());

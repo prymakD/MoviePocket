@@ -55,9 +55,17 @@ public class RatingMovieServiceImpl implements RatingMovieService {
     }
 
     public String getAllMovieRating(Long idMovie){
-        BigDecimal bd = BigDecimal.valueOf(ratingMovieRepository.getAverageRatingByMovieId(idMovie));
-        BigDecimal roundedNumber = bd.setScale(1, RoundingMode.HALF_UP);
-        return roundedNumber.toString();
+        Double rating = ratingMovieRepository.getAverageRatingByMovieId(idMovie);
+        if(rating!=null) {
+            BigDecimal bd = BigDecimal.valueOf(rating);
+            BigDecimal roundedNumber = bd.setScale(1, RoundingMode.HALF_UP);
+            return roundedNumber.toString();
+        }
+        return null;
+    }
+
+    public String getAllCountByIdMovie(Long idMovie){
+        return String.valueOf(ratingMovieRepository.getAllCountByIdMovie(idMovie));
     }
 
 }
