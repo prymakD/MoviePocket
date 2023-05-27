@@ -13,6 +13,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.webjars.NotFoundException;
 
 import javax.mail.MessagingException;
 import java.util.Arrays;
@@ -51,36 +52,36 @@ public class UserServiceImpl implements UserService {
                 user.getUsername(),
                 user.getActivationCode()
         );
-        emailSenderService.sendMailWithAttachment(user.getEmail(),message,"MoviePocket Email Verification");
+        emailSenderService.sendMailWithAttachment(user.getEmail(), message, "MoviePocket Email Verification");
     }
 
-    public boolean setNewLostPassword(String token,String pas){
+    public boolean setNewLostPassword(String token, String pas) {
         User user = userRepository.findByTokenLostPassword(token);
-        if(user!=null && user.getEmailVerification()) {
+        if (user != null && user.getEmailVerification()) {
             user.setPassword(passwordEncoder.encode(pas));
             user.setTokenLostPassword("");
             userRepository.save(user);
             return true;
-        }else
+        } else
             return false;
     }
 
-    public boolean setNewPassword(String email, String passwordOld,String passwordNew){
+    public boolean setNewPassword(String email, String passwordOld, String passwordNew) {
         User user = userRepository.findByEmail(email);
-        if(user!=null && user.getEmailVerification() && passwordEncoder.matches(passwordOld,user.getPassword())) {
+        if (user != null && user.getEmailVerification() && passwordEncoder.matches(passwordOld, user.getPassword())) {
             user.setPassword(passwordEncoder.encode(passwordNew));
             userRepository.save(user);
             return true;
-        }else
+        } else
             return false;
     }
 
-    public boolean deleteUser(String email,String pas){
+    public boolean deleteUser(String email, String pas) {
         User user = findUserByEmail(email);
-        if(user != null){
-            if(passwordEncoder.matches(pas,user.getPassword())){
+        if (user != null) {
+            if (passwordEncoder.matches(pas, user.getPassword())) {
                 user.setAccountActive(false);
-                user.setEmail(user.getEmail()+ " not active");
+                user.setEmail(user.getEmail() + " not active");
                 user.setPassword("");
                 userRepository.save(user);
                 return true;
@@ -90,11 +91,9 @@ public class UserServiceImpl implements UserService {
     }
 
 
-
-
     public boolean setTokenPassword(String mail) throws MessagingException {
         User user = userRepository.findByEmail(mail);
-        if (user != null && user.getEmailVerification()){
+        if (user != null && user.getEmailVerification()) {
             user.setTokenLostPassword(UUID.randomUUID().toString());
             userRepository.save(user);
             String message = String.format(
@@ -103,7 +102,7 @@ public class UserServiceImpl implements UserService {
                     user.getUsername(),
                     user.getTokenLostPassword()
             );
-            emailSenderService.sendMailWithAttachment(user.getEmail(),message,"Reset Password");
+            emailSenderService.sendMailWithAttachment(user.getEmail(), message, "Reset Password");
             return true;
         }
         return false;
@@ -111,7 +110,7 @@ public class UserServiceImpl implements UserService {
 
     public boolean setTokenEmail(String oldEmail, String newEmail) throws MessagingException {
         User user = userRepository.findByEmail(oldEmail);
-        if (user != null ) {
+        if (user != null) {
             user.setNewEmail(newEmail);
             user.setNewEmailToken(UUID.randomUUID().toString());
             userRepository.save(user);
@@ -121,7 +120,7 @@ public class UserServiceImpl implements UserService {
                     user.getUsername(),
                     user.getNewEmailToken()
             );
-            emailSenderService.sendMailWithAttachment(user.getNewEmail(),message,"New Mail Confirmation");
+            emailSenderService.sendMailWithAttachment(user.getNewEmail(), message, "New Mail Confirmation");
             return true;
         }
         return false;
@@ -130,7 +129,7 @@ public class UserServiceImpl implements UserService {
 
     public boolean activateNewEmail(String token) {
         User user = userRepository.findByNewEmailToken(token);
-        if (user != null ) {
+        if (user != null) {
             user.setEmail(user.getNewEmail());
             user.setNewEmail("");
             user.setNewEmailToken("");
@@ -140,26 +139,40 @@ public class UserServiceImpl implements UserService {
         return false;
     }
 
-    public boolean setNewUsername(String email, String username){
-    if(userRepository.findByUsername(username) == null) {
-        User user = userRepository.findByEmail(email);
-        if (user != null) {
-            user.setUsername(username);
-            userRepository.save(user);
-            return true;
+    public void setNewUsername(String email, String username) {
+        try {
+            User user = userRepository.findByEmail(email);
+            if (user != null) {
+                if (username.isEmpty()) {
+                    throw new MessagingException("Username cannot be empty");
+                }
+                user.setUsername(username);
+                userRepository.save(user);
+            } else {
+                throw new NotFoundException("User not found");
+            }
+        } catch (NotFoundException | MessagingException e) {
+            e.getStackTrace();
         }
-    }
-        return false;
     }
 
-    public boolean setNewBio(String email, String bio){
-        User user = userRepository.findByEmail(email);
-        if (user != null ) {
-            user.setBio(bio);
-            userRepository.save(user);
-            return true;
+    public boolean setNewBio(String email, String bio) {
+        try {
+            User user = userRepository.findByEmail(email);
+            if (user != null) {
+                if (bio.isEmpty()) {
+                    throw new MessagingException("Bio cannot be empty");
+                }
+                user.setBio(bio);
+                userRepository.save(user);
+                return true;
+            } else {
+                throw new NotFoundException("User not found");
+            }
+        } catch (NotFoundException | MessagingException e) {
+            e.getStackTrace();
+            return false;
         }
-        return false;
     }
 
 
@@ -167,18 +180,19 @@ public class UserServiceImpl implements UserService {
     public UserDetails loadUserByUsername(String usernameOrEmail) throws UsernameNotFoundException {
 
         User user = userRepository.findByEmail(usernameOrEmail);
-        if (user != null ) {
-            if(user.getEmailVerification()){
+        if (user != null) {
+            if (user.getEmailVerification()) {
                 return new org.springframework.security.core.userdetails.User(user.getEmail()
                         , user.getPassword(),
                         user.getRoles().stream()
                                 .map((role) -> new SimpleGrantedAuthority(role.getName()))
                                 .collect(Collectors.toList()));
-            }else {
+            } else {
                 throw new UsernameNotFoundException("You have not verified your email");
             }
         } else {
             throw new UsernameNotFoundException("Invalid email or password");
+
         }
     }
 
@@ -190,13 +204,12 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean activateUser(String code) {
         User user = userRepository.findByActivationCode(code);
-        if (user != null){
+        if (user != null) {
             user.setEmailVerification(Boolean.TRUE);
             user.setActivationCode("");
             userRepository.save(user);
             return true;
-        }
-        else
+        } else
             return false;
     }
 }

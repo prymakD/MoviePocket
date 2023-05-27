@@ -3,7 +3,6 @@ package com.moviePocket.Service;
 import com.moviePocket.controller.dto.UserRegistrationDto;
 import com.moviePocket.entities.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import javax.mail.MessagingException;
 
@@ -25,7 +24,7 @@ public interface UserService extends UserDetailsService {
 
     boolean activateNewEmail(String token);
 
-    boolean setNewUsername(String email, String username);
+    void setNewUsername(String email, String username);
 
     boolean setNewBio(String email, String bio);
 
