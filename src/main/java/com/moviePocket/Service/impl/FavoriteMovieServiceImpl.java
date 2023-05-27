@@ -50,4 +50,8 @@ public class FavoriteMovieServiceImpl implements FavoriteMovieService {
         return listIdMovie;
     }
 
+    public String getAllCountByIdMovie(Long idMovie){
+        return String.valueOf(favoriteMoviesRepository.getAllCountByIdMovie(idMovie));
+    }
+
 }

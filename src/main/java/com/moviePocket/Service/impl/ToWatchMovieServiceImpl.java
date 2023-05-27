@@ -48,4 +48,7 @@ public class ToWatchMovieServiceImpl implements ToWatchMovieService {
         }
         return listIdMovie;
     }
+    public String getAllCountByIdMovie(Long idMovie){
+        return String.valueOf(toWatchMovieRepository.getAllCountByIdMovie(idMovie));
+    }
 }

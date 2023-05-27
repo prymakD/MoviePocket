@@ -42,7 +42,6 @@ public class UserServiceImpl implements UserService {
 
         if (role == null)
             role = roleRepository.save(new Role(TbConstants.Roles.USER));
-
         User user = new User(userDto.getUsername(), userDto.getEmail(), passwordEncoder.encode(userDto.getPassword()),
                 Arrays.asList(role), UUID.randomUUID().toString());
         userRepository.save(user);
@@ -59,7 +58,7 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findByTokenLostPassword(token);
         if (user != null && user.getEmailVerification()) {
             user.setPassword(passwordEncoder.encode(pas));
-            user.setTokenLostPassword("");
+            user.setTokenLostPassword(null);
             userRepository.save(user);
             return true;
         } else
@@ -131,8 +130,8 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findByNewEmailToken(token);
         if (user != null) {
             user.setEmail(user.getNewEmail());
-            user.setNewEmail("");
-            user.setNewEmailToken("");
+            user.setNewEmail(null);
+            user.setNewEmailToken(null);
             userRepository.save(user);
             return true;
         }
@@ -142,7 +141,7 @@ public class UserServiceImpl implements UserService {
     public void setNewUsername(String email, String username) {
         try {
             User user = userRepository.findByEmail(email);
-            if (user != null) {
+            if (user != null && !userRepository.existsByUsername(username)) {
                 if (username.isEmpty()) {
                     throw new MessagingException("Username cannot be empty");
                 }
@@ -206,7 +205,7 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findByActivationCode(code);
         if (user != null) {
             user.setEmailVerification(Boolean.TRUE);
-            user.setActivationCode("");
+            user.setActivationCode(null);
             userRepository.save(user);
             return true;
         } else

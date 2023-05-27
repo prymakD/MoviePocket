@@ -16,4 +16,7 @@ public interface RatingMovieRepository extends JpaRepository<RatingMovie,Long> {
     @Query("SELECT AVG(rm.rating) FROM RatingMovie rm WHERE rm.idMovie = :movieId")
     Double getAverageRatingByMovieId(@Param("movieId") Long movieId);
 
+    @Query("SELECT COUNT(u) FROM RatingMovie u WHERE u.idMovie = :movieId")
+    int getAllCountByIdMovie(@Param("movieId") Long idMovie);
+
 }

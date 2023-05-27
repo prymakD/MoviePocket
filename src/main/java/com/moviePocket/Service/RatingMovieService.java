@@ -12,4 +12,5 @@ public interface RatingMovieService {
     List<RatingMovie> getAllUserRatingMovie(String email);
     String getAllMovieRating(Long idFilm);
 
+    String getAllCountByIdMovie(Long idMovie);
 }

@@ -51,6 +51,7 @@ public class WatchedMovieServiceImpl implements WatchedMovieService {
         return listIdMovie;
     }
 
-
-
+    public String getAllCountByIdMovie(Long idMovie){
+        return String.valueOf(watchedMovieRepository.getAllCountByIdMovie(idMovie));
+    }
 }
