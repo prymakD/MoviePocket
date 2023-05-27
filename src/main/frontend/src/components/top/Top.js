@@ -1,7 +1,7 @@
 import './Top.css';
 import Carousel from 'react-material-ui-carousel';
 import {Paper} from '@mui/material';
-
+import {Link} from "react-router-dom";
 const Top = ({movies}) => {
     const path = 'https://www.themoviedb.org/t/p/w220_and_h330_face';
     const temp = 'https://alienhive.pl/wp-content/uploads/2020/09/film-diuna-2020-dune.jpg'
@@ -16,6 +16,7 @@ const Top = ({movies}) => {
                                     <div className='movie-card' style={{"--img": `url(${temp})`}}>
                                         <div className='movie-detail'>
                                             <div className='movie-title'>
+                                                <Link key={movie.id} to={`/film/${movie.title}`}>Test</Link>
                                                 <h1>{movie.title}</h1>
                                             </div>
                                             <div className='movie-description'>
