@@ -1,9 +1,6 @@
 package com.moviePocket.controller.user;
 
 import com.moviePocket.Service.UserService;
-import com.moviePocket.entities.Role;
-import com.moviePocket.entities.User;
-import com.moviePocket.util.TbConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -15,8 +12,6 @@ import javax.mail.MessagingException;
 
 @Controller
 @RequestMapping("/user/edit")
-
-
 public class UserEditController {
 
     @Autowired
