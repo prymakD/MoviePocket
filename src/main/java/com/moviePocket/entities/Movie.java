@@ -1,22 +1,23 @@
 package com.moviePocket.entities;
 
-import javax.persistence.*;
-import lombok.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
 
 @Entity
-@Table(name = "movie")
+@Table(name = "movies")
 @Getter @Setter @NoArgsConstructor
 public class Movie {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
-    @Column(nullable = false)
     private String title;
 
     private Float avgRating;
@@ -31,14 +32,12 @@ public class Movie {
 
     private LocalDate releaseDate;
 
-    @Lob
     private String plot;
 
     private Integer runtime;
 
     private BigDecimal imdbRating;
 
-    @Column(nullable = false, unique = true)
     private Integer tmdbId;
 
     private String posterUrl;
