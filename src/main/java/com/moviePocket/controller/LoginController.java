@@ -7,23 +7,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
+import javax.mail.MessagingException;
 import javax.validation.Valid;
 
 @Controller
 public class LoginController {
 
-    @Autowired
-    private UserService userService;
-
     @RequestMapping("/login")
     public String loginForm() {
         return "login";
     }
+    @Autowired
+    private UserService userService;
+
+
 
     @GetMapping("/registration")
     public String registrationForm(Model model) {
@@ -36,8 +35,9 @@ public class LoginController {
     public String registration(
             @Valid @ModelAttribute("user") UserRegistrationDto userDto,
             BindingResult result,
-            Model model) {
+            Model model) throws MessagingException {
         User existingUser = userService.findUserByEmail(userDto.getEmail());
+
 
         if (existingUser != null)
             result.rejectValue("email", null,
@@ -50,5 +50,16 @@ public class LoginController {
 
         userService.save(userDto);
         return "redirect:/registration?success";
+    }
+
+    @GetMapping("/activate/{code}")
+    public String activate(Model model, @PathVariable String code) {
+        boolean isActivated = userService.activateUser(code);
+        if (isActivated) {
+            model.addAttribute("message", "User successfully activated");
+        } else {
+            model.addAttribute("message", "Activation code is not found!");
+        }
+        return "login";
     }
 }
