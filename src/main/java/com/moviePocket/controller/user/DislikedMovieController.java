@@ -6,24 +6,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @Controller
+@RestController
 @RequestMapping("/user/dislikedmovie")
 public class DislikedMovieController {
 
     @Autowired
     DislikedMovieService dislikedMovieService;
     @PostMapping("/set")
-    public void setDislikedMovie(@RequestParam("id") Long id){
+    public boolean setMovieWatched(@RequestParam("id") Long id){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        dislikedMovieService.setNewDislikedMovie(
-                authentication.getName(),id);
+        return dislikedMovieService.setNewDislikedMovie(authentication.getName(),id);
     }
     @PostMapping("/del")
     public void delDislikedMovie(@RequestParam("id") Long id){

@@ -18,19 +18,19 @@ public class ToWatchMovieServiceImpl implements ToWatchMovieService {
     @Autowired
     private UserRepository userRepository;
 
-    public void setNewToWatch(String email, Long idMovie){
-        if(toWatchMovieRepository.findByUserAndIdMovie(
-                userRepository.findByEmail(email),idMovie)==null) {
-
-            toWatchMovieRepository.save(
-                    new ToWatchMovie(userRepository.findByEmail(email), idMovie));
+    public boolean setNewToWatch(String email, Long idMovie){
+        if(toWatchMovieRepository.findByUserAndIdMovie(userRepository.findByEmail(email),idMovie)==null) {
+            toWatchMovieRepository.save(new ToWatchMovie(userRepository.findByEmail(email), idMovie));
+            return true;
         }
+        return false;
     }
 
-    public void removeFromToWatch(String email, Long idMovie){
+    public boolean removeFromToWatch(String email, Long idMovie){
         toWatchMovieRepository.delete(
                 toWatchMovieRepository.findByUserAndIdMovie(
                         userRepository.findByEmail(email),idMovie));
+        return false;
     }
 
     public boolean getFromToWatch(String email, Long idMovie) {

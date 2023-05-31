@@ -20,13 +20,14 @@ public class WatchedMovieServiceImpl implements WatchedMovieService {
     private UserRepository userRepository;
 
 
-    public void setNewWatched(String email, Long idMovie){
+    public boolean setNewWatched(String email, Long idMovie){
         if(watchedMovieRepository.findByUserAndIdMovie(
                 userRepository.findByEmail(email),idMovie)==null) {
-
             watchedMovieRepository.save(
                     new WatchedMovie(userRepository.findByEmail(email), idMovie));
+            return true;
         }
+        return false;
     }
 
     public void removeFromWatched(String email, Long idMovie){
