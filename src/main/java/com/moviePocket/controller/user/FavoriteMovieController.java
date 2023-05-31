@@ -5,14 +5,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @Controller
+@RestController
 @RequestMapping("/user/favoritemovie")
 public class FavoriteMovieController {
 
@@ -22,8 +20,7 @@ public class FavoriteMovieController {
     @PostMapping("/set")
     public void setFavoriteMovie(@RequestParam("id") Long id){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        favoriteMoviesService.setNewFavoriteMovies(
-                authentication.getName(),id);
+        favoriteMoviesService.setNewFavoriteMovies(authentication.getName(),id);
     }
     @PostMapping("/del")
     public void delFavoriteMovie(@RequestParam("id") Long id){

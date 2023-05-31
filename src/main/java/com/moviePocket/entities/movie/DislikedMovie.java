@@ -32,4 +32,29 @@ public class DislikedMovie{
         this.user = user;
         this.idMovie = idMovie;
     }
+
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public long getIdMovie() {
+        return idMovie;
+    }
+
+    public void setIdMovie(long idMovie) {
+        this.idMovie = idMovie;
+    }
 }

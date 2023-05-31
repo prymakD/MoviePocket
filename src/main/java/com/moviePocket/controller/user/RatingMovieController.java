@@ -1,20 +1,17 @@
 package com.moviePocket.controller.user;
 
-import com.moviePocket.Service.DislikedMovieService;
 import com.moviePocket.Service.RatingMovieService;
-import com.moviePocket.entities.movie.RatingMovie;
+import com.moviePocket.entities.Rating;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @Controller
+@RestController
 @RequestMapping("/user/rating")
 public class RatingMovieController {
 
@@ -32,13 +29,13 @@ public class RatingMovieController {
         ratingMovieService.removeFromRatingMovie(authentication.getName(),id);
     }
     @GetMapping("/get")
-    public float getRatingMovie(@RequestParam("id") Long id){
+    public int getRatingMovie(@RequestParam("id") Long id){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return ratingMovieService.getFromRatingMovie(
                 authentication.getName(),id);
     }
     @GetMapping("/all")
-    public List<RatingMovie> allRatingMovie(){
+    public List<Rating> allRatingMovie(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return ratingMovieService.getAllUserRatingMovie(
                 authentication.getName());

@@ -17,13 +17,14 @@ public class DislikedMovieServiceImpl implements DislikedMovieService {
     @Autowired
     private UserRepository userRepository;
 
-    public void setNewDislikedMovie(String email, Long idMovie){
+    public boolean setNewDislikedMovie(String email, Long idMovie){
         if(dislikedMovieRepository.findByUserAndIdMovie(
                 userRepository.findByEmail(email),idMovie)==null) {
-
             dislikedMovieRepository.save(
                     new DislikedMovie(userRepository.findByEmail(email), idMovie));
+            return true;
         }
+        return false;
     }
 
     public void removeFromDislikedMovie(String email, Long idMovie){
@@ -33,9 +34,9 @@ public class DislikedMovieServiceImpl implements DislikedMovieService {
     }
 
     public boolean getFromDislikedMovie(String email, Long idMovie) {
-        DislikedMovie favoriteMovie = dislikedMovieRepository.findByUserAndIdMovie(
+        DislikedMovie dislikedMovie = dislikedMovieRepository.findByUserAndIdMovie(
                 userRepository.findByEmail(email), idMovie);
-        return favoriteMovie != null;
+        return dislikedMovie != null;
     }
 
     public List<Long> getAllUserDislikedMovie(String email){

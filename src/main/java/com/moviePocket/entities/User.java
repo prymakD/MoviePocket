@@ -17,7 +17,7 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Table(name = "users")
-public class User {
+public class User extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -50,22 +50,6 @@ public class User {
     @Column(nullable = true)
     private String newEmailToken;
 
-    public String getTokenLostPassword() {
-        return tokenLostPassword;
-    }
-
-    public void setTokenLostPassword(String tokenLostPassword) {
-        this.tokenLostPassword = tokenLostPassword;
-    }
-
-    public String getNewEmailToken() {
-        return newEmailToken;
-    }
-
-    public void setNewEmailToken(String newEmailToken) {
-        this.newEmailToken = newEmailToken;
-    }
-
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(
             name = "users_roles",
@@ -95,85 +79,5 @@ public class User {
         this.activationCode = activationCode;
         this.emailVerification = false;
         this.accountActive = true;
-    }
-
-    public boolean isAccountActive() {
-        return accountActive;
-    }
-
-    public void setAccountActive(boolean accountActive) {
-        this.accountActive = accountActive;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public Boolean getEmailVerification() {
-        return emailVerification;
-    }
-
-    public void setEmailVerification(Boolean emailVerification) {
-        this.emailVerification = emailVerification;
-    }
-
-    public String getActivationCode() {
-        return activationCode;
-    }
-
-    public void setActivationCode(String activationCode) {
-        this.activationCode = activationCode;
-    }
-
-    public List<Role> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(List<Role> roles) {
-        this.roles = roles;
-    }
-
-    public String getBio() {
-        return bio;
-    }
-
-    public void setBio(String bio) {
-        this.bio = bio;
-    }
-
-    public String getNewEmail() {
-        return newEmail;
-    }
-
-    public void setNewEmail(String newEmail) {
-        this.newEmail = newEmail;
     }
 }

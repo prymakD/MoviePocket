@@ -5,23 +5,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @Controller
+@RestController
 @RequestMapping("/user/towatch")
 public class ToWatchMovieController {
 
     @Autowired
     ToWatchMovieService toWatchMovieService;
     @PostMapping("/set")
-    public void setMovieToWatch(@RequestParam("id") Long id){
+    public boolean setMovieToWatch(@RequestParam("id") Long id){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        toWatchMovieService.setNewToWatch(authentication.getName(),id);
+        return toWatchMovieService.setNewToWatch(authentication.getName(),id);
     }
     @PostMapping("/del")
     public void delMovieToWatch(@RequestParam("id") Long id){
