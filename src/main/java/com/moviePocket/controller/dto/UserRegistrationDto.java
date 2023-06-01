@@ -1,5 +1,6 @@
 package com.moviePocket.controller.dto;
 
+import com.moviePocket.security.validation.ValidPassword;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,13 +16,13 @@ import javax.validation.constraints.NotEmpty;
 public class UserRegistrationDto {
     private Long id;
 
-    @NotEmpty(message = "Please enter valid name.")
+    @NotEmpty(message = "Please enter valid username.")
     private String username;
 
     @NotEmpty(message = "Please enter valid email.")
     @Email
     private String email;
 
-    @NotEmpty(message = "Please enter valid password.")
+    @ValidPassword
     private String password;
 }
