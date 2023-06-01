@@ -1,0 +1,22 @@
+.Navbar{
+    padding: 15px 0;
+    background-color: #171718;
+    color: #FFFFFF;
+}
+.Container{
+    margin: 0 auto;
+    padding: 0 15%;
+}
+.NavRow{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    column-gap: 40px;
+    row-gap: 20px;
+    flex-wrap: wrap;
+}
+.NavBrand{
+    color: #FFFFFF;
+    font-size: 24px;
+    font-family: 'Poppins', sans-serif;
+}
