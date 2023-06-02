@@ -1,8 +1,6 @@
 package com.moviePocket.entities;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.Data;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -11,7 +9,7 @@ import java.time.LocalDate;
 
 @Entity
 @Table(name = "movies")
-@Getter @Setter @NoArgsConstructor
+@Data
 public class Movie {
 
     @Id

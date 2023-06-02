@@ -1,6 +1,5 @@
 package com.moviePocket.controller.dto;
 
-import com.moviePocket.security.validation.ValidPassword;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,6 +22,8 @@ public class UserRegistrationDto {
     @Email
     private String email;
 
-    @ValidPassword
+    //TODO password validation for registrasion
+
+    //    @ValidPassword
     private String password;
 }

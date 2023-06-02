@@ -28,6 +28,4 @@ public interface UserService extends UserDetailsService {
 
     boolean setNewBio(String email, String bio);
 
-
-
 }
