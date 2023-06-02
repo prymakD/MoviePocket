@@ -77,7 +77,7 @@ public class MovieReviewServiceImpl implements MovieReviewService {
                     movieReview.getUser().getUsername(),
                     movieReview.getCreated(),
                     movieReview.getId(),
-                    movieReview.getId()));
+                    movieReview.getIdMovie()));
         }
         return reviewList;
     }
