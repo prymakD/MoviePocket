@@ -43,6 +43,11 @@ public class ReviewMovieController {
         return movieReviewService.getByIDMovieReview(id);
     }
 
+    @GetMapping("/getallusermovie")
+    public List<Review> getAllByUserAndIdMovie(@RequestParam("id") Long id){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        return movieReviewService.getAllByUserAndIdMovie(authentication.getName(),id);
+    }
     @GetMapping("/getallmovie")
     public List<Review> getAllReviewByIdMovie(@RequestParam("id") Long id){
         return movieReviewService.getAllByIDMovie(id);

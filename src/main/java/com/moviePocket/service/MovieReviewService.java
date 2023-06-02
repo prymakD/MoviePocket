@@ -13,8 +13,7 @@ public interface MovieReviewService {
     List<Review> getAllByUser(String email);
     boolean delMovieReview(Long idMovieReview, String username);
     int getAllCountByIdMovie(Long idMovie);
-
     Review getByIDMovieReview(Long idMovieReview);
-
+    List<Review> getAllByUserAndIdMovie(String email,Long idMovie);
     ReviewMovie updateMovieReview(Long idMovieReview, String username, String title, String content);
 }

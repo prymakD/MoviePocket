@@ -1,5 +1,6 @@
 package com.moviePocket.entities.movie;
 
+import com.moviePocket.entities.BaseEntity;
 import com.moviePocket.entities.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -11,14 +12,9 @@ import javax.persistence.*;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 @Entity
 @Table(name = "user_disliked_movies")
-public class DislikedMovie {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class DislikedMovie extends BaseEntity {
 
     @ManyToOne
     @JoinColumn(name = "idUser", referencedColumnName = "id")

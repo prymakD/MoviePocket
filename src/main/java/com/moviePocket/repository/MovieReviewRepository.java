@@ -19,6 +19,8 @@ public interface MovieReviewRepository extends JpaRepository<ReviewMovie, Long> 
 
     List<ReviewMovie> getAllByUser(User user);
 
+    List<ReviewMovie> getAllByUserAndIdMovie(User user,Long idMovie);
+
     @Query("SELECT COUNT(u) FROM ReviewMovie u WHERE u.idMovie = :movieId")
     int getAllCountByIdMovie(@Param("movieId") Long idMovie);
 
