@@ -1,9 +1,9 @@
 package com.moviePocket.controller;
 
 
-import com.moviePocket.Service.LikeMovieReviewService;
-import com.moviePocket.Service.MovieReviewService;
 import com.moviePocket.entities.Review;
+import com.moviePocket.service.LikeMovieReviewService;
+import com.moviePocket.service.MovieReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -11,10 +11,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
 @RestController
 @RequestMapping("/movies/review")
 @Controller
-public class MovieReviewController {
+public class ReviewMovieController {
 
     @Autowired
     MovieReviewService movieReviewService;
@@ -23,8 +24,8 @@ public class MovieReviewController {
 
     @PostMapping("/set")
     public void setMovieReview(@RequestParam("id") Long idMovie,
-                                                   @RequestParam("title") String title,
-                                                   @RequestParam("content")String content){
+                               @RequestParam("title") String title,
+                               @RequestParam("content") String content) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         movieReviewService.creatMovieReview(authentication.getName(),idMovie,title,content);
     }

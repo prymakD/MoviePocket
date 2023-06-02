@@ -1,11 +1,11 @@
-package com.moviePocket.Service.impl;
+package com.moviePocket.service.impl;
 
-import com.moviePocket.Service.UserService;
 import com.moviePocket.controller.dto.UserRegistrationDto;
 import com.moviePocket.entities.Role;
 import com.moviePocket.entities.User;
 import com.moviePocket.repository.RoleRepository;
 import com.moviePocket.repository.UserRepository;
+import com.moviePocket.service.UserService;
 import com.moviePocket.util.TbConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

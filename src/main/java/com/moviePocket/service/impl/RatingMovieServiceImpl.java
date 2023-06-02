@@ -1,11 +1,11 @@
-package com.moviePocket.Service.impl;
+package com.moviePocket.service.impl;
 
-import com.moviePocket.Service.RatingMovieService;
-import com.moviePocket.Service.WatchedMovieService;
 import com.moviePocket.entities.Rating;
 import com.moviePocket.entities.movie.RatingMovie;
 import com.moviePocket.repository.RatingMovieRepository;
 import com.moviePocket.repository.UserRepository;
+import com.moviePocket.service.RatingMovieService;
+import com.moviePocket.service.WatchedMovieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
