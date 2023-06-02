@@ -20,7 +20,7 @@ public class LikeMovieReview{
 
     @ManyToOne
     @JoinColumn(name = "review_id")
-    private MovieReview movieReview;
+    private ReviewMovie movieReview;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -28,7 +28,7 @@ public class LikeMovieReview{
 
     private int lickOrDis;
 
-    public LikeMovieReview(MovieReview movieReview, User user, int lickOrDis) {
+    public LikeMovieReview(ReviewMovie movieReview, User user, int lickOrDis) {
         this.movieReview = movieReview;
         this.user = user;
         this.lickOrDis = lickOrDis;

@@ -1,11 +1,11 @@
-package com.moviePocket.Service.impl.movie;
+package com.moviePocket.service.impl.movie;
 
-import com.moviePocket.Service.MovieReviewService;
-import com.moviePocket.entities.movie.MovieReview;
 import com.moviePocket.entities.Review;
 import com.moviePocket.entities.User;
+import com.moviePocket.entities.movie.ReviewMovie;
 import com.moviePocket.repository.MovieReviewRepository;
 import com.moviePocket.repository.UserRepository;
+import com.moviePocket.service.MovieReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,10 +20,10 @@ public class MovieReviewServiceImpl implements MovieReviewService {
     @Autowired
     private MovieReviewRepository movieReviewRepository;
 
-    public MovieReview creatMovieReview(String username, Long idMovie, String title, String content){
+    public ReviewMovie creatMovieReview(String username, Long idMovie, String title, String content) {
         User user = userRepository.findByEmail(username);
-        if(user!=null){
-            MovieReview movieReview = new MovieReview(user,idMovie,title,content);
+        if (user != null) {
+            ReviewMovie movieReview = new ReviewMovie(user, idMovie, title, content);
             movieReviewRepository.save(movieReview);
             return movieReview;
         }
@@ -31,10 +31,10 @@ public class MovieReviewServiceImpl implements MovieReviewService {
     }
 
 
-    public MovieReview updateMovieReview(Long idMovieReview, String username, String title, String content){
+    public ReviewMovie updateMovieReview(Long idMovieReview, String username, String title, String content) {
         User user = userRepository.findByEmail(username);
-        if(user!=null){
-            MovieReview movieReview = movieReviewRepository.getById(idMovieReview);
+        if (user != null) {
+            ReviewMovie movieReview = movieReviewRepository.getById(idMovieReview);
             movieReview.setTitle(title);
             movieReview.setContent(content);
             movieReviewRepository.save(movieReview);
@@ -47,7 +47,7 @@ public class MovieReviewServiceImpl implements MovieReviewService {
     public boolean delMovieReview(Long idMovieReview, String username){
         User user = userRepository.findByEmail(username);
         if(user!=null){
-            MovieReview movieReview = movieReviewRepository.getById(idMovieReview);
+            ReviewMovie movieReview = movieReviewRepository.getById(idMovieReview);
             movieReviewRepository.delete(movieReview);
             return true;
         }
@@ -56,7 +56,7 @@ public class MovieReviewServiceImpl implements MovieReviewService {
 
 
     public Review getByIDMovieReview(Long idMovieReview){
-        MovieReview movieReview = movieReviewRepository.getById(idMovieReview);
+        ReviewMovie movieReview = movieReviewRepository.getById(idMovieReview);
         return new Review(
                 movieReview.getTitle(),
                 movieReview.getContent(),
@@ -68,9 +68,9 @@ public class MovieReviewServiceImpl implements MovieReviewService {
     }
 
 
-    private List<Review> parsMovieReview(List<MovieReview> movieReviewList){
+    private List<Review> parsMovieReview(List<ReviewMovie> movieReviewList) {
         List<Review> reviewList = new ArrayList<>();
-        for (MovieReview movieReview : movieReviewList) {
+        for (ReviewMovie movieReview : movieReviewList) {
             reviewList.add(new Review(
                     movieReview.getTitle(),
                     movieReview.getContent(),
@@ -91,7 +91,7 @@ public class MovieReviewServiceImpl implements MovieReviewService {
     public List<Review> getAllByUser(String email){
         User user = userRepository.findByEmail(email);
         if(user!=null){
-            List<MovieReview> movieReviewList = movieReviewRepository.getAllByUser(user);
+            List<ReviewMovie> movieReviewList = movieReviewRepository.getAllByUser(user);
             return parsMovieReview(movieReviewList);
         }
         return null;

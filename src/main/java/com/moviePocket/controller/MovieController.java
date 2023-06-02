@@ -1,8 +1,8 @@
 package com.moviePocket.controller;
 
-import com.moviePocket.Service.*;
-import com.moviePocket.Service.impl.MovieServiceImpl;
 import com.moviePocket.controller.dto.MovieDto;
+import com.moviePocket.service.*;
+import com.moviePocket.service.impl.MovieServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

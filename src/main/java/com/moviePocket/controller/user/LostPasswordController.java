@@ -1,7 +1,7 @@
 package com.moviePocket.controller.user;
 
-import com.moviePocket.Service.UserService;
 import com.moviePocket.security.validation.ValidPassword;
+import com.moviePocket.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

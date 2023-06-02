@@ -1,4 +1,4 @@
-package com.moviePocket.Service;
+package com.moviePocket.service;
 
 import java.util.List;
 

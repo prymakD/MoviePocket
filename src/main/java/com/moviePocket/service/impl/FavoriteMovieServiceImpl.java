@@ -1,9 +1,9 @@
-package com.moviePocket.Service.impl;
+package com.moviePocket.service.impl;
 
-import com.moviePocket.Service.FavoriteMovieService;
 import com.moviePocket.entities.movie.FavoriteMovie;
 import com.moviePocket.repository.FavoriteMovieRepository;
 import com.moviePocket.repository.UserRepository;
+import com.moviePocket.service.FavoriteMovieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

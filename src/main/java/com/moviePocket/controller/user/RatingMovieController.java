@@ -1,7 +1,7 @@
 package com.moviePocket.controller.user;
 
-import com.moviePocket.Service.RatingMovieService;
 import com.moviePocket.entities.Rating;
+import com.moviePocket.service.RatingMovieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;

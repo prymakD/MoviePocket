@@ -1,4 +1,4 @@
-package com.moviePocket.Service;
+package com.moviePocket.service;
 
 public interface MovieService {
 }
