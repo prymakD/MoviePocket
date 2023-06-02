@@ -33,8 +33,8 @@ public class MovieReviewServiceImpl implements MovieReviewService {
 
     public ReviewMovie updateMovieReview(Long idMovieReview, String username, String title, String content) {
         User user = userRepository.findByEmail(username);
-        if (user != null) {
-            ReviewMovie movieReview = movieReviewRepository.getById(idMovieReview);
+        ReviewMovie movieReview = movieReviewRepository.getById(idMovieReview);
+        if(user!=null && movieReview != null && movieReview.getUser()==user){
             movieReview.setTitle(title);
             movieReview.setContent(content);
             movieReviewRepository.save(movieReview);
@@ -46,8 +46,8 @@ public class MovieReviewServiceImpl implements MovieReviewService {
 
     public boolean delMovieReview(Long idMovieReview, String username){
         User user = userRepository.findByEmail(username);
-        if(user!=null){
-            ReviewMovie movieReview = movieReviewRepository.getById(idMovieReview);
+        ReviewMovie movieReview = movieReviewRepository.getById(idMovieReview);
+        if(user!=null && movieReview != null && movieReview.getUser()==user){
             movieReviewRepository.delete(movieReview);
             return true;
         }
