@@ -17,6 +17,7 @@ public class Review {
     private String content;
     private String username;
     private Date dataCreated;
+    private Date dataUpdated;
     private Long idMovie;
     private Long id;
 

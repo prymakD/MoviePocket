@@ -62,6 +62,7 @@ public class MovieReviewServiceImpl implements MovieReviewService {
                 movieReview.getContent(),
                 movieReview.getUser().getUsername(),
                 movieReview.getCreated(),
+                movieReview.getUpdated(),
                 movieReview.getId(),
                 movieReview.getId()
         );
@@ -76,8 +77,9 @@ public class MovieReviewServiceImpl implements MovieReviewService {
                     movieReview.getContent(),
                     movieReview.getUser().getUsername(),
                     movieReview.getCreated(),
-                    movieReview.getId(),
-                    movieReview.getIdMovie()));
+                    movieReview.getUpdated(),
+                    movieReview.getIdMovie(),
+                    movieReview.getId()));
         }
         return reviewList;
     }
@@ -86,6 +88,12 @@ public class MovieReviewServiceImpl implements MovieReviewService {
 
     public List<Review> getAllByIDMovie(Long idMovie){
         return parsMovieReview(movieReviewRepository.getAllByIdMovie(idMovie));
+    }
+    public List<Review> getAllByUserAndIdMovie(String email, Long idMovie){
+        User user = userRepository.findByEmail(email);
+        if(user!=null)
+            return parsMovieReview(movieReviewRepository.getAllByUserAndIdMovie(user,idMovie));
+        return null;
     }
 
     public List<Review> getAllByUser(String email){

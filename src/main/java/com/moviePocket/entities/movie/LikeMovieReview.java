@@ -1,5 +1,6 @@
 package com.moviePocket.entities.movie;
 
+import com.moviePocket.entities.BaseEntity;
 import com.moviePocket.entities.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,11 +13,7 @@ import javax.persistence.*;
 @Getter
 @Setter
 @NoArgsConstructor
-public class LikeMovieReview{
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class LikeMovieReview extends BaseEntity {
 
     @ManyToOne
     @JoinColumn(name = "review_id")
