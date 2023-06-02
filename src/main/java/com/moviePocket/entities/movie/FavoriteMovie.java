@@ -1,16 +1,15 @@
 package com.moviePocket.entities.movie;
 
 import com.moviePocket.entities.User;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 @Entity
 @Table(name = "user_favorite_movies")
 public class FavoriteMovie{

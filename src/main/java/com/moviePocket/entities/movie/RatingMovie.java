@@ -1,7 +1,6 @@
 package com.moviePocket.entities.movie;
 
 import com.moviePocket.entities.User;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -11,14 +10,13 @@ import javax.persistence.*;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 @Entity
 @Table(name = "user_rating_movies")
 public class RatingMovie {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
 
     @ManyToOne
     @JoinColumn(name = "idUser", referencedColumnName = "id")
@@ -35,5 +33,4 @@ public class RatingMovie {
         this.idMovie = idMovie;
         this.rating = rating;
     }
-
 }
