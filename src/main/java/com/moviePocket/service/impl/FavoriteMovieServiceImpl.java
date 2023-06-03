@@ -4,34 +4,34 @@ import com.moviePocket.entities.movie.FavoriteMovie;
 import com.moviePocket.repository.FavoriteMovieRepository;
 import com.moviePocket.repository.UserRepository;
 import com.moviePocket.service.FavoriteMovieService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class FavoriteMovieServiceImpl implements FavoriteMovieService {
 
+    private final FavoriteMovieRepository favoriteMoviesRepository;
 
-    @Autowired
-    private FavoriteMovieRepository favoriteMoviesRepository;
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
-    public void setNewFavoriteMovies(String email, Long idMovie){
-        if(favoriteMoviesRepository.findByUserAndIdMovie(
-                userRepository.findByEmail(email),idMovie)==null) {
+    public void setOrDeleteNewFavoriteMovies(String email, Long idMovie) {
+        if (favoriteMoviesRepository.findByUserAndIdMovie(
+                userRepository.findByEmail(email), idMovie) == null) {
 
-            favoriteMoviesRepository.save(
-                    new FavoriteMovie(userRepository.findByEmail(email), idMovie));
+            favoriteMoviesRepository.save(new FavoriteMovie(userRepository.findByEmail(email), idMovie));
+        } else { // if user already marked movie as fav, it will be deleted
+            removeFromFavoriteMovies(email, idMovie);
         }
     }
 
-    public void removeFromFavoriteMovies(String email, Long idMovie){
+    private void removeFromFavoriteMovies(String email, Long idMovie) {
         favoriteMoviesRepository.delete(
                 favoriteMoviesRepository.findByUserAndIdMovie(
-                        userRepository.findByEmail(email),idMovie));
+                        userRepository.findByEmail(email), idMovie));
     }
 
     public boolean getFromFavoriteMovies(String email, Long idMovie) {

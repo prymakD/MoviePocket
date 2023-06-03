@@ -29,7 +29,7 @@ public class RatingMovieServiceImpl implements RatingMovieService {
             ratingMovieRepository.save(
                     new RatingMovie(userRepository.findByEmail(email), idMovie, rating));
 
-            watchedMovieService.setNewWatched(email, idMovie);
+            watchedMovieService.setOrDeleteNewWatched(email, idMovie);
         } else {
             RatingMovie ratingMovie = ratingMovieRepository.findByUserAndIdMovie(
                     userRepository.findByEmail(email), idMovie);

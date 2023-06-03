@@ -4,33 +4,34 @@ import com.moviePocket.entities.movie.DislikedMovie;
 import com.moviePocket.repository.DislikedMovieRepository;
 import com.moviePocket.repository.UserRepository;
 import com.moviePocket.service.DislikedMovieService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class DislikedMovieServiceImpl implements DislikedMovieService {
-    @Autowired
-    private DislikedMovieRepository dislikedMovieRepository;
-    @Autowired
-    private UserRepository userRepository;
 
-    public boolean setNewDislikedMovie(String email, Long idMovie){
-        if(dislikedMovieRepository.findByUserAndIdMovie(
-                userRepository.findByEmail(email),idMovie)==null) {
+    private final DislikedMovieRepository dislikedMovieRepository;
+
+    private final UserRepository userRepository;
+
+    public void setOrDeleteDislikedMovie(String email, Long idMovie) {
+        if (dislikedMovieRepository.findByUserAndIdMovie(
+                userRepository.findByEmail(email), idMovie) == null) {
             dislikedMovieRepository.save(
                     new DislikedMovie(userRepository.findByEmail(email), idMovie));
-            return true;
+        } else {
+            removeFromDislikedMovie(email, idMovie);
         }
-        return false;
     }
 
-    public void removeFromDislikedMovie(String email, Long idMovie){
+    private void removeFromDislikedMovie(String email, Long idMovie) {
         dislikedMovieRepository.delete(
                 dislikedMovieRepository.findByUserAndIdMovie(
-                        userRepository.findByEmail(email),idMovie));
+                        userRepository.findByEmail(email), idMovie));
     }
 
     public boolean getFromDislikedMovie(String email, Long idMovie) {
