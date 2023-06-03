@@ -40,7 +40,7 @@ public class FavoriteMovieServiceImpl implements FavoriteMovieService {
         return favoriteMovie != null;
     }
 
-    public List<Long> getAllUserFavoriteMovies(String email){
+    public List<Long> getAllUserFavoriteMovies(String email) {
         List<FavoriteMovie> favoriteMoviesList = favoriteMoviesRepository.findAllByUser(
                 userRepository.findByEmail(email));
         List<Long> listIdMovie = new ArrayList<>();
@@ -50,8 +50,8 @@ public class FavoriteMovieServiceImpl implements FavoriteMovieService {
         return listIdMovie;
     }
 
-    public String getAllCountByIdMovie(Long idMovie){
-        return String.valueOf(favoriteMoviesRepository.getAllCountByIdMovie(idMovie));
+    public int getAllCountByIdMovie(Long idMovie) {
+        return favoriteMoviesRepository.getAllCountByIdMovie(idMovie);
     }
 
 }

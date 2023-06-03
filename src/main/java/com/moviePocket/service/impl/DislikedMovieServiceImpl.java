@@ -39,7 +39,7 @@ public class DislikedMovieServiceImpl implements DislikedMovieService {
         return dislikedMovie != null;
     }
 
-    public List<Long> getAllUserDislikedMovie(String email){
+    public List<Long> getAllUserDislikedMovie(String email) {
         List<DislikedMovie> favoriteMoviesList = dislikedMovieRepository.findAllByUser(
                 userRepository.findByEmail(email));
         List<Long> listIdMovie = new ArrayList<>();
@@ -49,7 +49,7 @@ public class DislikedMovieServiceImpl implements DislikedMovieService {
         return listIdMovie;
     }
 
-    public String getAllCountByIdMovie(Long idMovie){
-        return String.valueOf(dislikedMovieRepository.getAllCountByIdMovie(idMovie));
+    public int getAllCountByIdMovie(Long idMovie) {
+        return dislikedMovieRepository.getAllCountByIdMovie(idMovie);
     }
 }

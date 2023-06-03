@@ -8,5 +8,6 @@ public interface FavoriteMovieService {
     void removeFromFavoriteMovies(String email, Long idMovie);
     boolean getFromFavoriteMovies(String email, Long idMovie);
     List<Long> getAllUserFavoriteMovies(String email);
-    String getAllCountByIdMovie(Long idMovie);
+
+    int getAllCountByIdMovie(Long idMovie);
 }

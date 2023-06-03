@@ -8,6 +8,7 @@ public interface WatchedMovieService{
     void removeFromWatched(String email, Long idMovie);
     boolean getFromWatched(String email, Long idMovie);
     List<Long> getAllUserWatched(String email);
-    String getAllCountByIdMovie(Long idMovie);
+
+    int getAllCountByIdMovie(Long idMovie);
 
 }
