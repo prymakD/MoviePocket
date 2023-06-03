@@ -7,7 +7,7 @@ import com.moviePocket.repository.RoleRepository;
 import com.moviePocket.repository.UserRepository;
 import com.moviePocket.service.UserService;
 import com.moviePocket.util.TbConstants;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -21,20 +21,16 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
-    @Autowired
-    private RoleRepository roleRepository;
+    private final RoleRepository roleRepository;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
 
-    @Autowired
-    private EmailSenderService emailSenderService;
-
+    private final EmailSenderService emailSenderService;
 
     @Override
     public void save(UserRegistrationDto userDto) throws MessagingException {

@@ -4,33 +4,32 @@ import com.moviePocket.entities.movie.ToWatchMovie;
 import com.moviePocket.repository.ToWatchMovieRepository;
 import com.moviePocket.repository.UserRepository;
 import com.moviePocket.service.ToWatchMovieService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class ToWatchMovieServiceImpl implements ToWatchMovieService {
 
-    @Autowired
-    private ToWatchMovieRepository toWatchMovieRepository;
-    @Autowired
-    private UserRepository userRepository;
+    private final ToWatchMovieRepository toWatchMovieRepository;
 
-    public boolean setNewToWatch(String email, Long idMovie){
-        if(toWatchMovieRepository.findByUserAndIdMovie(userRepository.findByEmail(email),idMovie)==null) {
+    private final UserRepository userRepository;
+
+    public void setOrDeleteToWatch(String email, Long idMovie) {
+        if (toWatchMovieRepository.findByUserAndIdMovie(userRepository.findByEmail(email), idMovie) == null) {
             toWatchMovieRepository.save(new ToWatchMovie(userRepository.findByEmail(email), idMovie));
-            return true;
+        } else {
+            removeFromToWatch(email, idMovie);
         }
-        return false;
     }
 
-    public boolean removeFromToWatch(String email, Long idMovie){
+    private void removeFromToWatch(String email, Long idMovie) {
         toWatchMovieRepository.delete(
                 toWatchMovieRepository.findByUserAndIdMovie(
-                        userRepository.findByEmail(email),idMovie));
-        return false;
+                        userRepository.findByEmail(email), idMovie));
     }
 
     public boolean getFromToWatch(String email, Long idMovie) {
@@ -44,7 +43,7 @@ public class ToWatchMovieServiceImpl implements ToWatchMovieService {
                 userRepository.findByEmail(email));
         List<Long> listIdMovie = new ArrayList<>();
         for (ToWatchMovie toWatch : toWatchList) {
-            listIdMovie.add(toWatch.getId());
+            listIdMovie.add(toWatch.getIdMovie());
         }
         return listIdMovie;
     }

@@ -4,36 +4,32 @@ import com.moviePocket.service.DislikedMovieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Controller
 @RestController
-@RequestMapping("/user/dislikedmovie")
+@RequestMapping("/user/dislikedMovie")
 public class DislikedMovieController {
 
     @Autowired
     DislikedMovieService dislikedMovieService;
+
     @PostMapping("/set")
-    public boolean setMovieWatched(@RequestParam("id") Long id){
+    public void setOrDeleteMovieWatched(@RequestParam("idMovie") Long idMovie) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        return dislikedMovieService.setNewDislikedMovie(authentication.getName(),id);
+        dislikedMovieService.setOrDeleteDislikedMovie(authentication.getName(), idMovie);
     }
-    @PostMapping("/del")
-    public void delDislikedMovie(@RequestParam("id") Long id){
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        dislikedMovieService.removeFromDislikedMovie(authentication.getName(),id);
-    }
+
     @GetMapping("/get")
-    public boolean getDislikedMovie(@RequestParam("id") Long id){
+    public boolean getIsUserDislikedMovie(@RequestParam("idMovie") Long idMovie) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return dislikedMovieService.getFromDislikedMovie(
-                authentication.getName(),id);
+                authentication.getName(), idMovie);
     }
+
     @GetMapping("/all")
-    public List<Long> allDislikedMovie(){
+    public List<Long> allUserDislikedMovies() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return dislikedMovieService.getAllUserDislikedMovie(
                 authentication.getName());
