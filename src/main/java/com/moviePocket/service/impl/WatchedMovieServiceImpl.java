@@ -42,7 +42,7 @@ public class WatchedMovieServiceImpl implements WatchedMovieService {
         return watched != null;
     }
 
-    public List<Long> getAllUserWatched(String email){
+    public List<Long> getAllUserWatched(String email) {
         List<WatchedMovie> watchedList = watchedMovieRepository.findAllByUser(
                 userRepository.findByEmail(email));
         List<Long> listIdMovie = new ArrayList<>();
@@ -52,7 +52,7 @@ public class WatchedMovieServiceImpl implements WatchedMovieService {
         return listIdMovie;
     }
 
-    public String getAllCountByIdMovie(Long idMovie){
-        return String.valueOf(watchedMovieRepository.getAllCountByIdMovie(idMovie));
+    public int getAllCountByIdMovie(Long idMovie) {
+        return watchedMovieRepository.getAllCountByIdMovie(idMovie);
     }
 }

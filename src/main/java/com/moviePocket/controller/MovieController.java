@@ -36,28 +36,33 @@ public class MovieController {
     }
 
     @GetMapping("/rating")
-    public String getMovieRating(@RequestParam("id") String id){
-        return ratingMovieService.getAllMovieRating(Long.valueOf(id));
+    public double getMovieRating(@RequestParam("id") Long id) {
+        return ratingMovieService.getAllMovieRating(id);
     }
+
     @GetMapping("/count/rating")
-    public String getCountMovieRating(@RequestParam("id") String id){
-        return ratingMovieService.getAllCountByIdMovie(Long.valueOf(id));
+    public int getCountMovieRating(@RequestParam("id") Long id) {
+        return ratingMovieService.getAllCountByIdMovie(id);
     }
+
     @GetMapping("/count/dislike")
-    public String getAllCountDislikedByIdMovie(@RequestParam("id") String id){
-        return dislikedMovieService.getAllCountByIdMovie(Long.valueOf(id));
+    public int getAllCountDislikedByIdMovie(@RequestParam("id") Long id) {
+        return dislikedMovieService.getAllCountByIdMovie(id);
     }
+
     @GetMapping("/count/favorite")
-    public String getAllCountFavoriteByIdMovie(@RequestParam("id") String id){
-        return favoriteMovieService.getAllCountByIdMovie(Long.valueOf(id));
+    public int getAllCountFavoriteByIdMovie(@RequestParam("id") Long id) {
+        return favoriteMovieService.getAllCountByIdMovie(id);
     }
+
     @GetMapping("/count/watched")
-    public String getAllCountWatchedByIdMovie(@RequestParam("id") String id){
-        return watchedMovieService.getAllCountByIdMovie(Long.valueOf(id));
+    public int getAllCountWatchedByIdMovie(@RequestParam("id") Long id) {
+        return watchedMovieService.getAllCountByIdMovie(id);
     }
+
     @GetMapping("/count/towatch")
-    public String getAllCountToWatchByIdMovie(@RequestParam("id") String id){
-        return toWatchMovieService.getAllCountByIdMovie(Long.valueOf(id));
+    public int getAllCountToWatchByIdMovie(@RequestParam("id") Long id) {
+        return toWatchMovieService.getAllCountByIdMovie(id);
     }
 
 }

@@ -9,6 +9,6 @@ public interface DislikedMovieService {
     boolean getFromDislikedMovie(String email, Long idMovie);
     List<Long> getAllUserDislikedMovie(String email);
 
-    String getAllCountByIdMovie(Long idMovie);
+    int getAllCountByIdMovie(Long idMovie);
 
 }

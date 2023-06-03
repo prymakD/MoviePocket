@@ -39,7 +39,7 @@ public class ToWatchMovieServiceImpl implements ToWatchMovieService {
         return toWatchMovies != null;
     }
 
-    public List<Long> getAllUserToWatch(String email){
+    public List<Long> getAllUserToWatch(String email) {
         List<ToWatchMovie> toWatchList = toWatchMovieRepository.findAllByUser(
                 userRepository.findByEmail(email));
         List<Long> listIdMovie = new ArrayList<>();
@@ -48,7 +48,8 @@ public class ToWatchMovieServiceImpl implements ToWatchMovieService {
         }
         return listIdMovie;
     }
-    public String getAllCountByIdMovie(Long idMovie){
-        return String.valueOf(toWatchMovieRepository.getAllCountByIdMovie(idMovie));
+
+    public int getAllCountByIdMovie(Long idMovie) {
+        return toWatchMovieRepository.getAllCountByIdMovie(idMovie);
     }
 }
