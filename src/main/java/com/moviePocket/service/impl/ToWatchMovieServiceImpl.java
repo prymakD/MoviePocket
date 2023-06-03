@@ -19,19 +19,14 @@ public class ToWatchMovieServiceImpl implements ToWatchMovieService {
     private final UserRepository userRepository;
 
     public void setOrDeleteToWatch(String email, Long idMovie) {
-        if (toWatchMovieRepository.findByUserAndIdMovie(userRepository.findByEmail(email), idMovie) == null) {
+        ToWatchMovie toWatchMovie = toWatchMovieRepository.findByUserAndIdMovie(
+                userRepository.findByEmail(email), idMovie);
+        if (toWatchMovie == null) {
             toWatchMovieRepository.save(new ToWatchMovie(userRepository.findByEmail(email), idMovie));
         } else {
-            removeFromToWatch(email, idMovie);
+            toWatchMovieRepository.delete(toWatchMovie);
         }
     }
-
-    private void removeFromToWatch(String email, Long idMovie) {
-        toWatchMovieRepository.delete(
-                toWatchMovieRepository.findByUserAndIdMovie(
-                        userRepository.findByEmail(email), idMovie));
-    }
-
     public boolean getFromToWatch(String email, Long idMovie) {
         ToWatchMovie toWatchMovies = toWatchMovieRepository.findByUserAndIdMovie(
                 userRepository.findByEmail(email), idMovie);

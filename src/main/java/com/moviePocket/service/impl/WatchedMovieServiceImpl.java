@@ -19,23 +19,16 @@ public class WatchedMovieServiceImpl implements WatchedMovieService {
 
     private final UserRepository userRepository;
 
-
     public void setOrDeleteNewWatched(String email, Long idMovie) {
-        if (watchedMovieRepository.findByUserAndIdMovie(
-                userRepository.findByEmail(email), idMovie) == null) {
+        WatchedMovie watchedMovie = watchedMovieRepository.findByUserAndIdMovie(
+                userRepository.findByEmail(email), idMovie);
+        if (watchedMovie == null) {
             watchedMovieRepository.save(
                     new WatchedMovie(userRepository.findByEmail(email), idMovie));
         } else {
-            removeFromWatched(email, idMovie);
+            watchedMovieRepository.delete(watchedMovie);
         }
     }
-
-    private void removeFromWatched(String email, Long idMovie) {
-        watchedMovieRepository.delete(
-                watchedMovieRepository.findByUserAndIdMovie(
-                        userRepository.findByEmail(email), idMovie));
-    }
-
     public boolean getFromWatched(String email, Long idMovie) {
         WatchedMovie watched = watchedMovieRepository.findByUserAndIdMovie(
                 userRepository.findByEmail(email), idMovie);

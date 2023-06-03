@@ -19,21 +19,15 @@ public class DislikedMovieServiceImpl implements DislikedMovieService {
     private final UserRepository userRepository;
 
     public void setOrDeleteDislikedMovie(String email, Long idMovie) {
-        if (dislikedMovieRepository.findByUserAndIdMovie(
-                userRepository.findByEmail(email), idMovie) == null) {
+        DislikedMovie dislikedMovie = dislikedMovieRepository.findByUserAndIdMovie(
+                userRepository.findByEmail(email), idMovie);
+        if (dislikedMovie == null) {
             dislikedMovieRepository.save(
                     new DislikedMovie(userRepository.findByEmail(email), idMovie));
         } else {
-            removeFromDislikedMovie(email, idMovie);
+            dislikedMovieRepository.delete(dislikedMovie);
         }
     }
-
-    private void removeFromDislikedMovie(String email, Long idMovie) {
-        dislikedMovieRepository.delete(
-                dislikedMovieRepository.findByUserAndIdMovie(
-                        userRepository.findByEmail(email), idMovie));
-    }
-
     public boolean getFromDislikedMovie(String email, Long idMovie) {
         DislikedMovie dislikedMovie = dislikedMovieRepository.findByUserAndIdMovie(
                 userRepository.findByEmail(email), idMovie);
