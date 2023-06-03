@@ -19,19 +19,13 @@ public class FavoriteMovieServiceImpl implements FavoriteMovieService {
     private final UserRepository userRepository;
 
     public void setOrDeleteNewFavoriteMovies(String email, Long idMovie) {
-        if (favoriteMoviesRepository.findByUserAndIdMovie(
-                userRepository.findByEmail(email), idMovie) == null) {
-
+        FavoriteMovie favoriteMovie = favoriteMoviesRepository.findByUserAndIdMovie(
+                userRepository.findByEmail(email), idMovie);
+        if (favoriteMovie == null) {
             favoriteMoviesRepository.save(new FavoriteMovie(userRepository.findByEmail(email), idMovie));
         } else { // if user already marked movie as fav, it will be deleted
-            removeFromFavoriteMovies(email, idMovie);
+            favoriteMoviesRepository.delete(favoriteMovie);
         }
-    }
-
-    private void removeFromFavoriteMovies(String email, Long idMovie) {
-        favoriteMoviesRepository.delete(
-                favoriteMoviesRepository.findByUserAndIdMovie(
-                        userRepository.findByEmail(email), idMovie));
     }
 
     public boolean getFromFavoriteMovies(String email, Long idMovie) {
