@@ -1,7 +1,7 @@
 package com.moviePocket.service;
 
 import com.moviePocket.controller.dto.UserRegistrationDto;
-import com.moviePocket.entities.User;
+import com.moviePocket.entities.user.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 import javax.mail.MessagingException;

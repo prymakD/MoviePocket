@@ -1,0 +1,96 @@
+package com.moviePocket.service.impl.movie.list;
+
+import com.moviePocket.entities.movie.list.CategoriesMovieList;
+import com.moviePocket.entities.movie.list.MovieInList;
+import com.moviePocket.entities.movie.list.MovieList;
+import com.moviePocket.entities.movie.list.ParsMovieList;
+import com.moviePocket.entities.user.User;
+import com.moviePocket.repository.movie.list.CategoriesMovieListRepository;
+import com.moviePocket.repository.movie.list.LikeListRepository;
+import com.moviePocket.repository.movie.list.MovieInListRepository;
+import com.moviePocket.repository.movie.list.MovieListRepository;
+import com.moviePocket.repository.user.UserRepository;
+import com.moviePocket.service.movie.list.MovieListService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
+
+
+@Service
+public class MovieListServiceImpl implements MovieListService {
+
+    @Autowired
+    private MovieListRepository movieListRepository;
+    @Autowired
+    private UserRepository userRepository;
+    @Autowired
+    private MovieInListRepository movieInListRepository;
+    @Autowired
+    private LikeListRepository likeListRepository;
+    @Autowired
+    private CategoriesMovieListRepository categoriesMovieListRepository;
+
+    public void setMovieLis(String email, String title, String content) {
+        User user = userRepository.findByEmail(email);
+        if (user != null) {
+            MovieList movieList = new MovieList(title, content, user);
+            movieListRepository.save(movieList);
+        }
+    }
+
+    public void updateMovieLis(String email, Long idMovieList, String title, String content) {
+        User user = userRepository.findByEmail(email);
+        MovieList movieList = movieListRepository.getById(idMovieList);
+        if (user != null && movieList != null && movieList.getUser() == user) {
+            movieList.setTitle(title);
+            movieList.setContent(content);
+            movieListRepository.save(movieList);
+        }
+    }
+
+    public void deleteMovieLis(String email, Long idMovieList) {
+        User user = userRepository.findByEmail(email);
+        MovieList movieList = movieListRepository.getById(idMovieList);
+        if (user != null && movieList != null && movieList.getUser() == user) {
+            movieInListRepository.deleteAllByMovieList(movieList);
+            likeListRepository.deleteAllByMovieList(movieList);
+            categoriesMovieListRepository.deleteAllByMovieList(movieList);
+            movieListRepository.delete(movieList);
+        }
+    }
+
+    public ParsMovieList getMovieList(Long idList) {
+        if (movieListRepository.existsById(idList)) {
+            MovieList movieList = movieListRepository.getById(idList);
+            List<CategoriesMovieList> categoriesList = categoriesMovieListRepository.getAllByMovieList(movieList);
+            List<String> categoriesString = new ArrayList<>();
+            for (CategoriesMovieList categoriesMovieList : categoriesList) {
+                categoriesString.add(categoriesMovieList.getMovieCategories().getName());
+            }
+            List<MovieInList> movieListList = movieInListRepository.getAllByMovieList(movieList);
+            List<Long> idMovieList = new ArrayList<>();
+            for (MovieInList movieInList : movieListList) {
+                idMovieList.add(movieInList.getIdMovie());
+            }
+            ParsMovieList parsMovieList = new ParsMovieList(
+                    movieList.getId(),
+                    movieList.getTitle(),
+                    movieList.getContent(),
+                    categoriesString,
+                    idMovieList,
+                    new int[]{likeListRepository.countByMovieReviewAndLickOrDisIsTrue(movieList),
+                            likeListRepository.countByMovieReviewAndLickOrDisIsFalse(movieList)},
+                    movieList.getUser().getUsername(),
+                    movieList.getCreated(),
+                    movieList.getUpdated()
+
+            );
+            return parsMovieList;
+        }
+        return null;
+    }
+
+
+}
