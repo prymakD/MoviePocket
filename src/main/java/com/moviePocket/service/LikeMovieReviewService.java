@@ -2,8 +2,10 @@ package com.moviePocket.service;
 
 public interface LikeMovieReviewService {
 
-    boolean setLikeOrDis(String username, Long idMovie, int likeOrDis);
-    boolean delLikeOrDis(String username, Long idMovie);
-    int getLickOrDis(String username,Long idReview);
+    void setLikeOrDisOrDel(String username, Long id, boolean likeOrDis);
+
+    boolean[] getLikeOrDis(String username, Long id);
+
+    int[] getAllLikeAndDisByIdMovieReview(Long idReview);
 
 }
