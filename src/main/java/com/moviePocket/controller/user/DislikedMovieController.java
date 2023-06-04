@@ -1,6 +1,6 @@
 package com.moviePocket.controller.user;
 
-import com.moviePocket.service.DislikedMovieService;
+import com.moviePocket.service.movie.rating.DislikedMovieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;

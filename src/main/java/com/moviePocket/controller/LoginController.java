@@ -1,7 +1,7 @@
 package com.moviePocket.controller;
 
 import com.moviePocket.controller.dto.UserRegistrationDto;
-import com.moviePocket.entities.User;
+import com.moviePocket.entities.user.User;
 import com.moviePocket.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

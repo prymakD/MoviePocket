@@ -1,7 +1,7 @@
 package com.moviePocket;
 
-import com.moviePocket.entities.User;
-import com.moviePocket.repository.UserRepository;
+import com.moviePocket.entities.user.User;
+import com.moviePocket.repository.user.UserRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
