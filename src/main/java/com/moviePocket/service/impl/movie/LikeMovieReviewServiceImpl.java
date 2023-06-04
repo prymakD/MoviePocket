@@ -28,13 +28,11 @@ public class LikeMovieReviewServiceImpl implements LikeMovieReviewService {
         if (user != null) {
             if (likeMovieReview == null) {
                 likeMovieReviewRepository.save(new LikeMovieReview(movieReview, user, likeOrDis));
+            } else if (likeMovieReview.isLickOrDis() == likeOrDis) {
+                likeMovieReviewRepository.delete(likeMovieReview);
             } else {
-                if (likeMovieReview.isLickOrDis() == likeOrDis) {
-                    likeMovieReviewRepository.delete(likeMovieReview);
-                } else {
-                    likeMovieReview.setLickOrDis(likeOrDis);
-                    likeMovieReviewRepository.save(likeMovieReview);
-                }
+                likeMovieReview.setLickOrDis(likeOrDis);
+                likeMovieReviewRepository.save(likeMovieReview);
             }
         }
     }
