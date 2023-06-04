@@ -62,29 +62,25 @@ public class ReviewMovieController {
     @PostMapping("/del")
     public boolean delMovieReview(@RequestParam("id") Long id){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        return movieReviewService.delMovieReview(id,authentication.getName());
+        return movieReviewService.delMovieReview(id, authentication.getName());
     }
 
     @PostMapping("/setlike")
-    public boolean setLike(@RequestParam("id") Long id,@RequestParam("like") int like){
+    public void setLike(@RequestParam("id") Long id, @RequestParam("like") boolean like) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        return likeMovieReviewService.setLikeOrDis(authentication.getName(),id,like);
+        likeMovieReviewService.setLikeOrDisOrDel(authentication.getName(), id, like);
     }
 
-    @PostMapping("/dellike")
-    public boolean setLike(@RequestParam("id") Long id){
+    @GetMapping("/getLike")
+    public boolean[] getLikeReviewByIdMovie(@RequestParam("id") Long idReview) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        return likeMovieReviewService.delLikeOrDis(authentication.getName(),id);
+        return likeMovieReviewService.getLikeOrDis(authentication.getName(), idReview);
     }
 
-    @GetMapping("/getlike")
-    public int getLike(@RequestParam("id") Long id){
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        return likeMovieReviewService.getLickOrDis(authentication.getName(),id);
+    @GetMapping("/getallLike")
+    public int[] getAllLikeReviewByIdMovie(@RequestParam("id") Long idReview) {
+        return likeMovieReviewService.getAllLikeAndDisByIdMovieReview(idReview);
     }
-
-
-
 
 
 }

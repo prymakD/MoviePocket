@@ -6,7 +6,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "like_review")
@@ -23,9 +26,9 @@ public class LikeMovieReview extends BaseEntity {
     @JoinColumn(name = "user_id")
     private User user;
 
-    private int lickOrDis;
+    private boolean lickOrDis;
 
-    public LikeMovieReview(ReviewMovie movieReview, User user, int lickOrDis) {
+    public LikeMovieReview(ReviewMovie movieReview, User user, boolean lickOrDis) {
         this.movieReview = movieReview;
         this.user = user;
         this.lickOrDis = lickOrDis;

@@ -21,46 +21,43 @@ public class LikeMovieReviewServiceImpl implements LikeMovieReviewService {
     @Autowired
     UserRepository userRepository;
 
-    public boolean setLikeOrDis(String username, Long id, int likeOrDis){
+    public void setLikeOrDisOrDel(String username, Long id, boolean likeOrDis) {
         ReviewMovie movieReview = movieReviewRepository.getById(id);
         User user = userRepository.findByEmail(username);
-        if(movieReview!= null && user !=null) {
-            LikeMovieReview likeMovieReview = likeMovieReviewRepository.
-                    getByUserAndMovieReview(user,movieReview);
-            if(likeMovieReview!=null){
-                likeMovieReview.setLickOrDis(likeOrDis);
-                likeMovieReviewRepository.save(likeMovieReview);
-            }else{
-                likeMovieReview = new LikeMovieReview(movieReview, user,likeOrDis);
-                likeMovieReviewRepository.save(likeMovieReview);
+        LikeMovieReview likeMovieReview = likeMovieReviewRepository.getByUserAndMovieReview(user, movieReview);
+        if (user != null) {
+            if (likeMovieReview == null) {
+                likeMovieReviewRepository.save(new LikeMovieReview(movieReview, user, likeOrDis));
+            } else {
+                if (likeMovieReview.isLickOrDis() == likeOrDis) {
+                    likeMovieReviewRepository.delete(likeMovieReview);
+                } else {
+                    likeMovieReview.setLickOrDis(likeOrDis);
+                    likeMovieReviewRepository.save(likeMovieReview);
+                }
             }
-            return true;
         }
-        return false;
     }
 
-    public boolean delLikeOrDis(String username, Long idReview){
-        ReviewMovie movieReview = movieReviewRepository.getById(idReview);
+    public boolean[] getLikeOrDis(String username, Long id) {
+        ReviewMovie movieReview = movieReviewRepository.getById(id);
         User user = userRepository.findByEmail(username);
-        if(movieReview!= null && user !=null) {
-            LikeMovieReview likeMovieReview = likeMovieReviewRepository.
-                    getByUserAndMovieReview(user, movieReview);
-            if (likeMovieReview != null) {
-                likeMovieReviewRepository.delete(likeMovieReview);
-            }
-            return true;
-        }
-        return false;
+        LikeMovieReview likeMovieReview = likeMovieReviewRepository.getByUserAndMovieReview(user, movieReview);
+        if (likeMovieReview != null) {
+            return new boolean[]{likeMovieReview.isLickOrDis()};
+        } else
+            return new boolean[]{};
     }
 
-    public int getLickOrDis(String username,Long idReview){
-        User user = userRepository.findByEmail(username);
+    public int[] getAllLikeAndDisByIdMovieReview(Long idReview) {
         ReviewMovie movieReview = movieReviewRepository.getById(idReview);
-        if(user!=null && movieReview!=null){
-            LikeMovieReview likeMovieReview = likeMovieReviewRepository.getByUserAndMovieReview(user,movieReview);
-            return likeMovieReview.getLickOrDis();
-        }
-        return 0;
+        if (movieReview != null) {
+            return new int[]{
+                    likeMovieReviewRepository.countByMovieReviewAndLickOrDisIsTrue(movieReview),
+                    likeMovieReviewRepository.countByMovieReviewAndLickOrDisIsFalse(movieReview)
+            };
+        } else
+            return null;
     }
 
 
