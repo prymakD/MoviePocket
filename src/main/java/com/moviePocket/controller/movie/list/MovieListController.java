@@ -12,6 +12,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/movies/list")
 @Controller
@@ -48,7 +50,7 @@ public class MovieListController {
     }
 
     @GetMapping("/get")
-    public ParsMovieList getMovieList(@RequestParam("id") Long id) {
+    public List<ParsMovieList> getMovieList(@RequestParam("id") Long id) {
         return movieListService.getMovieList(id);
     }
 
@@ -68,6 +70,22 @@ public class MovieListController {
     public void setCategoryMovieList(@RequestParam("idList") Long idList, @RequestParam("idCategory") Long idCategory) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         categoriesMovieListService.setOrDelCategoryList(authentication.getName(), idList, idCategory);
+    }
+
+    @GetMapping("/getalllist")
+    public List<ParsMovieList> getAllList() {
+        return movieListService.getAllList();
+    }
+
+    @GetMapping("/getallmy")
+    public List<ParsMovieList> getAllMy() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        return movieListService.getAllMyList(authentication.getName());
+    }
+
+    @GetMapping("/getalluser")
+    public List<ParsMovieList> getAllUsername(@RequestParam("username") String username) {
+        return movieListService.getAllByUsernameList(username);
     }
 
 }
