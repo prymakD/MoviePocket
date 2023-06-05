@@ -29,6 +29,9 @@ public class User extends BaseEntity {
     @Column(nullable = false)
     private String email;
 
+    @Lob
+    private String bio;
+
     @Column(nullable = false)
     private Boolean emailVerification;
 
@@ -57,8 +60,6 @@ public class User extends BaseEntity {
 
     private List<Role> roles = new ArrayList<>();
 
-    @Lob
-    private String bio;
 
     public User(String username, String email, String password,  List<Role> roles) {
         this.username = username;
