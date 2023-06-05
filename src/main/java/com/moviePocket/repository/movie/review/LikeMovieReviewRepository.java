@@ -5,7 +5,12 @@ import com.moviePocket.entities.movie.review.ReviewMovie;
 import com.moviePocket.entities.user.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
 
+import javax.transaction.Transactional;
+
+@Transactional
+@Repository
 public interface LikeMovieReviewRepository extends JpaRepository<LikeMovieReview, Long> {
 
     LikeMovieReview getByUserAndMovieReview(User user, ReviewMovie movieReview);
