@@ -61,35 +61,70 @@ public class MovieListServiceImpl implements MovieListService {
         }
     }
 
-    public ParsMovieList getMovieList(Long idList) {
+    public List<ParsMovieList> getMovieList(Long idList) {
         if (movieListRepository.existsById(idList)) {
             MovieList movieList = movieListRepository.getById(idList);
-            List<CategoriesMovieList> categoriesList = categoriesMovieListRepository.getAllByMovieList(movieList);
+            List<MovieList> movieLL = new ArrayList<>();
+            movieLL.add(movieList);
+            return parsList(movieLL);
+        }
+        System.out.println("hi");
+        return null;
+    }
+
+    public List<ParsMovieList> getAllList() {
+        List<MovieList> movieLL = movieListRepository.findAll();
+        return parsList(movieLL);
+    }
+
+    public List<ParsMovieList> getAllMyList(String email) {
+        User user = userRepository.findByEmail(email);
+        if (user != null) {
+            List<MovieList> movieLL = movieListRepository.findAllByUser(user);
+            return parsList(movieLL);
+        }
+        return null;
+    }
+
+    public List<ParsMovieList> getAllByUsernameList(String username) {
+        User user = userRepository.findAllByUsername(username);
+        if (user != null) {
+            List<MovieList> movieLL = movieListRepository.findAllByUser(user);
+            return parsList(movieLL);
+        }
+        return null;
+    }
+
+    public List<ParsMovieList> parsList(List<MovieList> movieLL) {
+        List<ParsMovieList> parsMovieLL = new ArrayList<>();
+        for (int i = 0; i < movieLL.size(); i++) {
+            System.out.println(i);
+            List<CategoriesMovieList> categoriesList = categoriesMovieListRepository.getAllByMovieList(movieLL.get(i));
             List<String> categoriesString = new ArrayList<>();
             for (CategoriesMovieList categoriesMovieList : categoriesList) {
                 categoriesString.add(categoriesMovieList.getMovieCategories().getName());
             }
-            List<MovieInList> movieListList = movieInListRepository.getAllByMovieList(movieList);
+            List<MovieInList> movieListList = movieInListRepository.getAllByMovieList(movieLL.get(i));
             List<Long> idMovieList = new ArrayList<>();
             for (MovieInList movieInList : movieListList) {
                 idMovieList.add(movieInList.getIdMovie());
             }
+            int[] likeAndDis = new int[]{likeListRepository.countByMovieReviewAndLickOrDisIsTrue(movieLL.get(i)),
+                    likeListRepository.countByMovieReviewAndLickOrDisIsFalse(movieLL.get(i))};
             ParsMovieList parsMovieList = new ParsMovieList(
-                    movieList.getId(),
-                    movieList.getTitle(),
-                    movieList.getContent(),
+                    movieLL.get(i).getId(),
+                    movieLL.get(i).getTitle(),
+                    movieLL.get(i).getContent(),
                     categoriesString,
                     idMovieList,
-                    new int[]{likeListRepository.countByMovieReviewAndLickOrDisIsTrue(movieList),
-                            likeListRepository.countByMovieReviewAndLickOrDisIsFalse(movieList)},
-                    movieList.getUser().getUsername(),
-                    movieList.getCreated(),
-                    movieList.getUpdated()
-
+                    likeAndDis,
+                    movieLL.get(i).getUser().getUsername(),
+                    movieLL.get(i).getCreated(),
+                    movieLL.get(i).getUpdated()
             );
-            return parsMovieList;
+            parsMovieLL.add(parsMovieList);
         }
-        return null;
+        return parsMovieLL;
     }
 
 

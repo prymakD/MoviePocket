@@ -2,6 +2,8 @@ package com.moviePocket.service.movie.list;
 
 import com.moviePocket.entities.movie.list.ParsMovieList;
 
+import java.util.List;
+
 public interface MovieListService {
 
     void setMovieLis(String email, String title, String content);
@@ -10,5 +12,12 @@ public interface MovieListService {
 
     void deleteMovieLis(String email, Long idMovieList);
 
-    ParsMovieList getMovieList(Long idList);
+    List<ParsMovieList> getMovieList(Long idList);
+
+    List<ParsMovieList> getAllList();
+
+    List<ParsMovieList> getAllMyList(String email);
+
+    List<ParsMovieList> getAllByUsernameList(String username);
+
 }
