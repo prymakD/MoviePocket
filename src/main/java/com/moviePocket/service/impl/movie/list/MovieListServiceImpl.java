@@ -14,6 +14,7 @@ import com.moviePocket.service.movie.list.MovieListService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,6 +51,7 @@ public class MovieListServiceImpl implements MovieListService {
         }
     }
 
+    @Transactional
     public void deleteMovieLis(String email, Long idMovieList) {
         User user = userRepository.findByEmail(email);
         MovieList movieList = movieListRepository.getById(idMovieList);
