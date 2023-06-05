@@ -4,41 +4,35 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.moviePocket.entities.user.User;
 import lombok.Data;
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotEmpty;
-
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class UserRegistrationDto {
+public class UserDto {
     private Long id;
 
-    @NotEmpty(message = "Please enter valid username.")
     private String username;
 
-    @NotEmpty(message = "Please enter valid email.")
-    @Email
     private String email;
 
-    //TODO password validation for registrasion
-
-    //    @ValidPassword
-    private String password;
+    private String bio;
 
     public User toUser() {
         User user = new User();
         user.setId(id);
         user.setUsername(username);
         user.setEmail(email);
+        user.setBio(bio);
 
         return user;
     }
 
-    public static UserRegistrationDto fromUser(User user) {
-        UserRegistrationDto userDto = new UserRegistrationDto();
+    public static UserDto fromUser(User user) {
+        UserDto userDto = new UserDto();
         userDto.setId(user.getId());
         userDto.setUsername(user.getUsername());
         userDto.setEmail(user.getEmail());
+        userDto.setBio(user.getBio());
 
         return userDto;
     }
 }
+
