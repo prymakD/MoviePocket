@@ -10,6 +10,7 @@ import com.moviePocket.service.movie.raview.MovieReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,7 +47,7 @@ public class MovieReviewServiceImpl implements MovieReviewService {
         return null;
     }
 
-
+    @Transactional
     public boolean delMovieReview(Long idMovieReview, String username){
         User user = userRepository.findByEmail(username);
         ReviewMovie movieReview = movieReviewRepository.getById(idMovieReview);
