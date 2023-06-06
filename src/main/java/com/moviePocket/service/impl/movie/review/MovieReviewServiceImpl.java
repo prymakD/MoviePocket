@@ -1,6 +1,6 @@
 package com.moviePocket.service.impl.movie.review;
 
-import com.moviePocket.entities.movie.review.Review;
+import com.moviePocket.entities.movie.review.ParsReview;
 import com.moviePocket.entities.movie.review.ReviewMovie;
 import com.moviePocket.entities.user.User;
 import com.moviePocket.repository.movie.review.LikeMovieReviewRepository;
@@ -60,9 +60,9 @@ public class MovieReviewServiceImpl implements MovieReviewService {
     }
 
 
-    public Review getByIDMovieReview(Long idMovieReview){
+    public ParsReview getByIDMovieReview(Long idMovieReview) {
         ReviewMovie movieReview = movieReviewRepository.getById(idMovieReview);
-        return new Review(
+        return new ParsReview(
                 movieReview.getTitle(),
                 movieReview.getContent(),
                 movieReview.getUser().getUsername(),
@@ -74,10 +74,10 @@ public class MovieReviewServiceImpl implements MovieReviewService {
     }
 
 
-    private List<Review> parsMovieReview(List<ReviewMovie> movieReviewList) {
-        List<Review> reviewList = new ArrayList<>();
+    private List<ParsReview> parsMovieReview(List<ReviewMovie> movieReviewList) {
+        List<ParsReview> reviewList = new ArrayList<>();
         for (ReviewMovie movieReview : movieReviewList) {
-            reviewList.add(new Review(
+            reviewList.add(new ParsReview(
                     movieReview.getTitle(),
                     movieReview.getContent(),
                     movieReview.getUser().getUsername(),
@@ -90,20 +90,20 @@ public class MovieReviewServiceImpl implements MovieReviewService {
     }
 
 
-
-    public List<Review> getAllByIDMovie(Long idMovie){
+    public List<ParsReview> getAllByIDMovie(Long idMovie) {
         return parsMovieReview(movieReviewRepository.getAllByIdMovie(idMovie));
     }
-    public List<Review> getAllByUserAndIdMovie(String email, Long idMovie){
+
+    public List<ParsReview> getAllByUserAndIdMovie(String email, Long idMovie) {
         User user = userRepository.findByEmail(email);
-        if(user!=null)
-            return parsMovieReview(movieReviewRepository.getAllByUserAndIdMovie(user,idMovie));
+        if (user != null)
+            return parsMovieReview(movieReviewRepository.getAllByUserAndIdMovie(user, idMovie));
         return null;
     }
 
-    public List<Review> getAllByUser(String email){
+    public List<ParsReview> getAllByUser(String email) {
         User user = userRepository.findByEmail(email);
-        if(user!=null){
+        if (user != null) {
             List<ReviewMovie> movieReviewList = movieReviewRepository.getAllByUser(user);
             return parsMovieReview(movieReviewList);
         }

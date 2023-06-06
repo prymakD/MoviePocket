@@ -1,7 +1,7 @@
 package com.moviePocket.controller.movie;
 
 
-import com.moviePocket.entities.movie.review.Review;
+import com.moviePocket.entities.movie.review.ParsReview;
 import com.moviePocket.service.movie.raview.LikeMovieReviewService;
 import com.moviePocket.service.movie.raview.MovieReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,22 +39,23 @@ public class ReviewMovieController {
     }
 
     @GetMapping("/get")
-    public Review getByIdReview(@RequestParam("id") Long id){
+    public ParsReview getByIdReview(@RequestParam("id") Long id) {
         return movieReviewService.getByIDMovieReview(id);
     }
 
     @GetMapping("/getallusermovie")
-    public List<Review> getAllByUserAndIdMovie(@RequestParam("id") Long id){
+    public List<ParsReview> getAllByUserAndIdMovie(@RequestParam("id") Long id) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        return movieReviewService.getAllByUserAndIdMovie(authentication.getName(),id);
+        return movieReviewService.getAllByUserAndIdMovie(authentication.getName(), id);
     }
+
     @GetMapping("/getallmovie")
-    public List<Review> getAllReviewByIdMovie(@RequestParam("id") Long id){
+    public List<ParsReview> getAllReviewByIdMovie(@RequestParam("id") Long id) {
         return movieReviewService.getAllByIDMovie(id);
     }
 
     @GetMapping("/getalluser")
-    public List<Review> getAllReviewByUser(){
+    public List<ParsReview> getAllReviewByUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return movieReviewService.getAllByUser(authentication.getName());
     }
