@@ -11,7 +11,7 @@ import java.util.Date;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Review {
+public class ParsReview {
 
     private String title;
     private String content;

@@ -21,7 +21,8 @@ public interface UserService extends UserDetailsService {
 
     boolean setNewPassword(String email, String passwordOld,String passwordNew);
 
-    boolean deleteUser(String email,String pas);
+    boolean deleteUser(String email, String pas);
+
     boolean setTokenEmail(String oldEmail, String newEmail) throws MessagingException;
 
     boolean activateNewEmail(String token);
@@ -29,5 +30,7 @@ public interface UserService extends UserDetailsService {
     void setNewUsername(String email, String username);
 
     boolean setNewBio(String email, String bio);
+
+    User findUserByUsername(String username);
 
 }
