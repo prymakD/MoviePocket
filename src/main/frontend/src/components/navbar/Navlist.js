@@ -9,7 +9,7 @@ const Navlist = () => {
                 <input type="submit" className="Submit" value="+"/>
             </div>
             <li className="NavListItem"><Link to="#" className="NavListLink">SIGN IN</Link></li>
-            <li className="NavListItem"><Link to="#" className="NavListLink">CREATE ACCOUNT</Link></li>
+            <li className="NavListItem"><Link to="/registration" className="NavListLink">CREATE ACCOUNT</Link></li>
             <li className="NavListItem"><Link to="/film" className="NavListLink">FILMS</Link></li>
             <li className="NavListItem"><Link to="#" className="NavListLink">COMMUNITY</Link></li>
         </ul>
