@@ -6,13 +6,17 @@ import java.util.List;
 
 public interface MovieListService {
 
-    void setMovieLis(String email, String title, String content);
+    void setMovieList(String email, String title, String content);
 
-    void updateMovieLis(String email, Long idMovieList, String title, String content);
+    void updateMovieListTitle(String email, Long idMovieList, String title);
 
-    void deleteMovieLis(String email, Long idMovieList);
+    void updateMovieListContent(String email, Long idMovieList, String content);
 
-    List<ParsMovieList> getMovieList(Long idList);
+    void deleteMovieList(String email, Long idMovieList);
+
+    List<ParsMovieList> getAllByTitle(String title);
+
+    List<ParsMovieList> getMovieList(Long idMovieList);
 
     List<ParsMovieList> getAllList();
 

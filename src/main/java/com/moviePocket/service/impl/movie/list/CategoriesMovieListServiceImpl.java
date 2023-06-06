@@ -12,6 +12,7 @@ import com.moviePocket.repository.user.UserRepository;
 import com.moviePocket.service.movie.list.CategoriesMovieListService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.webjars.NotFoundException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,20 +28,28 @@ public class CategoriesMovieListServiceImpl implements CategoriesMovieListServic
     @Autowired
     private UserRepository userRepository;
 
-    public void setOrDelCategoryList(String email, Long idList, Long idCategory) {
+    public void setOrDelCategoryList(String email, Long idList, Long idCategory) throws NotFoundException {
         User user = userRepository.findByEmail(email);
+        if (user == null) {
+            throw new NotFoundException("User not found");
+        }
         MovieList movieList = movieListRepository.getById(idList);
+        if (movieList == null) {
+            throw new NotFoundException("Movie list not found");
+        }
         MovieCategories movieCategories = movieCategoriesRepository.getById(idCategory);
-        if (user != null && movieList != null && movieCategories != null && user == movieList.getUser()) {
-            CategoriesMovieList categoriesMovieList = categoriesMovieListRepository.
-                    getByMovieListAndMovieCategories(movieList, movieCategories);
-            if (categoriesMovieList != null) {
-                categoriesMovieListRepository.delete(categoriesMovieList);
-            } else {
-                categoriesMovieListRepository.save(new CategoriesMovieList(movieList, movieCategories));
-            }
+        if (!user.equals(movieList.getUser())) {
+            throw new IllegalArgumentException("User does not match movie list user");
+        }
+        CategoriesMovieList categoriesMovieList = categoriesMovieListRepository.
+                getByMovieListAndMovieCategories(movieList, movieCategories);
+        if (categoriesMovieList != null) {
+            categoriesMovieListRepository.delete(categoriesMovieList);
+        } else {
+            categoriesMovieListRepository.save(new CategoriesMovieList(movieList, movieCategories));
         }
     }
+
 
     public List<Long> getAllCategoriesList(Long idList) {
         MovieList movieList = movieListRepository.getById(idList);

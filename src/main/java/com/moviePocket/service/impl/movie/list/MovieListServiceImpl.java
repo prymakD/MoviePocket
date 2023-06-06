@@ -11,8 +11,9 @@ import com.moviePocket.repository.movie.list.MovieInListRepository;
 import com.moviePocket.repository.movie.list.MovieListRepository;
 import com.moviePocket.repository.user.UserRepository;
 import com.moviePocket.service.movie.list.MovieListService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.webjars.NotFoundException;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
@@ -20,39 +21,50 @@ import java.util.List;
 
 
 @Service
+@RequiredArgsConstructor
 public class MovieListServiceImpl implements MovieListService {
 
-    @Autowired
-    private MovieListRepository movieListRepository;
-    @Autowired
-    private UserRepository userRepository;
-    @Autowired
-    private MovieInListRepository movieInListRepository;
-    @Autowired
-    private LikeListRepository likeListRepository;
-    @Autowired
-    private CategoriesMovieListRepository categoriesMovieListRepository;
 
-    public void setMovieLis(String email, String title, String content) {
+    private final MovieListRepository movieListRepository;
+
+    private final UserRepository userRepository;
+
+    private final MovieInListRepository movieInListRepository;
+
+    private final LikeListRepository likeListRepository;
+
+    private final CategoriesMovieListRepository categoriesMovieListRepository;
+
+    public void setMovieList(String email, String title, String content) throws NotFoundException {
         User user = userRepository.findByEmail(email);
-        if (user != null) {
-            MovieList movieList = new MovieList(title, content, user);
-            movieListRepository.save(movieList);
+        if (user == null) {
+            throw new NotFoundException("User not found");
         }
+        MovieList movieList = new MovieList(title, content, user);
+        movieListRepository.save(movieList);
     }
 
-    public void updateMovieLis(String email, Long idMovieList, String title, String content) {
+    public void updateMovieListTitle(String email, Long idMovieList, String title) {
         User user = userRepository.findByEmail(email);
         MovieList movieList = movieListRepository.getById(idMovieList);
         if (user != null && movieList != null && movieList.getUser() == user) {
             movieList.setTitle(title);
+            movieListRepository.save(movieList);
+        }
+    }
+
+    public void updateMovieListContent(String email, Long idMovieList, String content) {
+        User user = userRepository.findByEmail(email);
+        MovieList movieList = movieListRepository.getById(idMovieList);
+        if (user != null && movieList != null && movieList.getUser() == user) {
             movieList.setContent(content);
             movieListRepository.save(movieList);
         }
     }
 
+
     @Transactional
-    public void deleteMovieLis(String email, Long idMovieList) {
+    public void deleteMovieList(String email, Long idMovieList) {
         User user = userRepository.findByEmail(email);
         MovieList movieList = movieListRepository.getById(idMovieList);
         if (user != null && movieList != null && movieList.getUser() == user) {
@@ -63,27 +75,26 @@ public class MovieListServiceImpl implements MovieListService {
         }
     }
 
-    public List<ParsMovieList> getMovieList(Long idList) {
-        if (movieListRepository.existsById(idList)) {
-            MovieList movieList = movieListRepository.getById(idList);
-            List<MovieList> movieLL = new ArrayList<>();
-            movieLL.add(movieList);
-            return parsList(movieLL);
+    public List<ParsMovieList> getMovieList(Long idMovieList) {
+        if (movieListRepository.existsById(idMovieList)) {
+            MovieList movieList = movieListRepository.getById(idMovieList);
+            List<MovieList> movieLists = new ArrayList<>();
+            movieLists.add(movieList);
+            return parsList(movieLists);
         }
-        System.out.println("hi");
         return null;
     }
 
     public List<ParsMovieList> getAllList() {
-        List<MovieList> movieLL = movieListRepository.findAll();
-        return parsList(movieLL);
+        List<MovieList> movieList = movieListRepository.findAll();
+        return parsList(movieList);
     }
 
     public List<ParsMovieList> getAllMyList(String email) {
         User user = userRepository.findByEmail(email);
         if (user != null) {
-            List<MovieList> movieLL = movieListRepository.findAllByUser(user);
-            return parsList(movieLL);
+            List<MovieList> movieList = movieListRepository.findAllByUser(user);
+            return parsList(movieList);
         }
         return null;
     }
@@ -91,38 +102,43 @@ public class MovieListServiceImpl implements MovieListService {
     public List<ParsMovieList> getAllByUsernameList(String username) {
         User user = userRepository.findAllByUsername(username);
         if (user != null) {
-            List<MovieList> movieLL = movieListRepository.findAllByUser(user);
-            return parsList(movieLL);
+            List<MovieList> movieList = movieListRepository.findAllByUser(user);
+            return parsList(movieList);
         }
         return null;
     }
 
-    public List<ParsMovieList> parsList(List<MovieList> movieLL) {
+    public List<ParsMovieList> getAllByTitle(String title) {
+        List<MovieList> movieLists = movieListRepository.findAllByTitle(title);
+        return parsList(movieLists);
+    }
+
+    private List<ParsMovieList> parsList(List<MovieList> movieList) {
         List<ParsMovieList> parsMovieLL = new ArrayList<>();
-        for (int i = 0; i < movieLL.size(); i++) {
+        for (int i = 0; i < movieList.size(); i++) {
             System.out.println(i);
-            List<CategoriesMovieList> categoriesList = categoriesMovieListRepository.getAllByMovieList(movieLL.get(i));
+            List<CategoriesMovieList> categoriesList = categoriesMovieListRepository.getAllByMovieList(movieList.get(i));
             List<String> categoriesString = new ArrayList<>();
             for (CategoriesMovieList categoriesMovieList : categoriesList) {
                 categoriesString.add(categoriesMovieList.getMovieCategories().getName());
             }
-            List<MovieInList> movieListList = movieInListRepository.getAllByMovieList(movieLL.get(i));
+            List<MovieInList> movieListList = movieInListRepository.getAllByMovieList(movieList.get(i));
             List<Long> idMovieList = new ArrayList<>();
             for (MovieInList movieInList : movieListList) {
                 idMovieList.add(movieInList.getIdMovie());
             }
-            int[] likeAndDis = new int[]{likeListRepository.countByMovieReviewAndLickOrDisIsTrue(movieLL.get(i)),
-                    likeListRepository.countByMovieReviewAndLickOrDisIsFalse(movieLL.get(i))};
+            int[] likeAndDis = new int[]{likeListRepository.countByMovieReviewAndLickOrDisIsTrue(movieList.get(i)),
+                    likeListRepository.countByMovieReviewAndLickOrDisIsFalse(movieList.get(i))};
             ParsMovieList parsMovieList = new ParsMovieList(
-                    movieLL.get(i).getId(),
-                    movieLL.get(i).getTitle(),
-                    movieLL.get(i).getContent(),
+                    movieList.get(i).getId(),
+                    movieList.get(i).getTitle(),
+                    movieList.get(i).getContent(),
                     categoriesString,
                     idMovieList,
                     likeAndDis,
-                    movieLL.get(i).getUser().getUsername(),
-                    movieLL.get(i).getCreated(),
-                    movieLL.get(i).getUpdated()
+                    movieList.get(i).getUser().getUsername(),
+                    movieList.get(i).getCreated(),
+                    movieList.get(i).getUpdated()
             );
             parsMovieLL.add(parsMovieList);
         }

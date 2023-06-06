@@ -18,7 +18,7 @@ import javax.persistence.*;
 public class MovieList extends BaseEntity {
     @Column(nullable = false, unique = true)
     String title;
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     String content;
 
     @ManyToOne
