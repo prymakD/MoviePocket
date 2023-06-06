@@ -1,0 +1,57 @@
+.registration-container {
+    margin-left: 30%;
+    margin-right: 30%;
+    margin-top: 5%;
+    height: 500px;
+    background-color: #596E79;
+}
+
+.head {
+    font-size: 26px;
+    margin-top: 3%;
+    margin-left: 5%;
+    margin-bottom: 3%;
+    color: whitesmoke;
+    font-family: 'Poppins', sans-serif;
+}
+
+form {
+    margin-left: 5%;
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    color: whitesmoke;
+    font-family: 'Poppins', sans-serif;
+    font-size: 18px;
+}
+
+.registration-input {
+    font-family: 'Poppins', sans-serif;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid whitesmoke;
+    border-radius: 4px;
+    background-color: #869BB3;
+}
+.registration-input:focus{
+    background-color: whitesmoke;
+}
+
+button {
+    padding: 10px;
+    background-color: #4caf50;
+    font-size: 20px;
+    font-family: 'Poppins', sans-serif;
+    color: whitesmoke;
+    cursor: pointer;
+    margin-top: 5%;
+    width: 15%;
+}
+
+button:hover {
+    background-color: #45a049;
+}
