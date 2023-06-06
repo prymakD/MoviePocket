@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Getter
 @Setter
@@ -24,5 +25,12 @@ public class MovieList extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "idUser", referencedColumnName = "id")
     private User user;
+    @OneToMany(mappedBy = "movieList")
+    private List<LikeList> likeList;
 
+    public MovieList(String title, String content, User user) {
+        this.title = title;
+        this.content = content;
+        this.user = user;
+    }
 }

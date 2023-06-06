@@ -207,4 +207,14 @@ public class MovieListController {
         return new ResponseEntity<>(allByUsernameLists, HttpStatus.OK);
     }
 
+    @ApiOperation(value = "Get top 5 movie lists in the system", notes = "Returns a list of all movie lists")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successfully retrieved all movie lists")
+    })
+    @GetMapping("/getTopList")
+    public ResponseEntity<List<ParsMovieList>> getTopList() {
+        List<ParsMovieList> allLists = movieListService.getTop5List();
+        return new ResponseEntity<>(allLists, HttpStatus.OK);
+    }
+
 }

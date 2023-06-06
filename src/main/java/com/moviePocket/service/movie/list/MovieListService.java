@@ -24,4 +24,6 @@ public interface MovieListService {
 
     List<ParsMovieList> getAllByUsernameList(String username);
 
+    List<ParsMovieList> getTop5List();
+
 }

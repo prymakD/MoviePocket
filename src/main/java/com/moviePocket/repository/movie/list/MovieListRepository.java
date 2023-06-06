@@ -21,5 +21,8 @@ public interface MovieListRepository extends JpaRepository<MovieList, Long> {
     @Query("SELECT m FROM MovieList m WHERE m.title LIKE :title%")
     List<MovieList> findAllByTitle(String title);
 
+    @Query("SELECT ml FROM MovieList ml LEFT JOIN ml.likeList ll WHERE ll.lickOrDis = true GROUP BY ml.id ORDER BY COUNT(ll) DESC")
+    List<MovieList> findTop5ByLikes();
+
 
 }

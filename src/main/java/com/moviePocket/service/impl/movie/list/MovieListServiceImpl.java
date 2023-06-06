@@ -113,6 +113,11 @@ public class MovieListServiceImpl implements MovieListService {
         return parsList(movieLists);
     }
 
+    public List<ParsMovieList> getTop5List() {
+        List<MovieList> movieLists = movieListRepository.findTop5ByLikes();
+        return parsList(movieLists);
+    }
+
     private List<ParsMovieList> parsList(List<MovieList> movieList) {
         List<ParsMovieList> parsMovieLL = new ArrayList<>();
         for (int i = 0; i < movieList.size(); i++) {
