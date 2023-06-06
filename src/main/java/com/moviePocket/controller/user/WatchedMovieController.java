@@ -1,18 +1,14 @@
 package com.moviePocket.controller.user;
 
-import com.moviePocket.Service.WatchedMovieService;
+import com.moviePocket.service.movie.rating.WatchedMovieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Controller
+@RestController
 @RequestMapping("/user/watched")
 public class WatchedMovieController {
 
@@ -20,33 +16,23 @@ public class WatchedMovieController {
     WatchedMovieService watchedMovieService;
 
     @PostMapping("/set")
-    public void setMovieWatched(@RequestParam("id") Long id){
+    public void setOrDeleteMovieWatched(@RequestParam("idMovie") Long idMovie) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        watchedMovieService.setNewWatched(authentication.getName(),id);
-    }
-
-    @PostMapping("/del")
-    public void delMovieWatched(@RequestParam("id") Long id){
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        watchedMovieService.removeFromWatched(authentication.getName(),id);
+        watchedMovieService.setOrDeleteNewWatched(authentication.getName(), idMovie);
     }
 
     @GetMapping("/get")
-    public boolean getMovieWatched(@RequestParam("id") Long id){
+    public boolean getIsMovieWatchedByUser(@RequestParam("idMovie") Long idMovie) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return watchedMovieService.getFromWatched(
-                authentication.getName(),id);
+                authentication.getName(), idMovie);
     }
+
     @GetMapping("/all")
-    public List<Long> allMovieWatched(){
+    public List<Long> allUserMovieWatchedMovies() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return watchedMovieService.getAllUserWatched(
                 authentication.getName());
-    }
-
-    @GetMapping("/")
-    public String s(){
-        return "ok";
     }
 
 }

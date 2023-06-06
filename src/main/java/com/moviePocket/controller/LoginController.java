@@ -1,9 +1,9 @@
 package com.moviePocket.controller;
 
-import com.moviePocket.Service.UserService;
 import com.moviePocket.controller.dto.UserRegistrationDto;
-import com.moviePocket.entities.User;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.moviePocket.entities.user.User;
+import com.moviePocket.service.UserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -13,16 +13,39 @@ import javax.mail.MessagingException;
 import javax.validation.Valid;
 
 @Controller
+@RequiredArgsConstructor
 public class LoginController {
+
+    private final UserService userService;
+
+//    private final AuthenticationManager authenticationManager;
+
+    /*@PostMapping("/login")
+    public String login(@RequestParam("username") String email,
+                                   @RequestParam("password") String password, Model model) {
+        try {
+            // create an authentication token using the provided email and password
+            Authentication authenticationToken = new UsernamePasswordAuthenticationToken(email, password);
+
+            // authenticate the user
+            Authentication authentication = authenticationManager.authenticate(authenticationToken);
+
+            // set the authentication in the security context
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+
+            // redirect to the default success URL
+            return "redirect:/user/";
+        } catch (AuthenticationException e) {
+            // add an error message to the model if authentication fails
+            model.addAttribute("error", true);
+            return "login";
+        }
+    }*/
 
     @RequestMapping("/login")
     public String loginForm() {
         return "login";
     }
-    @Autowired
-    private UserService userService;
-
-
 
     @GetMapping("/registration")
     public String registrationForm(Model model) {
