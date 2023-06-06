@@ -1,0 +1,51 @@
+package com.moviePocket.service.impl.movie.rating;
+
+import com.moviePocket.entities.movie.rating.FavoriteMovie;
+import com.moviePocket.repository.movie.rating.FavoriteMovieRepository;
+import com.moviePocket.repository.user.UserRepository;
+import com.moviePocket.service.movie.rating.FavoriteMovieService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
+
+@Service
+@RequiredArgsConstructor
+public class FavoriteMovieServiceImpl implements FavoriteMovieService {
+
+    private final FavoriteMovieRepository favoriteMoviesRepository;
+
+    private final UserRepository userRepository;
+
+    public void setOrDeleteNewFavoriteMovies(String email, Long idMovie) {
+        FavoriteMovie favoriteMovie = favoriteMoviesRepository.findByUserAndIdMovie(
+                userRepository.findByEmail(email), idMovie);
+        if (favoriteMovie == null) {
+            favoriteMoviesRepository.save(new FavoriteMovie(userRepository.findByEmail(email), idMovie));
+        } else { // if user already marked movie as fav, it will be deleted
+            favoriteMoviesRepository.delete(favoriteMovie);
+        }
+    }
+
+    public boolean getFromFavoriteMovies(String email, Long idMovie) {
+        FavoriteMovie favoriteMovie = favoriteMoviesRepository.findByUserAndIdMovie(
+                userRepository.findByEmail(email), idMovie);
+        return favoriteMovie != null;
+    }
+
+    public List<Long> getAllUserFavoriteMovies(String email) {
+        List<FavoriteMovie> favoriteMoviesList = favoriteMoviesRepository.findAllByUser(
+                userRepository.findByEmail(email));
+        List<Long> listIdMovie = new ArrayList<>();
+        for (FavoriteMovie favoriteMovies : favoriteMoviesList) {
+            listIdMovie.add(favoriteMovies.getIdMovie());
+        }
+        return listIdMovie;
+    }
+
+    public int getAllCountByIdMovie(Long idMovie) {
+        return favoriteMoviesRepository.getAllCountByIdMovie(idMovie);
+    }
+
+}

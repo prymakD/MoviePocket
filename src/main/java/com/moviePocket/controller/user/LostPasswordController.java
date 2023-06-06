@@ -1,11 +1,10 @@
 package com.moviePocket.controller.user;
 
-import com.moviePocket.Service.UserService;
 import com.moviePocket.security.validation.ValidPassword;
+import com.moviePocket.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,7 +14,8 @@ import javax.mail.MessagingException;
 
 @Controller
 @RequestMapping("/lostpassword")
-@Validated
+//@Validated
+//TODO password validation for lost password
 public class LostPasswordController {
 
     @Autowired

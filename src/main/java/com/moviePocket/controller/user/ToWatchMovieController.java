@@ -1,41 +1,35 @@
 package com.moviePocket.controller.user;
 
-import com.moviePocket.Service.ToWatchMovieService;
+import com.moviePocket.service.movie.rating.ToWatchMovieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Controller
+@RestController
 @RequestMapping("/user/towatch")
 public class ToWatchMovieController {
 
     @Autowired
     ToWatchMovieService toWatchMovieService;
+
     @PostMapping("/set")
-    public void setMovieToWatch(@RequestParam("id") Long id){
+    public void setOrDeleteMovieToWatch(@RequestParam("id") Long id) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        toWatchMovieService.setNewToWatch(authentication.getName(),id);
+        toWatchMovieService.setOrDeleteToWatch(authentication.getName(), id);
     }
-    @PostMapping("/del")
-    public void delMovieToWatch(@RequestParam("id") Long id){
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        toWatchMovieService.removeFromToWatch(authentication.getName(),id);
-    }
+
     @GetMapping("/get")
-    public boolean getMovieToWatch(@RequestParam("id") Long id){
+    public boolean getIsUserMovieToWatch(@RequestParam("id") Long id) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return toWatchMovieService.getFromToWatch(
-                authentication.getName(),id);
+                authentication.getName(), id);
     }
+
     @GetMapping("/all")
-    public List<Long> allMovieToWatch(){
+    public List<Long> allUserMovieToWatchMovies() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return toWatchMovieService.getAllUserToWatch(
                 authentication.getName());
