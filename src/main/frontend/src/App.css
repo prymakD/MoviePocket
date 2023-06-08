@@ -3,6 +3,7 @@
 }
 .App{
   display: flex;
+  background-color: #28282A;
   flex-direction: column;
   min-height: 100vh;
 }
