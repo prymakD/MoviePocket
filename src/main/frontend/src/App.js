@@ -21,6 +21,6 @@ function App() {
                 </Route>
             </Routes>
         </div>
-    );gi
+    );
 }
 export default App;
