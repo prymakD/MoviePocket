@@ -23,7 +23,10 @@ const RegistrationPage = () => {
         event.preventDefault();
 
         try {
-            const response = await axios.get('http://localhost:8080/user/f', {
+            const response = await axios.post('http://localhost:8080/registration', {
+                username: username,
+                email: email,
+                password: password,
             });
 
             console.log('Registration successful!', response.data);
@@ -34,11 +37,13 @@ const RegistrationPage = () => {
 
     return (
         <div className="registration-container">
-            <h1>Registration Page</h1>
+            <h1 className="head">CREATE ACCOUNT</h1>
             <form onSubmit={handleSubmit}>
                 <div className="form-group">
-                    <label htmlFor="username">Username:</label>
+                    <label htmlFor="username">Username</label>
+                    <br/>
                     <input
+                        className="registration-input"
                         type="text"
                         id="username"
                         value={username}
@@ -46,8 +51,10 @@ const RegistrationPage = () => {
                     />
                 </div>
                 <div className="form-group">
-                    <label htmlFor="email">Email:</label>
+                    <label htmlFor="email">Email</label>
+                    <br/>
                     <input
+                        className="registration-input"
                         type="email"
                         id="email"
                         value={email}
@@ -55,15 +62,17 @@ const RegistrationPage = () => {
                     />
                 </div>
                 <div className="form-group">
-                    <label htmlFor="password">Password:</label>
+                    <label htmlFor="password">Password</label>
+                    <br/>
                     <input
+                        className="registration-input"
                         type="password"
                         id="password"
                         value={password}
                         onChange={handlePasswordChange}
                     />
                 </div>
-                <button type="submit">Register</button>
+                <button type="submit">Join Us</button>
             </form>
         </div>
     );

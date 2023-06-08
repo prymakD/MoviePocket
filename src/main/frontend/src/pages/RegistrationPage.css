@@ -1,24 +1,25 @@
 .registration-container {
-    margin-left: 30%;
-    margin-right: 30%;
-    margin-top: 5%;
+    margin: 5% 40%;
     height: 500px;
     background-color: #596E79;
 }
 
 .head {
-    font-size: 26px;
+    font-size: 30px;
     margin-top: 3%;
-    margin-left: 5%;
     margin-bottom: 3%;
+    text-align: center;
     color: whitesmoke;
     font-family: 'Poppins', sans-serif;
 }
 
 form {
-    margin-left: 5%;
     display: flex;
     flex-direction: column;
+    align-items: center;
+}
+.form-group{
+    text-align: center;
 }
 
 label {
@@ -48,8 +49,8 @@ button {
     font-family: 'Poppins', sans-serif;
     color: whitesmoke;
     cursor: pointer;
-    margin-top: 5%;
-    width: 15%;
+    width: 25%;
+    margin-top: 20px;
 }
 
 button:hover {
