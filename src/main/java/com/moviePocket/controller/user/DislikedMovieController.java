@@ -2,6 +2,8 @@ package com.moviePocket.controller.user;
 
 import com.moviePocket.service.movie.rating.DislikedMovieService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
@@ -16,23 +18,31 @@ public class DislikedMovieController {
     DislikedMovieService dislikedMovieService;
 
     @PostMapping("/set")
-    public void setOrDeleteMovieWatched(@RequestParam("idMovie") Long idMovie) {
+    public ResponseEntity<?> setOrDeleteMovieWatched(@RequestParam("idMovie") Long idMovie) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication.getName().equals("anonymousUser")) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+        System.out.println(authentication.getName());
         dislikedMovieService.setOrDeleteDislikedMovie(authentication.getName(), idMovie);
+        return ResponseEntity.ok().build();
     }
 
     @GetMapping("/get")
-    public boolean getIsUserDislikedMovie(@RequestParam("idMovie") Long idMovie) {
+    public ResponseEntity<?> getIsUserDislikedMovie(@RequestParam("idMovie") Long idMovie) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        return dislikedMovieService.getFromDislikedMovie(
-                authentication.getName(), idMovie);
+        boolean isDisliked = dislikedMovieService.getFromDislikedMovie(authentication.getName(), idMovie);
+        return ResponseEntity.ok(isDisliked);
     }
 
     @GetMapping("/all")
-    public List<Long> allUserDislikedMovies() {
+    public ResponseEntity<List<Long>> allUserDislikedMovies() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        return dislikedMovieService.getAllUserDislikedMovie(
-                authentication.getName());
+        if (authentication.getName().equals("anonymousUser")) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+        List<Long> dislikedMovies = dislikedMovieService.getAllUserDislikedMovie(authentication.getName());
+        return ResponseEntity.ok(dislikedMovies);
     }
 
 }

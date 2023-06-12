@@ -2,6 +2,8 @@ package com.moviePocket.controller.user;
 
 import com.moviePocket.service.movie.rating.WatchedMovieService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
@@ -16,23 +18,33 @@ public class WatchedMovieController {
     WatchedMovieService watchedMovieService;
 
     @PostMapping("/set")
-    public void setOrDeleteMovieWatched(@RequestParam("idMovie") Long idMovie) {
+    public ResponseEntity<?> setOrDeleteMovieWatched(@RequestParam("idMovie") Long idMovie) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication.getName().equals("anonymousUser")) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
         watchedMovieService.setOrDeleteNewWatched(authentication.getName(), idMovie);
+        return ResponseEntity.ok().build();
     }
 
     @GetMapping("/get")
-    public boolean getIsMovieWatchedByUser(@RequestParam("idMovie") Long idMovie) {
+    public ResponseEntity<?> getIsMovieWatchedByUser(@RequestParam("idMovie") Long idMovie) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        return watchedMovieService.getFromWatched(
-                authentication.getName(), idMovie);
+        if (authentication.getName().equals("anonymousUser")) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+        boolean isWatched = watchedMovieService.getFromWatched(authentication.getName(), idMovie);
+        return ResponseEntity.ok(isWatched);
     }
 
     @GetMapping("/all")
-    public List<Long> allUserMovieWatchedMovies() {
+    public ResponseEntity<List<Long>> allUserMovieWatchedMovies() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        return watchedMovieService.getAllUserWatched(
-                authentication.getName());
+        if (authentication.getName().equals("anonymousUser")) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+        List<Long> watchedMovies = watchedMovieService.getAllUserWatched(authentication.getName());
+        return ResponseEntity.ok(watchedMovies);
     }
 
 }

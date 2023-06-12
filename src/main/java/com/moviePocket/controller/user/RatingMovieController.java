@@ -3,6 +3,8 @@ package com.moviePocket.controller.user;
 import com.moviePocket.entities.movie.rating.Rating;
 import com.moviePocket.service.movie.rating.RatingMovieService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -17,28 +19,46 @@ public class RatingMovieController {
 
     @Autowired
     RatingMovieService ratingMovieService;
+
     @PostMapping("/set")
-    public void setRatingMovie(@RequestParam("id") Long id,@RequestParam("rating") int rating){
+    public ResponseEntity<?> setRatingMovie(@RequestParam("id") Long id, @RequestParam("rating") int rating) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        ratingMovieService.setNewRatingMovie(
-                authentication.getName(),id,rating);
+        if (authentication.getName().equals("anonymousUser")) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+        ratingMovieService.setNewRatingMovie(authentication.getName(), id, rating);
+        return ResponseEntity.ok().build();
     }
+
     @PostMapping("/del")
-    public void delRatingMovie(@RequestParam("id") Long id){
+    public ResponseEntity<?> delRatingMovie(@RequestParam("id") Long id) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        ratingMovieService.removeFromRatingMovie(authentication.getName(),id);
+        if (authentication.getName().equals("anonymousUser")) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+        ratingMovieService.removeFromRatingMovie(authentication.getName(), id);
+        return ResponseEntity.ok().build();
     }
+
     @GetMapping("/get")
-    public int getRatingMovie(@RequestParam("id") Long id){
+    public ResponseEntity<?> getRatingMovie(@RequestParam("id") Long id) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        return ratingMovieService.getFromRatingMovie(
-                authentication.getName(),id);
+        if (authentication.getName().equals("anonymousUser")) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+        int rating = ratingMovieService.getFromRatingMovie(authentication.getName(), id);
+        return ResponseEntity.ok(rating);
     }
+
     @GetMapping("/all")
-    public List<Rating> allRatingMovie(){
+    public ResponseEntity<List<Rating>> allRatingMovie() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        return ratingMovieService.getAllUserRatingMovie(
-                authentication.getName());
+        if (authentication.getName().equals("anonymousUser")) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+        List<Rating> ratings = ratingMovieService.getAllUserRatingMovie(authentication.getName());
+        return ResponseEntity.ok(ratings);
     }
+
 
 }
