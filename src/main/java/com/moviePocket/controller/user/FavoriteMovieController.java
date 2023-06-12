@@ -30,6 +30,9 @@ public class FavoriteMovieController {
     @GetMapping("/get")
     public ResponseEntity<?> getIsUserFavoriteMovie(@RequestParam("idMovie") Long idMovie) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication.getName().equals("anonymousUser")) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
         boolean isFavorite = favoriteMoviesService.getFromFavoriteMovies(authentication.getName(), idMovie);
         return ResponseEntity.ok(isFavorite);
     }

@@ -31,6 +31,9 @@ public class DislikedMovieController {
     @GetMapping("/get")
     public ResponseEntity<?> getIsUserDislikedMovie(@RequestParam("idMovie") Long idMovie) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication.getName().equals("anonymousUser")) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
         boolean isDisliked = dislikedMovieService.getFromDislikedMovie(authentication.getName(), idMovie);
         return ResponseEntity.ok(isDisliked);
     }
