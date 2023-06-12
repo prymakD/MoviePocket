@@ -207,7 +207,7 @@ public class MovieListController {
         return new ResponseEntity<>(allByUsernameLists, HttpStatus.OK);
     }
 
-    @ApiOperation(value = "Get top 5 movie lists in the system", notes = "Returns a list of all movie lists")
+    @ApiOperation(value = "Get top 5 movie lists in the system", notes = "Returns top 5 lists by recieved likes")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Successfully retrieved all movie lists")
     })
