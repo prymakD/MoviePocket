@@ -1,6 +1,6 @@
 .film-info-container{
-    padding-left: 10%;
-    padding-right: 10%;
+    padding-left: 12%;
+    padding-right: 12%;
     color: whitesmoke;
     display: flex;
     flex-direction: column;
@@ -21,9 +21,9 @@
     right: 0;
     top: 0;
     bottom: 0;
-    background: linear-gradient(300deg, #000000 10.0%, rgba(0, 0, 0, 0) 40.0%),
-    linear-gradient(60deg, #000000 10.0%, rgba(0, 0, 0, 0) 40.0%),
-    linear-gradient(0deg, #000000 10.0%, rgba(0, 0, 0, 0) 40.0%);
+    background: linear-gradient(300deg, #000000 7.0%, rgba(0, 0, 0, 0) 40.0%),
+    linear-gradient(60deg, #000000 7.0%, rgba(0, 0, 0, 0) 40.0%),
+    linear-gradient(0deg, #000000 0%, rgba(0, 0, 0, 0) 40.0%);
     z-index: 1;
 }
 
@@ -38,8 +38,8 @@ h1{
 }
 
 .player-wrapper {
-    height: 300px;
-    width: 500px;
+    height: 50vh;
+    width: 90vh;
 }
 
 .react-player {
@@ -50,6 +50,6 @@ h1{
 
 .film-poster > img {
     display: flex;
-    height: 300px;
-    width: 200px;
+    height: 50vh;
+    width: 35vh;
 }

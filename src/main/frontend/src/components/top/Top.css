@@ -1,6 +1,7 @@
-.film-info-container {
-    padding-left: 10%;
-    padding-right: 10%;
+.main-container {
+    padding-left: 12%;
+    padding-right: 12%;
+    height: 100vh;
     color: whitesmoke;
     display: flex;
     flex-direction: column;
@@ -9,7 +10,7 @@
 .movie-card {
     display: flex;
     width: 100%;
-    height: 100vh;
+    height: 60vh;
     justify-content: center;
     background-size: cover;
     position: relative;
@@ -21,21 +22,20 @@
     position: absolute;
     width: 100%;
     height: 100%;
-    background: linear-gradient(300deg, #000000 7.0%, rgba(0, 0, 0, 0) 40.0%),
-    linear-gradient(60deg, #000000 7.0%, rgba(0, 0, 0, 0) 40.0%),
-    linear-gradient(0deg, #000000 7.0%, rgba(0, 0, 0, 0) 40.0%);
     background-size: cover;
-    filter: blur(10px);
     z-index: -1;
 }
 
 .movie-card::after {
     content: "";
     position: absolute;
-    width: 200%;
+    width: 100%;
     height: 100%;
+    background: linear-gradient(300deg, #000000 10.0%, rgba(0, 0, 0, 0) 40.0%),
+    linear-gradient(60deg, #000000 10.0%, rgba(0, 0, 0, 0) 40.0%),
+    linear-gradient(0deg, #000000 10.0%, rgba(0, 0, 0, 0) 40.0%);
     backdrop-filter: blur(20px);
-    z-index: 0;
+    z-index: -1;
 }
 
 .movie-detail{

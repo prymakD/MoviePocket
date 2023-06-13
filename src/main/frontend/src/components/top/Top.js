@@ -11,20 +11,23 @@ const Top = ({movies}) => {
                 {
                     movies.map((movie) =>{
                         return(
-                            <div key={movie.id} className='movie-card' style={{backgroundImage: `url(${path + movie.poster_path})`}}>
-                                <div className='movie-detail'>
-                                    <div className='movie-poster'>
-                                        <Link to={`/films/${movie.id}`}>
-                                            <img src={path+movie.poster_path} alt="Movie poster" />
-                                        </Link>
-                                    </div>
-                                    <div className='movie-title'>
-                                        <Link to={`/films/${movie.id}`}>
-                                            <h1>{movie.title}</h1>
-                                        </Link>
-                                    </div>
-                                    <div className='movie-description'>
-                                        <h4>{movie.overview}</h4>
+                            <div className='main-container'>
+                                <div key={movie.id} className='movie-card'
+                                     style={{backgroundImage: `url(${path + movie.poster_path})`}}>
+                                    <div className='movie-detail'>
+                                        <div className='movie-poster'>
+                                            <Link to={`/films/${movie.id}`}>
+                                                <img src={path + movie.poster_path} alt="Movie poster"/>
+                                            </Link>
+                                        </div>
+                                        <div className='movie-title'>
+                                            <Link to={`/films/${movie.id}`}>
+                                                <h1>{movie.title}</h1>
+                                            </Link>
+                                        </div>
+                                        <div className='movie-description'>
+                                            <h4>{movie.overview}</h4>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
