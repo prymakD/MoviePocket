@@ -41,7 +41,7 @@ public class UserController {
                 user.getUsername(),
                 user.getBio(),
                 user.getCreated(),
-                movieListService.getAllMyList(user.getEmail()),
+                movieListService.getAllMyList(user.getEmail()).getBody(),
                 movieReviewService.getAllByUser(user.getEmail()),
                 favoriteMovieService.getAllUserFavoriteMovies(user.getEmail()),
                 dislikedMovieService.getAllUserDislikedMovie(user.getEmail()),
