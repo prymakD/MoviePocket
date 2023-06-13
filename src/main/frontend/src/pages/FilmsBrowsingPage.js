@@ -1,4 +1,4 @@
-import {Link, useParams} from 'react-router-dom'
+import {Link} from 'react-router-dom'
 import {useEffect, useState} from "react";
 import axios from "axios";
 import './FilmsBrowsingPage.css'
@@ -37,11 +37,15 @@ const FilmsBrowsingPage = () => {
                 {movies.map(movie => (
                     <div className="film-card">
                         <Link to={`/films/${movie.id}`}>
-                            <img src={path+movie.poster_path}  alt="movie-poster"/>
+                            <div className='film-poster'>
+                                <img src={path + movie.poster_path} alt="movie-poster"/>
+                            </div>
                         </Link>
-                        <Link to={`/films/${movie.id}`}>
-                            <h2>{movie.title}</h2>
-                        </Link>
+                        <div className='film-title'>
+                            <Link to={`/films/${movie.id}`}>
+                                <h2>{movie.title}</h2>
+                            </Link>
+                        </div>
                         <div>{movie.overview}</div>
                     </div>
                 ))}

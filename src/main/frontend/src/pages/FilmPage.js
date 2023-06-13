@@ -1,8 +1,9 @@
-import { useParams } from 'react-router-dom'
+import {useParams} from 'react-router-dom'
 import {useEffect, useState} from "react";
 import axios from "axios";
 import ReactPlayer from 'react-player';
 import './FilmPage.css';
+
 const FilmPage = () => {
     const {id} = useParams()
 
@@ -35,19 +36,21 @@ const FilmPage = () => {
     const path = 'https://www.themoviedb.org/t/p/w220_and_h330_face';
     return (
         <div className='film-info-container'>
-            <div className='film-header' style={{backgroundImage: `url(${path + back})`}}></div>
-            <h1>{movie.title}</h1>
-            <div className="film-media-container">
-                <div className='film-poster'>
-                    <img src={path+movie.poster_path} alt="Movie poster" />
-                </div>
-                <div className="player-wrapper">
-                    <ReactPlayer
-                        url="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
-                        width="100%"
-                        height="100%"
-                        controls={true}
-                    />
+            <div>
+                <div className='film-header' style={{backgroundImage: `url(${path + back})`}}></div>
+                <h1>{movie.title}</h1>
+                <div className="film-media-container">
+                    <div className='film-poster'>
+                        <img src={path + movie.poster_path} alt="Movie poster"/>
+                    </div>
+                    <div className="player-wrapper">
+                        <ReactPlayer
+                            url="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+                            width="100%"
+                            height="100%"
+                            controls={true}
+                        />
+                    </div>
                 </div>
             </div>
         </div>
