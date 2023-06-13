@@ -8,7 +8,7 @@
 
 .film-header {
     background-size: cover;
-    height: 500px;
+    height: 60vh;
     position: relative;
     filter: blur(10px);
 }
