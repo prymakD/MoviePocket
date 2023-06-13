@@ -1,4 +1,4 @@
-package com.moviePocket.controller.user;
+package com.moviePocket.controller.movie.rating;
 
 import com.moviePocket.entities.movie.rating.Rating;
 import com.moviePocket.service.movie.rating.RatingMovieService;
@@ -7,6 +7,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
@@ -14,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/user/rating")
+@RequestMapping("/movie/rating")
 @Api(value = "Rating Movie Controller", tags = "Controller to rate movies, avr rating is double value")
 public class RatingMovieController {
 
@@ -28,11 +29,11 @@ public class RatingMovieController {
             @ApiResponse(code = 400, message = "Bad request"),
             @ApiResponse(code = 401, message = "User is not authentificated")
     })
-    public void setRatingMovie(
+    public ResponseEntity<Void> setRatingMovie(
             @RequestParam("MovieId") Long MovieId,
             @RequestParam("rating") int rating) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        ratingMovieService.setNewRatingMovie(authentication.getName(), MovieId, rating);
+        return ratingMovieService.setNewRatingMovie(authentication.getName(), MovieId, rating);
     }
 
     @PostMapping("/del")
@@ -42,9 +43,9 @@ public class RatingMovieController {
             @ApiResponse(code = 400, message = "Bad request"),
             @ApiResponse(code = 401, message = "User is not authentificated")
     })
-    public void delRatingMovie(@RequestParam("MovieId") Long MovieId) {
+    public ResponseEntity<Void> delRatingMovie(@RequestParam("MovieId") Long MovieId) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        ratingMovieService.removeFromRatingMovie(authentication.getName(), MovieId);
+        return ratingMovieService.removeFromRatingMovie(authentication.getName(), MovieId);
     }
 
     @GetMapping("/get")
@@ -54,7 +55,7 @@ public class RatingMovieController {
             @ApiResponse(code = 400, message = "Bad request"),
             @ApiResponse(code = 401, message = "User is not authentificated")
     })
-    public int getRatingMovie(@RequestParam("MovieId") Long MovieId) {
+    public ResponseEntity<Integer> getRatingMovie(@RequestParam("MovieId") Long MovieId) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return ratingMovieService.getFromRatingMovie(authentication.getName(), MovieId);
     }
@@ -66,8 +67,19 @@ public class RatingMovieController {
             @ApiResponse(code = 400, message = "Bad request"),
             @ApiResponse(code = 401, message = "User is not authentificated")
     })
-    public List<Rating> allRatingMovieByUser() {
+    public ResponseEntity<List<Rating>> allRatingMovieByUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return ratingMovieService.getAllUserRatingMovie(authentication.getName());
     }
+
+    @GetMapping("/rating")
+    public ResponseEntity<Double> getMovieRating(@RequestParam("id") Long id) {
+        return ratingMovieService.getAllMovieRating(id);
+    }
+
+    @GetMapping("/count/rating")
+    public ResponseEntity<Integer> getCountMovieRating(@RequestParam("id") Long id) {
+        return ratingMovieService.getAllCountByIdMovie(id);
+    }
+
 }

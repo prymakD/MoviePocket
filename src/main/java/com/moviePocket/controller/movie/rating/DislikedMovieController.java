@@ -1,4 +1,4 @@
-package com.moviePocket.controller.user;
+package com.moviePocket.controller.movie.rating;
 
 import com.moviePocket.service.movie.rating.DislikedMovieService;
 import io.swagger.annotations.Api;
@@ -6,6 +6,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
@@ -14,7 +15,7 @@ import java.util.List;
 
 @RestController
 @Api(value = "Disliked Movie Controller", tags = "Controller to dislike a movie")
-@RequestMapping("/user/dislikedMovie")
+@RequestMapping("/movie/dislike")
 public class DislikedMovieController {
 
     @Autowired
@@ -26,9 +27,9 @@ public class DislikedMovieController {
             @ApiResponse(code = 400, message = "Bad request")
     })
     @PostMapping("/set")
-    public void setOrDeleteMovieWatched(@RequestParam("idMovie") Long idMovie) {
+    public ResponseEntity<Void> setOrDeleteMovieWatched(@RequestParam("idMovie") Long idMovie) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        dislikedMovieService.setOrDeleteDislikedMovie(authentication.getName(), idMovie);
+        return dislikedMovieService.setOrDeleteDislikedMovie(authentication.getName(), idMovie);
     }
 
     @ApiOperation(value = "Check if a user has disliked a movie", notes = "returns boolean")
@@ -37,7 +38,7 @@ public class DislikedMovieController {
             @ApiResponse(code = 400, message = "Bad request")
     })
     @GetMapping("/get")
-    public boolean getIsUserDislikedMovie(@RequestParam("idMovie") Long idMovie) {
+    public ResponseEntity<Boolean> getIsUserDislikedMovie(@RequestParam("idMovie") Long idMovie) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return dislikedMovieService.getFromDislikedMovie(
                 authentication.getName(), idMovie);
@@ -49,10 +50,14 @@ public class DislikedMovieController {
             @ApiResponse(code = 400, message = "Bad request")
     })
     @GetMapping("/all")
-    public List<Long> allUserDislikedMovies() {
+    public ResponseEntity<List<Long>> allUserDislikedMovies() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return dislikedMovieService.getAllUserDislikedMovie(
                 authentication.getName());
     }
 
+    @GetMapping("/count/dislike")
+    public ResponseEntity<Integer> getAllCountDislikedByIdMovie(@RequestParam("id") Long id) {
+        return dislikedMovieService.getAllCountByIdMovie(id);
+    }
 }

@@ -1,10 +1,13 @@
 package com.moviePocket.service.impl.movie.rating;
 
 import com.moviePocket.entities.movie.rating.ToWatchMovie;
+import com.moviePocket.entities.user.User;
 import com.moviePocket.repository.movie.rating.ToWatchMovieRepository;
 import com.moviePocket.repository.user.UserRepository;
 import com.moviePocket.service.movie.rating.ToWatchMovieService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -18,32 +21,43 @@ public class ToWatchMovieServiceImpl implements ToWatchMovieService {
 
     private final UserRepository userRepository;
 
-    public void setOrDeleteToWatch(String email, Long idMovie) {
+    public ResponseEntity<Void> setOrDeleteToWatch(String email, Long idMovie) {
+        User user = userRepository.findByEmail(email);
+        if (user == null)
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         ToWatchMovie toWatchMovie = toWatchMovieRepository.findByUserAndIdMovie(
-                userRepository.findByEmail(email), idMovie);
+                user, idMovie);
         if (toWatchMovie == null) {
             toWatchMovieRepository.save(new ToWatchMovie(userRepository.findByEmail(email), idMovie));
         } else {
             toWatchMovieRepository.delete(toWatchMovie);
         }
-    }
-    public boolean getFromToWatch(String email, Long idMovie) {
-        ToWatchMovie toWatchMovies = toWatchMovieRepository.findByUserAndIdMovie(
-                userRepository.findByEmail(email), idMovie);
-        return toWatchMovies != null;
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    public List<Long> getAllUserToWatch(String email) {
+    public ResponseEntity<Boolean> getFromToWatch(String email, Long idMovie) {
+        User user = userRepository.findByEmail(email);
+        if (user == null)
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        ToWatchMovie toWatchMovies = toWatchMovieRepository.findByUserAndIdMovie(
+                user, idMovie);
+        return ResponseEntity.ok(toWatchMovies != null);
+    }
+
+    public ResponseEntity<List<Long>> getAllUserToWatch(String email) {
         List<ToWatchMovie> toWatchList = toWatchMovieRepository.findAllByUser(
                 userRepository.findByEmail(email));
         List<Long> listIdMovie = new ArrayList<>();
         for (ToWatchMovie toWatch : toWatchList) {
             listIdMovie.add(toWatch.getIdMovie());
         }
-        return listIdMovie;
+        if (listIdMovie.size() == 0)
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        return ResponseEntity.ok(listIdMovie);
     }
 
-    public int getAllCountByIdMovie(Long idMovie) {
-        return toWatchMovieRepository.getAllCountByIdMovie(idMovie);
+    public ResponseEntity<Integer> getAllCountByIdMovie(Long idMovie) {
+        int count = toWatchMovieRepository.getAllCountByIdMovie(idMovie);
+        return ResponseEntity.ok(count);
     }
 }
