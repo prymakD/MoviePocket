@@ -43,9 +43,9 @@ public class UserController {
                 user.getCreated(),
                 movieListService.getAllMyList(user.getEmail()).getBody(),
                 movieReviewService.getAllByUser(user.getEmail()),
-                favoriteMovieService.getAllUserFavoriteMovies(user.getEmail()),
-                dislikedMovieService.getAllUserDislikedMovie(user.getEmail()),
-                watchedMovieService.getAllUserWatched(user.getEmail())
+                favoriteMovieService.getAllUserFavoriteMovies(user.getEmail()).getBody(),
+                dislikedMovieService.getAllUserDislikedMovie(user.getEmail()).getBody(),
+                watchedMovieService.getAllUserWatched(user.getEmail()).getBody()
         );
         return new ResponseEntity<>(parsUserPage, HttpStatus.OK);
     }

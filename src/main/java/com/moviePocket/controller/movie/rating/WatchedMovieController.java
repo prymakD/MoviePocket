@@ -1,4 +1,4 @@
-package com.moviePocket.controller.user;
+package com.moviePocket.controller.movie.rating;
 
 import com.moviePocket.service.movie.rating.WatchedMovieService;
 import io.swagger.annotations.Api;
@@ -6,6 +6,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
@@ -13,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/user/watched")
+@RequestMapping("/movie/watched")
 @Api(value = "Watched Movie Controller")
 public class WatchedMovieController {
 
@@ -27,9 +28,9 @@ public class WatchedMovieController {
             @ApiResponse(code = 401, message = "Unauthorized"),
             @ApiResponse(code = 500, message = "Internal Server Error")
     })
-    public void setOrDeleteMovieWatched(@RequestParam("idMovie") Long idMovie) {
+    public ResponseEntity<Void> setOrDeleteMovieWatched(@RequestParam("idMovie") Long idMovie) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        watchedMovieService.setOrDeleteNewWatched(authentication.getName(), idMovie);
+        return watchedMovieService.setOrDeleteNewWatched(authentication.getName(), idMovie);
     }
 
     @GetMapping("/get")
@@ -39,7 +40,7 @@ public class WatchedMovieController {
             @ApiResponse(code = 401, message = "Unauthorized"),
             @ApiResponse(code = 500, message = "Internal Server Error")
     })
-    public boolean getIsMovieWatchedByUser(@RequestParam("idMovie") Long idMovie) {
+    public ResponseEntity<Boolean> getIsMovieWatchedByUser(@RequestParam("idMovie") Long idMovie) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return watchedMovieService.getFromWatched(
                 authentication.getName(), idMovie);
@@ -52,9 +53,14 @@ public class WatchedMovieController {
             @ApiResponse(code = 401, message = "Unauthorized"),
             @ApiResponse(code = 500, message = "Internal Server Error")
     })
-    public List<Long> allUserMovieWatchedMovies() {
+    public ResponseEntity<List<Long>> allUserMovieWatchedMovies() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return watchedMovieService.getAllUserWatched(
                 authentication.getName());
+    }
+
+    @GetMapping("/count/watched")
+    public ResponseEntity<Integer> getAllCountWatchedByIdMovie(@RequestParam("id") Long id) {
+        return watchedMovieService.getAllCountByIdMovie(id);
     }
 }

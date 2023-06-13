@@ -1,13 +1,16 @@
 package com.moviePocket.service.movie.rating;
 
+import org.springframework.http.ResponseEntity;
+
 import java.util.List;
 
 public interface FavoriteMovieService {
 
-    void setOrDeleteNewFavoriteMovies(String email, Long idMovie);
+    ResponseEntity<Void> setOrDeleteNewFavoriteMovies(String email, Long idMovie);
 
-    boolean getFromFavoriteMovies(String email, Long idMovie);
-    List<Long> getAllUserFavoriteMovies(String email);
+    ResponseEntity<Boolean> getFromFavoriteMovies(String email, Long idMovie);
 
-    int getAllCountByIdMovie(Long idMovie);
+    ResponseEntity<List<Long>> getAllUserFavoriteMovies(String email);
+
+    ResponseEntity<Integer> getAllCountByIdMovie(Long idMovie);
 }
