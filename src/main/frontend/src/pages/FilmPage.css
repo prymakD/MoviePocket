@@ -1,27 +1,18 @@
 .film-info-container{
-    padding-left: 15%;
-    padding-right: 15%;
+    padding-left: 10%;
+    padding-right: 10%;
     color: whitesmoke;
     display: flex;
     flex-direction: column;
 }
 
-.film-header{
+.film-header {
     background-size: cover;
-    height: 400px;
+    height: 500px;
     position: relative;
+    filter: blur(10px);
 }
 
-.film-header::before {
-    content: "";
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    height: 50px;
-    background: linear-gradient(to top, rgba(40, 40, 42, 1), rgba(40, 40, 42, 0));
-    z-index: 1;
-}
 
 .film-header::after {
     content: "";
@@ -30,7 +21,9 @@
     right: 0;
     top: 0;
     bottom: 0;
-    background: linear-gradient(to right, rgba(40, 40, 42, 1), rgba(40, 40, 42, 0), rgba(40, 40, 42, 0), rgba(40, 40, 42, 1));
+    background: linear-gradient(300deg, #000000 10.0%, rgba(0, 0, 0, 0) 40.0%),
+    linear-gradient(60deg, #000000 10.0%, rgba(0, 0, 0, 0) 40.0%),
+    linear-gradient(0deg, #000000 10.0%, rgba(0, 0, 0, 0) 40.0%);
     z-index: 1;
 }
 
@@ -39,14 +32,14 @@ h1{
     margin-bottom: 4%;
 }
 
-.film-media-container{
-    display:flex;
-    column-gap: 30px;
+.film-media-container {
+    display: flex;
+    column-gap: 50px;
 }
 
 .player-wrapper {
-    height: 400px;
-    width: 800px;
+    height: 300px;
+    width: 500px;
 }
 
 .react-player {
@@ -55,7 +48,8 @@ h1{
     left: 0;
 }
 
-.film-poster > img{
+.film-poster > img {
+    display: flex;
     height: 300px;
-    width: 250px;
+    width: 200px;
 }
