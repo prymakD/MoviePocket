@@ -1,10 +1,19 @@
-.movie-card{
+.film-info-container {
+    padding-left: 10%;
+    padding-right: 10%;
+    color: whitesmoke;
+    display: flex;
+    flex-direction: column;
+}
+
+.movie-card {
     display: flex;
     width: 100%;
-    height: 800px;
+    height: 100vh;
     justify-content: center;
     background-size: cover;
     position: relative;
+    z-index: 1;
 }
 
 .movie-card::before {
@@ -12,8 +21,21 @@
     position: absolute;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 1;
+    background: linear-gradient(300deg, #000000 7.0%, rgba(0, 0, 0, 0) 40.0%),
+    linear-gradient(60deg, #000000 7.0%, rgba(0, 0, 0, 0) 40.0%),
+    linear-gradient(0deg, #000000 7.0%, rgba(0, 0, 0, 0) 40.0%);
+    background-size: cover;
+    filter: blur(10px);
+    z-index: -1;
+}
+
+.movie-card::after {
+    content: "";
+    position: absolute;
+    width: 200%;
+    height: 100%;
+    backdrop-filter: blur(20px);
+    z-index: 0;
 }
 
 .movie-detail{
@@ -36,7 +58,7 @@
 }
 
 .movie-title a:hover {
-    color: #869BB3;
+    color: #000000;
 }
 
 .movie-description{

@@ -1,6 +1,6 @@
 .films-browser-container{
-    padding-left: 15%;
-    padding-right: 15%;
+    padding-left: 10%;
+    padding-right: 10%;
     color: whitesmoke;
 }
 
@@ -11,9 +11,9 @@
     flex-direction: column;
 }
 
-.film-card{
+.film-card {
     border-top: 1px solid #ccc;
-    padding-top: 20px;
+    padding-top: 25px;
     display: flex;
     position: relative;
     background-color: rgba(0, 0, 0, 0);
