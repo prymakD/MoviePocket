@@ -1,10 +1,8 @@
 package com.moviePocket.service.movie.list;
 
-import java.util.List;
+import org.springframework.http.ResponseEntity;
 
 public interface MovieInListService {
-    void addOrDelMovieFromList(String email, Long idList, Long idMovie);
-
-    List<Long> getAllMovieFromMovieList(Long idList);
+    ResponseEntity<Void> addOrDelMovieFromList(String email, Long idList, Long idMovie);
 
 }
