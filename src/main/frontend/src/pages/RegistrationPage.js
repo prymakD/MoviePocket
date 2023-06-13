@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import './RegistrationPage.css';
+import queryString from "query-string";
 
 const RegistrationPage = () => {
     const [username, setUsername] = useState('');
@@ -23,11 +24,12 @@ const RegistrationPage = () => {
         event.preventDefault();
 
         try {
-            const response = await axios.post('http://localhost:8080/registration', {
+            const params = {
                 username: username,
                 email: email,
                 password: password,
-            });
+            }
+            const response = await axios.post('http://localhost:8080/registration', queryString.stringify(params),{withCredentials: true});
 
             console.log('Registration successful!', response.data);
         } catch (error) {

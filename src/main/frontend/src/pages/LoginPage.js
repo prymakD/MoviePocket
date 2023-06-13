@@ -6,6 +6,7 @@ const LoginPage = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
+
     const handleEmailChange = (event) => {
         setEmail(event.target.value);
     };
@@ -14,6 +15,14 @@ const LoginPage = () => {
         setPassword(event.target.value);
     };
 
+    const handleLogout = async () => {
+        try {
+            const response = await axios.get('http://localhost:8080/user/bob');
+            console.log('Log out successful!', response.data);
+        } catch (error) {
+            console.error('Error occurred during logout:', error);
+        }
+    };
     const handleSubmit = async (event) => {
         event.preventDefault();
 
@@ -21,13 +30,14 @@ const LoginPage = () => {
             const response = await axios.post('http://localhost:8080/login', {
                 username: email,
                 password: password,
-            });
+            },{withCredentials: true});
 
             console.log('Login successful!', response.data);
+
             const authToken = response.headers['set-cookie'];
 
-            console.log(authToken);
-            document.cookie = authToken;
+            // Сохранение куки на клиенте
+            document.cookie = `authToken=${authToken.join(';')}`;
         } catch (error) {
             console.error('Error occurred during login:', error);
         }
@@ -60,6 +70,7 @@ const LoginPage = () => {
                     />
                 </div>
                 <button type="submit">Sign in</button>
+                <button onClick={handleLogout}>Logout</button>
             </form>
         </div>
     );
