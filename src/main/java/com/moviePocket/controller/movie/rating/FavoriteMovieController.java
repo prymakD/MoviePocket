@@ -1,6 +1,7 @@
 package com.moviePocket.controller.movie.rating;
 
 import com.moviePocket.service.movie.rating.FavoriteMovieService;
+import com.moviePocket.util.Utils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -16,6 +17,7 @@ import java.util.List;
 @RestController
 @Api(value = "Favorite Movie Controller", tags = "Controller for favorites movies list")
 @RequestMapping("/movies/favorite")
+@CrossOrigin(origins = Utils.CORS_HOST)
 public class FavoriteMovieController {
 
     @Autowired

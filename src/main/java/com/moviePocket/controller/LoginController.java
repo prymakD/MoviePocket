@@ -3,6 +3,7 @@ package com.moviePocket.controller;
 import com.moviePocket.controller.dto.UserRegistrationDto;
 import com.moviePocket.entities.user.User;
 import com.moviePocket.service.UserService;
+import com.moviePocket.util.Utils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.mail.MessagingException;
 import javax.validation.Valid;
 
+@CrossOrigin(origins = Utils.CORS_HOST)
 @Controller
 @RequiredArgsConstructor
 @Api(value = "Login and Registration Controller", description = "Controller for user login/registration")
