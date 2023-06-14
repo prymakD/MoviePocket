@@ -4,14 +4,14 @@
     color: whitesmoke;
 }
 
-.film-list{
+.films-browser-list{
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
     flex-direction: column;
 }
 
-.film-card {
+.film-browser-card {
     border-top: 1px solid #ccc;
     padding-top: 25px;
     display: flex;
@@ -19,18 +19,36 @@
     background-color: rgba(0, 0, 0, 0);
 }
 
-.film-poster {
-    height: 260px;
-    width: 200px;
+.watched {
+    height: 5vh;
+    width: 5vh;
 }
 
-.film-poster > img {
-    height: 260px;
-    width: 200px;
-}
-
-
-h2 {
+.film-browser-info {
+    display: flex;
+    flex-direction: column;
+    font-family: 'Poppins', sans-serif;
+    font-size: 18px;
     padding-left: 20px;
 }
+
+.film-browser-poster {
+    height: 36vh;
+    width: 24vh;
+}
+
+.film-browser-poster > img {
+    height: 30vh;
+    width: 20vh;
+}
+
+.film-browser-title a{
+    color: whitesmoke;
+    font-family: 'Poppins', sans-serif;
+}
+
+.film-browser-title a:hover {
+    color: #555555;
+}
+
 
