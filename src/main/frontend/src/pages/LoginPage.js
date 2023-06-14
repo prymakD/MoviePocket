@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import './LoginPage.css';
+import queryString from "query-string";
 
 const LoginPage = () => {
     const [email, setEmail] = useState('');
@@ -27,10 +28,13 @@ const LoginPage = () => {
         event.preventDefault();
 
         try {
-            const response = await axios.post('http://localhost:8080/login', {
+            const params = {
                 username: email,
                 password: password,
-            },{withCredentials: true});
+            }
+            const response = await axios.post('http://localhost:8080/login',
+                queryString.stringify(params),
+                {withCredentials: true});
 
             console.log('Login successful!', response.data);
 
