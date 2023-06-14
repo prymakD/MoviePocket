@@ -63,6 +63,7 @@ const FilmsBrowsingPage = () => {
             const params = {
                 idMovie: idMovie
             }
+
             const response = await axios.post(`http://localhost:8080/movies/watched/set`,
                                                 queryString.stringify(params),
                                               {withCredentials: true},
@@ -70,6 +71,25 @@ const FilmsBrowsingPage = () => {
             console.log(response.data)
         } catch (err) {
             console.log(err)
+        }
+    }
+
+    const getWatchedMovie = async (idMovie) => {
+        try {
+            const params = {
+                idMovie: idMovie
+            }
+            const config = {
+                params: params,
+                withCredentials: true
+            }
+            const response = await axios.get(
+                `http://localhost:8080/movies/watched/get`,
+                config
+            );
+            console.log(response.data);
+        } catch (err) {
+            console.log(err);
         }
     }
 
@@ -90,6 +110,7 @@ const FilmsBrowsingPage = () => {
 
     useEffect(() => {
         getMovies(currentPage);
+        getWatchedMovie(1);
     }, [currentPage]);
 
     const path = 'https://www.themoviedb.org/t/p/w220_and_h330_face';
