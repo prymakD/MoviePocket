@@ -4,6 +4,7 @@ package com.moviePocket.controller.movie;
 import com.moviePocket.entities.movie.review.ParsReview;
 import com.moviePocket.service.movie.raview.LikeMovieReviewService;
 import com.moviePocket.service.movie.raview.MovieReviewService;
+import com.moviePocket.util.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin(origins = Utils.CORS_HOST)
 @RestController
 @RequestMapping("/movies/review")
 @Controller
