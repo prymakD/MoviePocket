@@ -1,6 +1,7 @@
 package com.moviePocket.controller.movie.rating;
 
 import com.moviePocket.service.movie.rating.ToWatchMovieService;
+import com.moviePocket.util.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin(origins = Utils.CORS_HOST)
 @RestController
 @RequestMapping("/movies/towatch")
 public class ToWatchMovieController {
