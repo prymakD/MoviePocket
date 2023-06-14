@@ -6,6 +6,7 @@ import com.moviePocket.service.movie.list.CategoriesMovieListService;
 import com.moviePocket.service.movie.list.LikeListService;
 import com.moviePocket.service.movie.list.MovieInListService;
 import com.moviePocket.service.movie.list.MovieListService;
+import com.moviePocket.util.Utils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin(origins = Utils.CORS_HOST)
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/movies/list")
