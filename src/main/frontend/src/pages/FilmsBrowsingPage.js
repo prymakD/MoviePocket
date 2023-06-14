@@ -6,6 +6,8 @@ import queryString from "query-string";
 
 const FilmsBrowsingPage = () => {
     const [movies, setMovies] = useState([]);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(0);
 
     const options = {
         method: 'GET',
@@ -15,11 +17,21 @@ const FilmsBrowsingPage = () => {
         }
     };
 
-    const getMovies = async () => {
+    const getMovies = async (page) => {
         try {
-            const response = await axios.get(`https://api.themoviedb.org/3/movie/popular`, options);
-            console.log(response.data.results)
-            setMovies(response.data.results)
+            if (page > 6) {
+                setMovies([]);
+                setTotalPages(6);
+                return;
+            }
+
+            const response = await axios.get(
+                `https://api.themoviedb.org/3/movie/popular?page=${page}`,
+                options
+            );
+
+            setMovies(response.data.results);
+            setTotalPages(response.data.total_pages > 6 ? 6 : response.data.total_pages);
         } catch (err) {
             console.log(err);
         }
@@ -40,19 +52,31 @@ const FilmsBrowsingPage = () => {
     }
 
     useEffect(() => {
-        getMovies();
-    }, [])
+        getMovies(currentPage);
+    }, [currentPage]);
 
     const path = 'https://www.themoviedb.org/t/p/w220_and_h330_face';
 
+    const handlePreviousPage = () => {
+        if (currentPage > 1) {
+            setCurrentPage(currentPage - 1);
+        }
+    };
+
+    const handleNextPage = () => {
+        if (currentPage < totalPages) {
+            setCurrentPage(currentPage + 1);
+        }
+    };
+
     return (
-        <div className='films-browser-container'>
+        <div className="films-browser-container">
             <h1>Movie Browser</h1>
             <div className="films-browser-list">
                 {movies.map(movie => (
-                    <div className="film-browser-card">
+                    <div className="film-browser-card" key={movie.id}>
                         <Link to={`/films/${movie.id}`}>
-                            <div className='film-browser-poster'>
+                            <div className="film-browser-poster">
                                 <img src={path + movie.poster_path} alt="movie-poster"/>
                             </div>
                         </Link>
@@ -71,6 +95,27 @@ const FilmsBrowsingPage = () => {
                     </div>
                 ))}
             </div>
+            {totalPages > 1 && ( // Update the condition here
+                <div className="pagination">
+                    <button
+                        className="pagination-button"
+                        onClick={handlePreviousPage}
+                        disabled={currentPage === 1}
+                    >
+                        &lt;
+                    </button>
+                    <span className="pagination-info">
+                    Page {currentPage} of {totalPages}
+                </span>
+                    <button
+                        className="pagination-button"
+                        onClick={handleNextPage}
+                        disabled={currentPage === totalPages}
+                    >
+                        &gt;
+                    </button>
+                </div>
+            )}
         </div>
     )
 }
