@@ -9,12 +9,13 @@ import com.moviePocket.service.UserService;
 import com.moviePocket.util.TbConstants;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.webjars.NotFoundException;
 
 import javax.mail.MessagingException;
 import java.util.Arrays;
@@ -91,26 +92,20 @@ public class UserServiceImpl implements UserService {
             return false;
     }
 
-    @Override
-    public void setNewUsername(String email, String username) {
-        try {
-            User user = userRepository.findByEmail(email);
-            if (user != null && !userRepository.existsByUsername(username)) {
-                if (username.isEmpty()) {
-                    throw new MessagingException("Username cannot be empty");
-                }
-                user.setUsername(username);
-                userRepository.save(user);
-            } else {
-                throw new NotFoundException("User not found");
-            }
-        } catch (NotFoundException | MessagingException e) {
-            e.getStackTrace();
+    public ResponseEntity<Void> setNewUsername(String email, String username) {
+        User user = userRepository.findByEmail(email);
+        if (user == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } else if (userRepository.existsByUsername(username)) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        } else {
+            user.setUsername(username);
+            userRepository.save(user);
+            return new ResponseEntity<>(HttpStatus.OK);
         }
     }
 
-    @Override
-    public boolean setNewBio(String email, String bio) {
+    public ResponseEntity<Void> setNewBio(String email, String bio) {
         try {
             User user = userRepository.findByEmail(email);
             if (user != null) {
@@ -119,13 +114,12 @@ public class UserServiceImpl implements UserService {
                 }
                 user.setBio(bio);
                 userRepository.save(user);
-                return true;
+                return ResponseEntity.ok().build();
             } else {
-                throw new NotFoundException("User not found");
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
             }
-        } catch (NotFoundException | MessagingException e) {
-            e.getStackTrace();
-            return false;
+        } catch (MessagingException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
     }
 
@@ -167,16 +161,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean activateNewEmail(String token) {
+    public ResponseEntity<Void> activateNewEmail(String token) {
         User user = userRepository.findByNewEmailToken(token);
         if (user != null) {
             user.setEmail(user.getNewEmail());
             user.setNewEmail(null);
             user.setNewEmailToken(null);
             userRepository.save(user);
-            return true;
+            return ResponseEntity.status(HttpStatus.OK).build();
         }
-        return false;
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }
 
     @Override

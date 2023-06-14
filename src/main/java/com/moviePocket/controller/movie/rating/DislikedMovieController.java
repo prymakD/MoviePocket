@@ -1,7 +1,6 @@
 package com.moviePocket.controller.movie.rating;
 
 import com.moviePocket.service.movie.rating.DislikedMovieService;
-import com.moviePocket.util.Utils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -16,7 +15,6 @@ import java.util.List;
 
 @RestController
 @Api(value = "Disliked Movie Controller", tags = "Controller to dislike a movie")
-@CrossOrigin(origins = Utils.CORS_HOST)
 @RequestMapping("/movies/dislike")
 public class DislikedMovieController {
 
