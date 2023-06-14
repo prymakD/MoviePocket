@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/movie/rating")
+@RequestMapping("/movies/rating")
 @Api(value = "Rating Movie Controller", tags = "Controller to rate movies, avr rating is double value")
 public class RatingMovieController {
 

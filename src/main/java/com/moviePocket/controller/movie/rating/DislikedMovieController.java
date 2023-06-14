@@ -15,7 +15,7 @@ import java.util.List;
 
 @RestController
 @Api(value = "Disliked Movie Controller", tags = "Controller to dislike a movie")
-@RequestMapping("/movie/dislike")
+@RequestMapping("/movies/dislike")
 public class DislikedMovieController {
 
     @Autowired

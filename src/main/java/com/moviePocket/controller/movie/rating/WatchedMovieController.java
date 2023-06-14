@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/movie/watched")
+@RequestMapping("/movies/watched")
 @Api(value = "Watched Movie Controller")
 public class WatchedMovieController {
 
