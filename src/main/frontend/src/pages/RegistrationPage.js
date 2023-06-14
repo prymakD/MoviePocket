@@ -29,7 +29,7 @@ const RegistrationPage = () => {
                 email: email,
                 password: password,
             }
-            const response = await axios.post('http://localhost:8080/registration', queryString.stringify(params),{withCredentials: true});
+            const response = await axios.post('http://localhost:8080/registration', queryString.stringify(params));
 
             console.log('Registration successful!', response.data);
         } catch (error) {

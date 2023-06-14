@@ -26,11 +26,12 @@ const FilmsBrowsingPage = () => {
     }
     const postWatched = async(idMovie) => {
         try{
+            console.log(idMovie)
             const params = {
-                idMovie: idMovie
+                idMovie: parseInt(idMovie)
             }
             const response = await axios.post(`http://localhost:8080/movies/watched/set`,
-                                                    queryString.stringify(params),
+                                                queryString.stringify(params),
                                               {withCredentials: true})
             console.log(response.data)
         } catch (err) {
