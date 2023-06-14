@@ -6,6 +6,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -15,6 +16,7 @@ import javax.mail.MessagingException;
 
 
 @Controller
+@RestController
 @RequestMapping("/user/edit")
 @Api(value = "User edition controller", tags = "Bio, username, email or password edition")
 public class UserEditController {
@@ -22,16 +24,6 @@ public class UserEditController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("/")
-    public String editForm() {
-        return "user_edit";
-    }
-
-
-    @GetMapping("/delete")
-    public String deleteForm() {
-        return "delete";
-    }
 
     @ApiOperation(value = "Delete a user", notes = "User set status deleted and stays in db")
     @ApiResponses({
@@ -39,12 +31,9 @@ public class UserEditController {
             @ApiResponse(code = 400, message = "Bad request")
     })
     @PostMapping("/delete")
-    public String deleteUser(@RequestParam String password) {
+    public ResponseEntity<Void> deleteUser(@RequestParam String password) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (userService.deleteUser(authentication.getName(), password))
-            return "login";
-        else
-            return "delete";
+        return userService.deleteUser(authentication.getName(), password);
     }
 
 
@@ -60,17 +49,12 @@ public class UserEditController {
 
     })
     @PostMapping("/newpas")
-    public String newPasswordPostForm(
+    public ResponseEntity<Void> newPasswordPostForm(
             @RequestParam("passwordold") String passwordOld,
             @RequestParam("password0") String passwordNew0,
             @RequestParam("password1") String passwordNew1) {
-        if (passwordNew0.equals(passwordNew1) && !passwordOld.equals(passwordNew1)) {
-            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-            userService.setNewPassword(authentication.getName(), passwordOld, passwordNew0);
-            return "user_edit";
-        }
-
-        return "set_new_pas";
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        return userService.setNewPassword(authentication.getName(), passwordOld, passwordNew0, passwordNew1);
     }
 
     @PostMapping("/newemail")

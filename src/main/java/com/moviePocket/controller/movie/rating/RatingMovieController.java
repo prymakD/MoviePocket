@@ -2,7 +2,6 @@ package com.moviePocket.controller.movie.rating;
 
 import com.moviePocket.entities.movie.rating.Rating;
 import com.moviePocket.service.movie.rating.RatingMovieService;
-import com.moviePocket.util.Utils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@CrossOrigin(origins = Utils.CORS_HOST)
 @RestController
 @RequestMapping("/movies/rating")
 @Api(value = "Rating Movie Controller", tags = "Controller to rate movies, avr rating is double value")
