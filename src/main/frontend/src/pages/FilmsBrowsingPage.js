@@ -2,6 +2,7 @@ import {Link} from 'react-router-dom'
 import {useEffect, useState} from "react";
 import axios from "axios";
 import './FilmsBrowsingPage.css'
+import queryString from "query-string";
 
 const FilmsBrowsingPage = () => {
     const [movies, setMovies] = useState([]);
@@ -23,6 +24,19 @@ const FilmsBrowsingPage = () => {
             console.log(err);
         }
     }
+    const postWatched = async(idMovie) => {
+        try{
+            const params = {
+                idMovie: idMovie
+            }
+            const response = await axios.post(`http://localhost:8080/movie/watched/set`,
+                                                    queryString.stringify(params),
+                                              {withCredentials: true})
+            console.log(response.data)
+        } catch (err) {
+            console.log(err)
+        }
+    }
 
     useEffect(() => {
         getMovies();
@@ -33,20 +47,26 @@ const FilmsBrowsingPage = () => {
     return (
         <div className='films-browser-container'>
             <h1>Movie Browser</h1>
-            <div className="film-list">
+            <div className="films-browser-list">
                 {movies.map(movie => (
-                    <div className="film-card">
+                    <div className="film-browser-card">
                         <Link to={`/films/${movie.id}`}>
-                            <div className='film-poster'>
+                            <div className='film-browser-poster'>
                                 <img src={path + movie.poster_path} alt="movie-poster"/>
                             </div>
                         </Link>
-                        <div className='film-title'>
-                            <Link to={`/films/${movie.id}`}>
-                                <h2>{movie.title}</h2>
-                            </Link>
+                        <img src="https://raw.githubusercontent.com/prymakD/MoviePocket/1458e6c307d0ae5d381bd8607aa7758ccef1a575/src/main/frontend/src/images/eye.png"
+                             className="watched"
+                             alt="watched"
+                             onClick={() => postWatched(movie.id)}/>
+                        <div className='film-browser-info'>
+                            <div className='film-browser-title'>
+                                <Link to={`/films/${movie.id}`}>
+                                    <h2>{movie.title}</h2>
+                                </Link>
+                            </div>
+                            <div>{movie.overview}</div>
                         </div>
-                        <div>{movie.overview}</div>
                     </div>
                 ))}
             </div>
