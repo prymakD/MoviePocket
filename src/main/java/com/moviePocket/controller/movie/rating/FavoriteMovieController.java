@@ -15,7 +15,7 @@ import java.util.List;
 
 @RestController
 @Api(value = "Favorite Movie Controller", tags = "Controller for favorites movies list")
-@RequestMapping("/movie/favorite")
+@RequestMapping("/movies/favorite")
 public class FavoriteMovieController {
 
     @Autowired
