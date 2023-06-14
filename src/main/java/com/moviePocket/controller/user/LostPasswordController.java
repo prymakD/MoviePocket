@@ -2,7 +2,6 @@ package com.moviePocket.controller.user;
 
 import com.moviePocket.security.validation.ValidPassword;
 import com.moviePocket.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,7 +17,6 @@ import javax.mail.MessagingException;
 //TODO password validation for lost password
 public class LostPasswordController {
 
-    @Autowired
     private UserService userService;
 
     @GetMapping("")

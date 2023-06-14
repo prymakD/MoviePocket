@@ -1,7 +1,6 @@
 package com.moviePocket.controller.movie.rating;
 
 import com.moviePocket.service.movie.rating.DislikedMovieService;
-import com.moviePocket.util.Utils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -12,11 +11,11 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @RestController
 @Api(value = "Disliked Movie Controller", tags = "Controller to dislike a movie")
-@CrossOrigin(origins = Utils.CORS_HOST)
 @RequestMapping("/movies/dislike")
 public class DislikedMovieController {
 
@@ -29,8 +28,10 @@ public class DislikedMovieController {
             @ApiResponse(code = 400, message = "Bad request")
     })
     @PostMapping("/set")
-    public ResponseEntity<Void> setOrDeleteMovieWatched(@RequestParam("idMovie") Long idMovie) {
+    public ResponseEntity<Void> setOrDeleteMovieWatched(@RequestParam("idMovie") Long idMovie, HttpServletRequest request) {
+
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        System.out.println(authentication.getName());
         return dislikedMovieService.setOrDeleteDislikedMovie(authentication.getName(), idMovie);
     }
 

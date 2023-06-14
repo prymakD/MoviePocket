@@ -9,12 +9,13 @@ import com.moviePocket.service.UserService;
 import com.moviePocket.util.TbConstants;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.webjars.NotFoundException;
 
 import javax.mail.MessagingException;
 import java.util.Arrays;
@@ -54,63 +55,69 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean deleteUser(String email, String pas) {
+    public ResponseEntity<Void> deleteUser(String email, String pas) {
         User user = findUserByEmail(email);
-        if (user != null) {
-            if (passwordEncoder.matches(pas, user.getPassword())) {
-                user.setAccountActive(false);
-                user.setEmail(user.getEmail() + " not active");
-                user.setPassword("");
-                userRepository.save(user);
-                return true;
-            }
+        if (user == null)
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        else if (!passwordEncoder.matches(pas, user.getPassword()))
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        else {
+            user.setAccountActive(false);
+            user.setEmail(user.getEmail() + " not active");
+            user.setPassword("");
+            userRepository.save(user);
+            return new ResponseEntity<>(HttpStatus.OK);
         }
-        return false;
     }
 
     @Override
-    public boolean setNewLostPassword(String token, String pas) {
+    public ResponseEntity<Void> setNewLostPassword(String token, String pas) {
         User user = userRepository.findByTokenLostPassword(token);
-        if (user != null && user.getEmailVerification()) {
+        if (user == null)
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        else if (!user.getEmailVerification())
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        else if (!user.getTokenLostPassword().equals(token))
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        else {
             user.setPassword(passwordEncoder.encode(pas));
             user.setTokenLostPassword(null);
             userRepository.save(user);
-            return true;
-        } else
-            return false;
-    }
-
-    @Override
-    public boolean setNewPassword(String email, String passwordOld, String passwordNew) {
-        User user = userRepository.findByEmail(email);
-        if (user != null && user.getEmailVerification() && passwordEncoder.matches(passwordOld, user.getPassword())) {
-            user.setPassword(passwordEncoder.encode(passwordNew));
-            userRepository.save(user);
-            return true;
-        } else
-            return false;
-    }
-
-    @Override
-    public void setNewUsername(String email, String username) {
-        try {
-            User user = userRepository.findByEmail(email);
-            if (user != null && !userRepository.existsByUsername(username)) {
-                if (username.isEmpty()) {
-                    throw new MessagingException("Username cannot be empty");
-                }
-                user.setUsername(username);
-                userRepository.save(user);
-            } else {
-                throw new NotFoundException("User not found");
-            }
-        } catch (NotFoundException | MessagingException e) {
-            e.getStackTrace();
+            return new ResponseEntity<>(HttpStatus.OK);
         }
     }
 
-    @Override
-    public boolean setNewBio(String email, String bio) {
+    public ResponseEntity<Void> setNewPassword(String email, String passwordOld, String passwordNew0, String passwordNew1) {
+        User user = userRepository.findByEmail(email);
+        if (user == null)
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        else if (user.getEmailVerification())
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        else if (!passwordEncoder.matches(passwordOld, user.getPassword()))
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        else if (!passwordNew0.equals(passwordNew1))
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        else {
+            user.setPassword(passwordEncoder.encode(passwordNew0));
+            userRepository.save(user);
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
+    }
+
+    public ResponseEntity<Void> setNewUsername(String email, String username) {
+        User user = userRepository.findByEmail(email);
+        if (user == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } else if (userRepository.existsByUsername(username)) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        } else {
+            user.setUsername(username);
+            userRepository.save(user);
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
+    }
+
+    public ResponseEntity<Void> setNewBio(String email, String bio) {
         try {
             User user = userRepository.findByEmail(email);
             if (user != null) {
@@ -119,39 +126,39 @@ public class UserServiceImpl implements UserService {
                 }
                 user.setBio(bio);
                 userRepository.save(user);
-                return true;
+                return ResponseEntity.ok().build();
             } else {
-                throw new NotFoundException("User not found");
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
             }
-        } catch (NotFoundException | MessagingException e) {
-            e.getStackTrace();
-            return false;
+        } catch (MessagingException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
     }
 
-    @Override
-    public boolean setTokenPassword(String mail) throws MessagingException {
+    public ResponseEntity<Void> setTokenPassword(String mail) throws MessagingException {
         User user = userRepository.findByEmail(mail);
-        if (user != null && user.getEmailVerification()) {
+        if (user == null)
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        else if (user.getEmailVerification())
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        else {
             user.setTokenLostPassword(UUID.randomUUID().toString());
             userRepository.save(user);
-
             String username = user.getUsername();
             String link = "http://localhost:8080/lostpassword/reset?token=" + user.getTokenLostPassword();
             String massage = "You are just in the middle of having your new password. \n Please confirm your new email address.";
-
             emailSenderService.sendMailWithAttachment(user.getEmail(), buildEmail(username, massage, link), "Password Recovery");
-
-
-            return true;
+            return new ResponseEntity<>(HttpStatus.OK);
         }
-        return false;
     }
 
-    @Override
-    public boolean setTokenEmail(String oldEmail, String newEmail) throws MessagingException {
-        User user = userRepository.findByEmail(oldEmail);
-        if (user != null) {
+    public ResponseEntity<Void> setTokenEmail(String email, String newEmail) throws MessagingException {
+        User user = userRepository.findByEmail(email);
+        if (user == null)
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        else if (email.equals(newEmail))
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        else {
             user.setNewEmail(newEmail);
             user.setNewEmailToken(UUID.randomUUID().toString());
             userRepository.save(user);
@@ -161,22 +168,21 @@ public class UserServiceImpl implements UserService {
             String massage = "You are just in the middle of setting up your new email address. \n Please confirm your new email address.";
 
             emailSenderService.sendMailWithAttachment(user.getNewEmail(), buildEmail(username, massage, link), "New Mail Confirmation");
-            return true;
+            return new ResponseEntity<>(HttpStatus.OK);
         }
-        return false;
     }
 
     @Override
-    public boolean activateNewEmail(String token) {
+    public ResponseEntity<Void> activateNewEmail(String token) {
         User user = userRepository.findByNewEmailToken(token);
         if (user != null) {
             user.setEmail(user.getNewEmail());
             user.setNewEmail(null);
             user.setNewEmailToken(null);
             userRepository.save(user);
-            return true;
+            return ResponseEntity.status(HttpStatus.OK).build();
         }
-        return false;
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }
 
     @Override
