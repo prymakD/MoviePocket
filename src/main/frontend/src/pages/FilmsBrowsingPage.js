@@ -73,6 +73,21 @@ const FilmsBrowsingPage = () => {
         }
     }
 
+    const postLiked = async(idMovie) => {
+        try{
+            const params = {
+                idMovie: idMovie
+            }
+            const response = await axios.post(`http://localhost:8080/movies/favorite/set`,
+                queryString.stringify(params),
+                {withCredentials: true},
+            )
+            console.log(response.data)
+        } catch (err) {
+            console.log(err)
+        }
+    }
+
     useEffect(() => {
         getMovies(currentPage);
     }, [currentPage]);
@@ -111,7 +126,7 @@ const FilmsBrowsingPage = () => {
                                 <img src="https://raw.githubusercontent.com/prymakD/MoviePocket/1458e6c307d0ae5d381bd8607aa7758ccef1a575/src/main/frontend/src/images/likefalse.png"
                                      className="like"
                                      alt="like"
-                                     onClick={() => postWatched(movie.id)}/>
+                                     onClick={() => postLiked(movie.id)}/>
                             </div>
                         </div>
                         <div className='film-browser-info'>
