@@ -50,6 +50,7 @@
 }
 
 .watched:hover {
+    transform: scale(1.2);
     cursor: pointer;
 }
 
@@ -63,6 +64,7 @@
 }
 
 .like:hover {
+    transform: scale(1.2);
     cursor: pointer;
 }
 
@@ -79,7 +81,7 @@
 }
 
 .film-browser-title a:hover {
-    color: #555555;
+    color: #999999;
 }
 
 .pagination {
