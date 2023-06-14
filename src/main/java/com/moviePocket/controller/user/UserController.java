@@ -11,6 +11,8 @@ import com.moviePocket.service.movie.raview.MovieReviewService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,6 +30,13 @@ public class UserController {
     public final DislikedMovieService dislikedMovieService;
     public final WatchedMovieService watchedMovieService;
 
+    @GetMapping("/getAut")
+    public ResponseEntity<Void> checkAuthentication() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication.getName().equals("anonymousUser"))
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 
     @GetMapping("/{username}")
     public ResponseEntity<ParsUserPage> getUserByUsername(@PathVariable String username) {
