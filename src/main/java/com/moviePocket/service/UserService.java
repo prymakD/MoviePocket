@@ -16,15 +16,15 @@ public interface UserService extends UserDetailsService {
 
     boolean activateUser(String code);
 
-    boolean setTokenPassword(String mail) throws MessagingException;
+    ResponseEntity<Void> setTokenPassword(String mail) throws MessagingException;
 
-    boolean setNewLostPassword(String token,String pas);
+    ResponseEntity<Void> setNewLostPassword(String token, String pas);
 
-    boolean setNewPassword(String email, String passwordOld,String passwordNew);
+    ResponseEntity<Void> setNewPassword(String email, String passwordOld, String passwordNew0, String passwordNew1);
 
-    boolean deleteUser(String email, String pas);
+    ResponseEntity<Void> deleteUser(String email, String pas);
 
-    boolean setTokenEmail(String oldEmail, String newEmail) throws MessagingException;
+    ResponseEntity<Void> setTokenEmail(String oldEmail, String newEmail) throws MessagingException;
 
     ResponseEntity<Void> activateNewEmail(String token);
 

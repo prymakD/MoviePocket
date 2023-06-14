@@ -34,7 +34,7 @@ public class UserController {
         User user = userService.findUserByUsername(username);
 
         if (user == null) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
         ParsUserPage parsUserPage = new ParsUserPage(

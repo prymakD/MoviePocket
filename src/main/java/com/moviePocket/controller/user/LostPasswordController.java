@@ -17,7 +17,6 @@ import javax.mail.MessagingException;
 //TODO password validation for lost password
 public class LostPasswordController {
 
-    @Autowired
     private UserService userService;
 
     @GetMapping("")
