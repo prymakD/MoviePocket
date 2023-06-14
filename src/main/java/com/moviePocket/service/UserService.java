@@ -2,6 +2,7 @@ package com.moviePocket.service;
 
 import com.moviePocket.controller.dto.UserRegistrationDto;
 import com.moviePocket.entities.user.User;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 import javax.mail.MessagingException;
@@ -25,11 +26,11 @@ public interface UserService extends UserDetailsService {
 
     boolean setTokenEmail(String oldEmail, String newEmail) throws MessagingException;
 
-    boolean activateNewEmail(String token);
+    ResponseEntity<Void> activateNewEmail(String token);
 
-    void setNewUsername(String email, String username);
+    ResponseEntity<Void> setNewUsername(String email, String username);
 
-    boolean setNewBio(String email, String bio);
+    ResponseEntity<Void> setNewBio(String email, String bio);
 
     User findUserByUsername(String username);
 

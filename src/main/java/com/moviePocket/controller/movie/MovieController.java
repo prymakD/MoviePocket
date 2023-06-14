@@ -3,13 +3,14 @@ package com.moviePocket.controller.movie;
 import com.moviePocket.controller.dto.MovieDto;
 import com.moviePocket.service.impl.movie.MovieServiceImpl;
 import com.moviePocket.service.movie.rating.*;
-import com.moviePocket.util.Utils;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-@CrossOrigin(origins = Utils.CORS_HOST)
 @RestController
 @RequestMapping("/movies")
 @RequiredArgsConstructor
