@@ -8,6 +8,7 @@ const FilmsBrowsingPage = () => {
     const [movies, setMovies] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(0);
+    const [watchedCounts, setWatchedCounts] = useState({});
 
     const options = {
         method: 'GET',
@@ -36,15 +37,36 @@ const FilmsBrowsingPage = () => {
             console.log(err);
         }
     }
+
+    const getCountWatched = async(idMovie) => {
+        try{
+            const params = {
+                id: idMovie
+            }
+            const config = {
+                params: params,
+                withCredentials: true
+            }
+            const response = await axios.get(`http://localhost:8080/movies/watched/count/watched`, config)
+            console.log(response.data)
+            setWatchedCounts((prevCounts) => ({
+                ...prevCounts,
+                [idMovie]: response.data,
+            }));
+        } catch (err) {
+            console.log(err)
+        }
+    }
+
     const postWatched = async(idMovie) => {
         try{
-            console.log(idMovie)
             const params = {
-                idMovie: parseInt(idMovie)
+                idMovie: idMovie
             }
             const response = await axios.post(`http://localhost:8080/movies/watched/set`,
                                                 queryString.stringify(params),
-                                              {withCredentials: true})
+                                              {withCredentials: true},
+            )
             console.log(response.data)
         } catch (err) {
             console.log(err)
@@ -75,15 +97,23 @@ const FilmsBrowsingPage = () => {
             <div className="films-browser-list">
                 {movies.map(movie => (
                     <div className="film-browser-card" key={movie.id}>
-                        <Link to={`/films/${movie.id}`}>
-                            <div className="film-browser-poster">
-                                <img src={path + movie.poster_path} alt="movie-poster"/>
+                        <div className="film-browser-poster">
+                            <Link to={`/films/${movie.id}`}>
+                                <img src={path + movie.poster_path}
+                                     className="poster-card"
+                                     alt="movie-poster"/>
+                            </Link>
+                            <div className="film-poster-buttons">
+                                <img src="https://raw.githubusercontent.com/prymakD/MoviePocket/1458e6c307d0ae5d381bd8607aa7758ccef1a575/src/main/frontend/src/images/eye.png"
+                                     className="watched"
+                                     alt="watched"
+                                     onClick={() => postWatched(movie.id)}/>
+                                <img src="https://raw.githubusercontent.com/prymakD/MoviePocket/1458e6c307d0ae5d381bd8607aa7758ccef1a575/src/main/frontend/src/images/likefalse.png"
+                                     className="like"
+                                     alt="like"
+                                     onClick={() => postWatched(movie.id)}/>
                             </div>
-                        </Link>
-                        <img src="https://raw.githubusercontent.com/prymakD/MoviePocket/1458e6c307d0ae5d381bd8607aa7758ccef1a575/src/main/frontend/src/images/eye.png"
-                             className="watched"
-                             alt="watched"
-                             onClick={() => postWatched(movie.id)}/>
+                        </div>
                         <div className='film-browser-info'>
                             <div className='film-browser-title'>
                                 <Link to={`/films/${movie.id}`}>
