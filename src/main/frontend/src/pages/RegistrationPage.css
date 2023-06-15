@@ -54,6 +54,7 @@ label {
     border-radius: 4px;
     background-color: #869BB3;
 }
+
 .registration-input:focus{
     background-color: whitesmoke;
 }
