@@ -111,8 +111,7 @@ const LoginPage = () => {
                             onChange={handlePasswordChange}
                         />
                     </div>
-                    <button type="submit">Sign in</button>
-                    <button onClick={handleLogout}>Logout</button>
+                    <button className="button_sign_in" type="submit">Sign in</button>
                 </form>
             </div>
         </div>
