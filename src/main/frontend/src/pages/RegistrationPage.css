@@ -12,12 +12,10 @@
 }
 
 .registration-container {
-    margin: 50% 40%;
-    height: 500px;
-    width: 500px;
-    background-color: rgba(89, 110, 121, 0.9);
-    border-radius: 15px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    height: 60vh;
+    width: 42vh;
+    background-color: rgba(0, 0, 0, 0.8);
+    border-radius: 2vh;
 }
 
 .head {
@@ -52,7 +50,7 @@ label {
     margin-bottom: 10px;
     border: 1px solid whitesmoke;
     border-radius: 4px;
-    background-color: #869BB3;
+    background-color: rgba(0, 0, 0, 0.2);
 }
 
 .registration-input:focus{
@@ -73,3 +71,4 @@ button {
 button:hover {
     background-color: #45a049;
 }
+

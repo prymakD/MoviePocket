@@ -85,7 +85,7 @@ const LoginPage = () => {
             className="image-container"
             style={{backgroundImage: `url(${backgroundImage})`}}
         >
-            <div className="registration-container"
+            <div className="login-container"
             >
                 <h1 className="head">SIGN IN</h1>
                 <form onSubmit={handleSubmit}>

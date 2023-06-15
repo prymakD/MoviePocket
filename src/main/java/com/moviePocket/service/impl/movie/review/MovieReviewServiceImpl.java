@@ -84,7 +84,11 @@ public class MovieReviewServiceImpl implements MovieReviewService {
                 movieReview.getCreated(),
                 movieReview.getUpdated(),
                 movieReview.getId(),
-                movieReview.getId()
+                movieReview.getId(),
+                new int[]{
+                        likeMovieReviewRepository.countByMovieReviewAndLickOrDisIsTrue(movieReview),
+                        likeMovieReviewRepository.countByMovieReviewAndLickOrDisIsFalse(movieReview)
+                }
         ));
     }
 
@@ -98,8 +102,13 @@ public class MovieReviewServiceImpl implements MovieReviewService {
                     movieReview.getUser().getUsername(),
                     movieReview.getCreated(),
                     movieReview.getUpdated(),
-                    movieReview.getIdMovie(),
-                    movieReview.getId()));
+                    movieReview.getId(),
+                    movieReview.getId(),
+                    new int[]{
+                            likeMovieReviewRepository.countByMovieReviewAndLickOrDisIsTrue(movieReview),
+                            likeMovieReviewRepository.countByMovieReviewAndLickOrDisIsFalse(movieReview)
+                    }
+            ));
         }
         return reviewList;
     }
