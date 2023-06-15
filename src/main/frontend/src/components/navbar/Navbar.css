@@ -13,7 +13,7 @@
     align-items: center;
     justify-content: space-between;
     column-gap: 1vh;
-    row-gap: 5vh;
+    row-gap: 2px;
     flex-wrap: wrap;
 }
 .NavBrand {
