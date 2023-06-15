@@ -3,6 +3,7 @@ import {useEffect, useState} from 'react';
 import axios from 'axios';
 import ReactPlayer from 'react-player';
 import './FilmPage.css';
+import queryString from "query-string";
 
 const FilmPage = () => {
     const {id} = useParams();
@@ -10,6 +11,9 @@ const FilmPage = () => {
     const [movie, setMovie] = useState([]);
     const [back, setBack] = useState([]);
     const [trailerKey, setTrailerKey] = useState('');
+    const [title, setTitle] = useState('');
+    const [content, setContent] = useState('');
+    const [reviews, setReviews] = useState([]);
 
     const options = {
         method: 'GET',
@@ -59,9 +63,57 @@ const FilmPage = () => {
         }
     };
 
+    const handleTitleChange = (event) => {
+        setTitle(event.target.value);
+    };
+
+    const handleContentChange = (event) => {
+        setContent(event.target.value);
+    };
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        postReview(id);
+        getAllReview(id);
+    };
+
+    const getAllReview = async (idMovie) => {
+        try {
+            const options = {
+                withCredentials: true
+            }
+            const response = await axios.get(
+                `http://localhost:8080/movies/review/getallmovie?id=${idMovie}`,
+                options
+            );
+            console.log(response.data);
+            setReviews(response.data);
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
+    const postReview = async (idMovie) => {
+        try{
+            const params = {
+                content: content,
+                id: idMovie,
+                title: title
+            }
+            const response = await axios.post(`http://localhost:8080/movies/review/set`,
+                queryString.stringify(params),
+                {withCredentials: true},
+            )
+            console.log(response.data)
+        } catch (err) {
+            console.log(err)
+        }
+    };
+
     useEffect(() => {
         getMovie();
         getTrailer();
+        getAllReview(id);
     }, []);
 
     const path = 'https://www.themoviedb.org/t/p/w220_and_h330_face';
@@ -100,6 +152,37 @@ const FilmPage = () => {
                                 controls={true}
                             />
                         )}
+                    </div>
+                </div>
+                <div className="review-container">
+                    <h2>Leave a Review</h2>
+                    <form onSubmit={handleSubmit}>
+                        <input
+                            type="text"
+                            value={title}
+                            onChange={handleTitleChange}
+                            placeholder="Review Title"
+                            required
+                        />
+                        <textarea
+                            value={content}
+                            onChange={handleContentChange}
+                            placeholder="Write your review here"
+                            required
+                        ></textarea>
+                        <button type="submit">Submit Review</button>
+                    </form>
+                    <div className="review-list">
+                        <h2>All Reviews</h2>
+                        {reviews.map((review) => (
+                            <div key={review.id}>
+                                <p>
+                                    <strong>{review.username}</strong>
+                                </p>
+                                <h3>{review.title}</h3>
+                                <p>{review.content}</p>
+                            </div>
+                        ))}
                     </div>
                 </div>
             </div>
