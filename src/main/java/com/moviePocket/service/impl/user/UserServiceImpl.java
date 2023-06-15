@@ -71,7 +71,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public ResponseEntity<Void> setNewLostPassword(String token, String pas) {
+    public ResponseEntity<Void> setNewLostPassword(String token, String password1, String password2) {
         User user = userRepository.findByTokenLostPassword(token);
         if (user == null)
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
@@ -79,8 +79,10 @@ public class UserServiceImpl implements UserService {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         else if (!user.getTokenLostPassword().equals(token))
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        else if (password1.equals(password2))
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         else {
-            user.setPassword(passwordEncoder.encode(pas));
+            user.setPassword(passwordEncoder.encode(password1));
             user.setTokenLostPassword(null);
             userRepository.save(user);
             return new ResponseEntity<>(HttpStatus.OK);
@@ -155,23 +157,24 @@ public class UserServiceImpl implements UserService {
     }
 
     public ResponseEntity<Void> setTokenEmail(String email, String newEmail) throws MessagingException {
-        User user = userRepository.findByEmail(email);
-        if (user == null)
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-        else if (email.equals(newEmail))
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        else {
-            user.setNewEmail(newEmail);
-            user.setNewEmailToken(UUID.randomUUID().toString());
-            userRepository.save(user);
-
-            String username = user.getUsername();
-            String link = "http://localhost:8080/user/edit/newemail/" + user.getNewEmailToken();
-            String massage = "You are just in the middle of setting up your new email address. \n Please confirm your new email address.";
-
-            emailSenderService.sendMailWithAttachment(user.getNewEmail(), buildEmail(username, massage, link), "New Mail Confirmation");
-            return new ResponseEntity<>(HttpStatus.OK);
-        }
+        // User user = userRepository.findByEmail(email);
+//        if (user == null)
+//            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+//        else if (email.equals(newEmail))
+//            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+//        else {
+//            user.setNewEmail(newEmail);
+//            user.setNewEmailToken(UUID.randomUUID().toString());
+//            userRepository.save(user);
+//
+//            String username = user.getUsername();
+//            String link = "http://localhost:8080/user/edit/newemail/" + user.getNewEmailToken();
+//            String massage = "You are just in the middle of setting up your new email address. \n Please confirm your new email address.";
+//
+//            emailSenderService.sendMailWithAttachment(user.getNewEmail(), buildEmail(username, massage, link), "New Mail Confirmation");
+//            return new ResponseEntity<>(HttpStatus.OK);
+//        }
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @Override
