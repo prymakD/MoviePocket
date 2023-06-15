@@ -22,16 +22,12 @@
     z-index: -1;
 }
 
-.registration-container {
-    background-color: rgba(0, 0, 0, 0.8);
-}
 
 .button_sign_in {
     background-color: black;
     border-radius: 1vh;
     width: 18vh;
     height: 7vh;
-
 }
 
 .button_sign_in:active {
@@ -43,7 +39,11 @@
     background-color: #021750;
 }
 
-.registration-container {
-    width: 40vh;
+.login-container {
     height: 50vh;
+    width: 40vh;
+    background-color: rgba(0, 0, 0, 0.8);
+    border-radius: 3vh;
 }
+
+
