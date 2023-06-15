@@ -23,9 +23,13 @@ const FilmPage = () => {
     const getMovie = async () => {
         try {
             const responseMovieDetails = await axios.get(
-                `https://api.themoviedb.org/3/movie/${id}`, options);
+                `https://api.themoviedb.org/3/movie/${id}`,
+                options
+            );
             const responseMovieBack = await axios.get(
-                `https://api.themoviedb.org/3/movie/${id}/images`, options);
+                `https://api.themoviedb.org/3/movie/${id}/images`,
+                options
+            );
 
             setMovie(responseMovieDetails.data);
             setBack(responseMovieBack.data.backdrops[0].file_path);
@@ -37,7 +41,9 @@ const FilmPage = () => {
     const getTrailer = async () => {
         try {
             const responseVideos = await axios.get(
-                `https://api.themoviedb.org/3/movie/${id}/videos`, options);
+                `https://api.themoviedb.org/3/movie/${id}/videos`,
+                options
+            );
 
             if (responseVideos.data.results.length > 0) {
                 const trailer = responseVideos.data.results.find(
@@ -68,14 +74,26 @@ const FilmPage = () => {
                     className="film-header"
                     style={{backgroundImage: `url(${path + back})`}}
                 ></div>
-                <h1>{movie.title}</h1>
                 <div className="film-media-container">
                     <div className="film-poster">
                         <img src={path + movie.poster_path} alt="Movie poster"/>
                     </div>
+                    <div className="film-details">
+                        <h1>{movie.title}</h1>
+                        <p>Release Date: {movie.release_date}</p>
+                        <p>Runtime: {movie.runtime} minutes</p>
+                        {movie.genres && movie.genres.length > 0 && (
+                            <p>Genres: {movie.genres.map((genre) => genre.name).join(", ")}</p>
+                        )}
+                        <p>Revenue: {movie.revenue} $</p>
+                        <p>Overview: {movie.overview}</p>
+                    </div>
+                </div>
+                <div className="film-media-container">
                     <div className="player-wrapper">
                         {trailerKey && (
                             <ReactPlayer
+                                className="react-player"
                                 url={trailerUrl}
                                 width="100%"
                                 height="100%"
