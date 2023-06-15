@@ -16,12 +16,12 @@ const Top = ({movies}) => {
                                      style={{backgroundImage: `url(${path + movie.poster_path})`}}>
                                     <div className='movie-detail'>
                                         <div className='movie-poster'>
-                                            <Link to={`/films/${movie.id}`}>
+                                            <Link to={`/film/${movie.id}`}>
                                                 <img src={path + movie.poster_path} alt="Movie poster"/>
                                             </Link>
                                         </div>
                                         <div className='movie-title'>
-                                            <Link to={`/films/${movie.id}`}>
+                                            <Link to={`/film/${movie.id}`}>
                                                 <h1>{movie.title}</h1>
                                             </Link>
                                         </div>
