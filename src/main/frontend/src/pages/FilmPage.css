@@ -30,18 +30,17 @@
 
 .film-media-container {
     display: flex;
-    margin-top: 20px;
+    margin-top: 0vh;
 }
 
 .film-poster {
-    width: 25vh;
+    margin-top: 5vh;
+    width: 40vh;
     z-index: auto;
 }
 
 .film-details {
-    flex: 1;
-    margin-left: 0px;
-
+    margin-left: 18vh;
 }
 
 h1 {
