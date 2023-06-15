@@ -109,7 +109,7 @@ const RegistrationPage = () => {
                             onChange={handlePasswordChange}
                         />
                     </div>
-                    <button type="submit">Join Us</button>
+                    <button className="button_sign_in" type="submit">Join Us</button>
                 </form>
             </div>
         </div>
