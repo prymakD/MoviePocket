@@ -1,7 +1,23 @@
+.image-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 92vh;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    /* z-index: auto; */ /* Not necessary */
+    /* height: 950px; */ /* Remove fixed height */
+    /* filter: blur(8px); */ /* Remove blur filter */
+}
+
 .registration-container {
-    margin: 5% 40%;
+    margin: 50% 40%;
     height: 500px;
-    background-color: #596E79;
+    width: 500px;
+    background-color: rgba(89, 110, 121, 0.9);
+    border-radius: 15px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
 
 .head {
