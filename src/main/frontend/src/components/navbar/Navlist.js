@@ -13,7 +13,7 @@ const Navlist = () => {
             </div>
             <li className="NavListItem"><Link to="/login" className="NavListLink">SIGN IN</Link></li>
             <li className="NavListItem"><Link to="/registration" className="NavListLink">CREATE ACCOUNT</Link></li>
-            <li className="NavListItem"><Link to="/films" className="NavListLink">FILMS</Link></li>
+            <li className="NavListItem"><Link to="/films/1" className="NavListLink">FILMS</Link></li>
             <li className="NavListItem"><Link to="#" className="NavListLink">COMMUNITY</Link></li>
         </ul>
     )
