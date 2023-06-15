@@ -19,8 +19,8 @@ function App() {
                     <Route path='registration' element={<RegistrationPage/>}></Route>
                     <Route path='login' element={<LoginPage/>}></Route>
                     <Route path='settings' element={<SettingsPage/>}></Route>
-                    <Route path='films' element={<FilmsBrowsingPage/>}></Route>
-                    <Route path='films/:id' element={<FilmPage/>}></Route>
+                    <Route path='films/:currentPage' element={<FilmsBrowsingPage/>}></Route>
+                    <Route path='film/:id' element={<FilmPage/>}></Route>
                 </Route>
             </Routes>
         </div>
