@@ -46,7 +46,7 @@ public class UserServiceImpl implements UserService {
         userRepository.save(user);
 
         String username = user.getUsername();
-        String link = "http://localhost:8080/activate/" + user.getActivationCode();
+        String link = "http://localhost:3000/activate/" + user.getActivationCode();
         String massage = "Welcome to MoviePocket. We really hope that you will enjoy being a part of MoviePocket family \n" +
                 " We want to make sure it's really you. To do that please confirm your mail by clicking the link below.";
 
@@ -135,21 +135,23 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-    public ResponseEntity<Void> setTokenPassword(String mail) throws MessagingException {
+    @Override
+    public boolean setTokenPassword(String mail) throws MessagingException {
         User user = userRepository.findByEmail(mail);
-        if (user == null)
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        else if (user.getEmailVerification())
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-        else {
+        if (user != null && user.getEmailVerification()) {
             user.setTokenLostPassword(UUID.randomUUID().toString());
             userRepository.save(user);
+
             String username = user.getUsername();
             String link = "http://localhost:8080/lostpassword/reset?token=" + user.getTokenLostPassword();
             String massage = "You are just in the middle of having your new password. \n Please confirm your new email address.";
+
             emailSenderService.sendMailWithAttachment(user.getEmail(), buildEmail(username, massage, link), "Password Recovery");
-            return new ResponseEntity<>(HttpStatus.OK);
+
+
+            return true;
         }
+        return false;
     }
 
     public ResponseEntity<Void> setTokenEmail(String email, String newEmail) throws MessagingException {
