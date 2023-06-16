@@ -8,16 +8,16 @@ const WatchMovieButton = ({ idMovie, className }) => {
     const [isHovered, setIsHovered] = useState(false);
     const [isClicked, setIsClicked] = useState(false);
 
-    useEffect(() => {
-        const getWatchedMovieState = async () => {
-            try {
-                const response = await getWatchedMovie(idMovie);
-                setWatched(response);
-            } catch (error) {
-                console.log(error);
-            }
-        };
+    const getWatchedMovieState = async () => {
+        try {
+            const response = await getWatchedMovie(idMovie);
+            setWatched(response);
+        } catch (error) {
+            console.log(error);
+        }
+    };
 
+    useEffect(() => {
         getWatchedMovieState();
     }, [idMovie]);
 

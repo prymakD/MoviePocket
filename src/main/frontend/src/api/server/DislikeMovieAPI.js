@@ -2,15 +2,15 @@ import axios from "axios";
 import queryString from "query-string";
 
 
-// Set or delete a movie from the favorite list
-export const postFavoriteMovie = async (idMovie) => {
+// Set or delete a movie from the disliked list
+export const postDislikedMovie = async (idMovie) => {
     try {
         const params = {
             idMovie: idMovie
         };
 
         const response = await axios.post(
-            `http://localhost:8080/movies/favorite/set`,
+            `http://localhost:8080/movies/dislike/set`,
             queryString.stringify(params),
             { withCredentials: true },
         );
@@ -21,14 +21,14 @@ export const postFavoriteMovie = async (idMovie) => {
     }
 };
 
-// Check if a user has favorite a movie
-export const getFavoriteMovie = async (idMovie) => {
+// Check if a user has disliked a movie
+export const getDislikedMovie = async (idMovie) => {
     try {
         const options = {
             withCredentials: true
         }
         const response = await axios.get(
-            `http://localhost:8080/movies/favorite/get?idMovie=${idMovie}`,
+            `http://localhost:8080/movies/dislike/get?idMovie=${idMovie}`,
             options
         );
 
@@ -38,14 +38,14 @@ export const getFavoriteMovie = async (idMovie) => {
     }
 }
 
-// getAllCountFavoriteByIdMovie
-export const getFavoriteCountMovie = async (idMovie) => {
+// getAllCountDislikedByIdMovie
+export const getDislikedCountMovie = async (idMovie) => {
     try {
         const options = {
             withCredentials: true
         }
         const response = await axios.get(
-            `http://localhost:8080/movies/favorite/count/favorite?id=${idMovie}`,
+            `http://localhost:8080/movies/dislike/count/dislike?id=${idMovie}`,
             options
         );
 
@@ -55,14 +55,14 @@ export const getFavoriteCountMovie = async (idMovie) => {
     }
 }
 
-// Get all movies user's favorite list
-export const getAllFavoriteMovie = async () => {
+// Get all movies disliked by a user
+export const getAllDislikedMovie = async () => {
     try {
         const options = {
             withCredentials: true
         }
         const response = await axios.get(
-            `http://localhost:8080/movies/favorite/all`,
+            `http://localhost:8080/movies/dislike/all`,
             options
         );
 
