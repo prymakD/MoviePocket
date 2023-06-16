@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import axios from 'axios';
 import './LoginPage.css';
-import queryString from 'query-string';
+import {postLogin} from "../api/server/AuthenticationAPI";
 
 const LoginPage = () => {
     const [email, setEmail] = useState('');
@@ -29,26 +29,12 @@ const LoginPage = () => {
         event.preventDefault();
 
         try {
-            const params = {
-                username: email,
-                password: password,
-            };
-            const response = await axios.post(
-                'http://localhost:8080/login',
-                queryString.stringify(params),
-                {withCredentials: true}
-            );
-
-            console.log('Login successful!', response.data);
-
-            const authToken = response.headers['set-cookie'];
-
-            // Save cookie on the client
-            document.cookie = `authToken=${authToken.join(';')}`;
+            const response = await postLogin(email, password);
         } catch (error) {
-            console.error('Error occurred during login:', error);
+            console.log(error);
         }
     };
+
 
     const options = {
         headers: {
