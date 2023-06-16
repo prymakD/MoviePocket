@@ -39,6 +39,7 @@ const FilmPage = () => {
     const handleDelete = async (idReview) => {
         try {
             const response = await delReview(idReview);
+            getReviews();
         } catch (error) {
             console.log(error);
         }
@@ -96,16 +97,20 @@ const FilmPage = () => {
                     style={{backgroundImage: `url(${path + back})`}}
                 ></div>
                 <div className="film-media-container">
-                    <div className="film-poster">
-                        <img src={path + movie.poster_path} alt="Movie poster"/>
-                        <WatchMovieButton
-                            idMovie={movie.id}
-                            className={styles.watched}
-                        />
-                        <FavoriteMovieButton
-                            idMovie={movie.id}
-                            className={styles.favorite}
-                        />
+                    <div className="movie-like-contaner">
+                        <div className="film-poster">
+                            <img src={path + movie.poster_path} alt="Movie poster"/>
+                        </div>
+                        <div className="like-container">
+                            <WatchMovieButton
+                                idMovie={movie.id}
+                                className={styles.watched}
+                            />
+                            <FavoriteMovieButton
+                                idMovie={movie.id}
+                                className={styles.favorite}
+                            />
+                        </div>
                     </div>
                     <div className="film-details">
                         <h1>{movie.title}</h1>
@@ -118,19 +123,18 @@ const FilmPage = () => {
                         <p>Overview: {movie.overview}</p>
                     </div>
                 </div>
-                <div className="film-media-container">
-                    <div className="player-wrapper">
-                        {trailer && (
-                            <ReactPlayer
-                                className="react-player"
-                                url={trailer}
-                                width="100%"
-                                height="100%"
-                                controls={true}
-                            />
-                        )}
-                    </div>
+
+                <div className="player-wrapper">
+                    {trailer && (
+                        <ReactPlayer
+                            className="react-player"
+                            url={trailer}
+                            controls={true}
+                        />
+                    )}
                 </div>
+
+
                 <div className="review-container">
                     <h2>Leave a Review</h2>
                     <form onSubmit={handleSubmit}>

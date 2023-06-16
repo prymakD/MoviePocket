@@ -11,8 +11,7 @@
 .NavRow {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    column-gap: 1vh;
+    column-gap: 1px;
     row-gap: 2vh;
     flex-wrap: wrap;
 }
