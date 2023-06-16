@@ -6,7 +6,7 @@ import queryString from "query-string";
 export const delReview = async(idReview) => {
     try {
         const params = {
-            id: idReview
+            idReview: idReview
         }
 
         const response = await axios.post(
@@ -26,7 +26,7 @@ export const postReview = async (content, idMovie, title) => {
     try {
         const params = {
             content: content,
-            id: idMovie,
+            idMovie: idMovie,
             title: title
         }
 
@@ -108,7 +108,7 @@ export const getAllReview = async (idMovie) => {
         }
 
         const response = await axios.get(
-            `http://localhost:8080/movies/review/getallmovie?id=${idMovie}`,
+            `http://localhost:8080/movies/review/getAllByMovie?idMovie=${idMovie}`,
             options
         );
         return response.data;
