@@ -6,16 +6,16 @@ import { getFavoriteMovie, postFavoriteMovie } from '../../api/server/FavoriteMo
 const FavoriteMovieButton = ({ idMovie, className }) => {
     const [favorite, setFavorite] = useState(false);
 
-    useEffect(() => {
-        const getFavouriteMovieState = async () => {
-            try {
-                const response = await getFavoriteMovie(idMovie);
-                setFavorite(response);
-            } catch (error) {
-                console.log(error);
-            }
-        };
+    const getFavouriteMovieState = async () => {
+        try {
+            const response = await getFavoriteMovie(idMovie);
+            setFavorite(response);
+        } catch (error) {
+            console.log(error);
+        }
+    };
 
+    useEffect(() => {
         getFavouriteMovieState();
     }, [idMovie]);
 
@@ -47,7 +47,7 @@ const FavoriteMovieButton = ({ idMovie, className }) => {
 };
 
 FavoriteMovieButton.propTypes = {
-    idMovie: PropTypes.string.isRequired,
+    idMovie: PropTypes.number.isRequired,
     className: PropTypes.string,
 };
 

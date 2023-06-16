@@ -108,4 +108,24 @@ h1 {
     background-color: #0069d9;
 }
 
+.single-review {
+    margin-top: 3vh;
+    display: flex;
+    border-bottom: 1px solid gray;
+}
 
+.review-content {
+    margin-left: 2vh;
+}
+
+.user-profile {
+    width: 7vh;
+    height: 7vh;
+}
+
+.delete-review-button{
+    width: 25vh;
+    height: 13vh;
+    font-size: 14px;
+    margin-bottom: 3vh;
+}

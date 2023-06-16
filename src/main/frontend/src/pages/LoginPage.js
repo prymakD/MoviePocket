@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from 'react';
-import axios from 'axios';
 import './LoginPage.css';
 import {postLogin} from "../api/server/AuthenticationAPI";
 import {Link} from "react-router-dom";
+import {getRandomMovie} from "../api/tmdb/MovieAPI";
 
 const LoginPage = () => {
     const [email, setEmail] = useState('');
@@ -17,15 +17,6 @@ const LoginPage = () => {
         setPassword(event.target.value);
     };
 
-    const handleLogout = async () => {
-        try {
-            const response = await axios.get('http://localhost:8080/user/bob');
-            console.log('Log out successful!', response.data);
-        } catch (error) {
-            console.error('Error occurred during logout:', error);
-        }
-    };
-
     const handleSubmit = async (event) => {
         event.preventDefault();
 
@@ -36,34 +27,17 @@ const LoginPage = () => {
         }
     };
 
-
-    const options = {
-        headers: {
-            accept: 'application/json',
-            Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIxZGEzNWQ1OGZkMTI0OTdiMTExZTRkZDFjNGE0YzAwNCIsInN1YiI6IjY0NDUyZGMwNjUxZmNmMDYxNzliZmY5YiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.expCnsMxBP9wfZab438BOkfl0VPQJftRFG7WPkSRyD0'
+    const getRandomMovieImage = async () => {
+        try {
+            const response = await getRandomMovie();
+            setBackgroundImage(`https://image.tmdb.org/t/p/original${response.backdrop_path}`);
+        } catch (error) {
+            console.log(error);
         }
     };
 
     useEffect(() => {
-        const fetchRandomMovieImage = async () => {
-            try {
-                const response = await axios.get(
-                    'https://api.themoviedb.org/3/movie/popular',
-                    options
-                );
-
-                const randomIndex = Math.floor(
-                    Math.random() * response.data.results.length
-                );
-                const movie = response.data.results[randomIndex];
-
-                setBackgroundImage(`https://image.tmdb.org/t/p/original${movie.backdrop_path}`);
-            } catch (error) {
-                console.error('Error occurred while fetching movie image:', error);
-            }
-        };
-
-        fetchRandomMovieImage();
+        getRandomMovieImage();
     }, []);
 
 
