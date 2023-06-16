@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import axios from 'axios';
 import './LoginPage.css';
 import {postLogin} from "../api/server/AuthenticationAPI";
+import {Link} from "react-router-dom";
 
 const LoginPage = () => {
     const [email, setEmail] = useState('');
@@ -98,6 +99,9 @@ const LoginPage = () => {
                         />
                     </div>
                     <button className="button_sign_in" type="submit">Sign in</button>
+                    <Link to={`/forgotPassword`}>
+                        <button className="link-primary">Forgot password</button>
+                    </Link>
                 </form>
             </div>
         </div>
