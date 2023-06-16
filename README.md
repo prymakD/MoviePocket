@@ -12,9 +12,27 @@ The more percise description of the service you can find in Documentation/ secti
 
 Explore world of movies with MoviePocket and create your personal unforgettable experience collecting sharing movies between users.
 
-## Some examples of how it works
+## Short user manual
 
-## To start
+### Join MoviePocket by creating your account
+
+![Register](https://github.com/prymakD/MoviePocket/assets/54550596/c7252056-e857-4bd0-b290-8ff4b25476fd)
+
+### Explore the upcoming movies on the main page 
+
+![main_screen](https://github.com/prymakD/MoviePocket/assets/54550596/45864288-ad11-49d9-9b66-5b60c6b427c0)
+
+###  Leave a review and share what you think about particular movie with others
+
+![Review](https://github.com/prymakD/MoviePocket/assets/54550596/3f77fa8f-8bc8-4503-b9bb-0c3812b08718)
+
+### Mark movie as wathced or add it to your favourites list
+
+![Like_and_watched](https://github.com/prymakD/MoviePocket/assets/54550596/0b591513-dd3c-4106-857c-865410e18a82)
+
+
+
+## To start develop
 
 ### You will need on your machine installed:
 
