@@ -1,0 +1,27 @@
+.watched {
+    height: 5vh;
+    width: 5vh;
+}
+
+.watched:hover {
+    transform: scale(1.2);
+    cursor: pointer;
+}
+
+.watched-count {
+
+}
+
+.favorite {
+    height: 5vh;
+    width: 5vh;
+}
+
+.favorite:hover {
+    transform: scale(1.2);
+    cursor: pointer;
+}
+
+.favorite-count {
+
+}

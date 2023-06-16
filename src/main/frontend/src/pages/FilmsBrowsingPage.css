@@ -44,30 +44,6 @@
     padding-top: 5px;
 }
 
-.watched {
-    height: 5vh;
-    width: 5vh;
-}
-
-.watched:hover {
-    transform: scale(1.2);
-    cursor: pointer;
-}
-
-.watched-count {
-    color: whitesmoke;
-}
-
-.like {
-    height: 5vh;
-    width: 5vh;
-}
-
-.like:hover {
-    transform: scale(1.2);
-    cursor: pointer;
-}
-
 .film-browser-info {
     display: flex;
     flex-direction: column;
@@ -82,37 +58,6 @@
 
 .film-browser-title a:hover {
     color: #999999;
-}
-
-.pagination {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: 20px;
-}
-
-.pagination-button {
-    background-color: transparent;
-    border: none;
-    color: whitesmoke;
-    font-size: 18px;
-    margin: 0 10px;
-    cursor: pointer;
-}
-
-.pagination-button:focus {
-    outline: none;
-}
-
-.pagination-button:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-}
-
-.pagination-info {
-    font-size: 16px;
-    color: whitesmoke;
-    margin: 0 10px;
 }
 
 
