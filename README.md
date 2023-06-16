@@ -1,9 +1,18 @@
+<img src="src/main/frontend/src/images/logo.png"  width="200" height="300" />
+
+
 # MoviePocket
 
 ## Getting started
 
 MoviePocket is movie management system that will help you to orginize your movie collection and share it with other
 movie lovers.
+The more percise description of the service you can find in Documentation/ section:)
+
+
+Explore world of movies with MoviePocket and create your personal unforgettable experience collecting sharing movies between users.
+
+## Some examples of how it works
 
 ## To start
 
