@@ -1,13 +1,14 @@
 import React, {useEffect, useState} from 'react';
 import './LoginPage.css';
 import {postLogin} from "../api/server/AuthenticationAPI";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {getRandomMovie} from "../api/tmdb/MovieAPI";
 
 const LoginPage = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [backgroundImage, setBackgroundImage] = useState('');
+    const navigate = useNavigate()
 
     const handleEmailChange = (event) => {
         setEmail(event.target.value);
@@ -22,6 +23,12 @@ const LoginPage = () => {
 
         try {
             const response = await postLogin(email, password);
+            const authToken = response.headers['set-cookie'];
+
+            // Save cookie on the client
+            document.cookie = `authToken=${authToken.join(';')}`;
+            navigate('/');
+            window.location.reload();
         } catch (error) {
             console.log(error);
         }
@@ -37,7 +44,7 @@ const LoginPage = () => {
     };
 
     useEffect(() => {
-        getRandomMovieImage();
+        getRandomMovieImage().then();
     }, []);
 
 

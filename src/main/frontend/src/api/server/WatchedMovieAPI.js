@@ -27,7 +27,7 @@ export const getWatchedMovie = async (idMovie) => {
             withCredentials: true
         }
         const response = await axios.get(
-            `http://localhost:8080/movies/watched/get?idMovie=${idMovie}`,
+                `http://localhost:8080/movies/watched/get?idMovie=${idMovie}`,
             options
         );
 

@@ -67,7 +67,7 @@ export const postReviewUpdate = async (content, idReview, title) => {
     try {
         const params = {
             content: content,
-            id: idReview,
+            idReview: idReview,
             title: title
         }
 
@@ -91,7 +91,7 @@ export const getReviewById = async (idReview) => {
         }
 
         const response = await axios.get(
-            `http://localhost:8080/movies/review/get?id=${idReview}`,
+            `http://localhost:8080/movies/review/get?idReview=${idReview}`,
             options
         );
         return response.data;
@@ -125,7 +125,7 @@ export const getAllReviewByUser = async () => {
         }
 
         const response = await axios.get(
-            `http://localhost:8080/movies/review/getalluser`,
+            `http://localhost:8080/movies/review/getAllMy`,
             options
         );
         return response.data;

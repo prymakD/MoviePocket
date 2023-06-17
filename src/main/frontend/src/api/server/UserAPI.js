@@ -20,17 +20,19 @@ export const getUser = async (username) => {
 
 // checkAuthentication
 export const checkAuth = async () => {
+
+    const options = {
+        withCredentials: true
+    }
+
     try {
-        const options = {
-            withCredentials: true
-        }
         const response = await axios.get(
             `http://localhost:8080/user/getAut`,
             options
         );
-
-        return response.data;
+        return true;
     } catch (err) {
-        console.log(err);
+        return false;
     }
+
 }
