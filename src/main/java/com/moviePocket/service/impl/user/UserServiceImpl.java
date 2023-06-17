@@ -63,8 +63,10 @@ public class UserServiceImpl implements UserService {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         else {
             user.setAccountActive(false);
-            user.setEmail(user.getEmail() + " not active");
+            user.setEmailVerification(false);
+            user.setEmail(user.getEmail() + "not active" + user.getId());
             user.setPassword("");
+            user.setUsername(String.valueOf(user.getId()));
             userRepository.save(user);
             return new ResponseEntity<>(HttpStatus.OK);
         }
@@ -241,7 +243,7 @@ public class UserServiceImpl implements UserService {
     }
 
     public User findUserByUsername(String username) {
-        return userRepository.findAllByUsername(username);
+        return userRepository.findByUsernameAndAccountActive(username, true);
     }
 
 
