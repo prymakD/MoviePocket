@@ -58,28 +58,23 @@ const FilmsBrowsingPage = () => {
                     <div className="film-browser-card" key={movie.id}>
                         <div className="film-browser-poster">
                             <Link to={`/film/${movie.id}`}>
-                                <img src={path + movie.poster_path}
-                                     className="poster-card"
-                                     alt="movie-poster"/>
+                                <img src={path + movie.poster_path} className="poster-card" alt="movie-poster"/>
                             </Link>
                             <div className="film-poster-buttons">
-                                <WatchMovieButton
-                                    idMovie={movie.id}
-                                    className={styles.watched}
-                                />
-                                <FavoriteMovieButton
-                                    idMovie={movie.id}
-                                    className={styles.favorite}
-                                />
+                                <WatchMovieButton idMovie={movie.id} className={styles.watched}/>
+                                <FavoriteMovieButton idMovie={movie.id} className={styles.favorite}/>
                             </div>
                         </div>
-                        <div className='film-browser-info'>
-                            <div className='film-browser-title'>
+                        <div className="film-browser-info">
+                            <div className="film-browser-title">
                                 <Link to={`/film/${movie.id}`}>
-                                    <h2>{movie.title}</h2>
+                                    <p style={{fontSize: '18px'}}>{movie.title}</p>
                                 </Link>
+                                <p style={{fontSize: '12px'}}>{movie.release_date.split('-')[0]}</p>
+                                {movie.genres && movie.genres.length > 0 && (
+                                    <p style={{fontSize: '14px'}}>Genres: {movie.genres.map((genre) => genre.name).join(", ")}</p>
+                                )}
                             </div>
-                            <div>{movie.overview}</div>
                         </div>
                     </div>
                 ))}
@@ -91,6 +86,7 @@ const FilmsBrowsingPage = () => {
                 onNextPage={handleNextPage}
             />
         </div>
+
     )
 }
 

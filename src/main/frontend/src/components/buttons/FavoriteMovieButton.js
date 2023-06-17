@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import PropTypes from 'prop-types';
 import styles from './FavoriteMovieButton.module.css';
-import { getFavoriteMovie, postFavoriteMovie } from '../../api/server/FavoriteMovieAPI';
+import {getFavoriteMovie, postFavoriteMovie} from '../../api/server/FavoriteMovieAPI';
 
 const FavoriteMovieButton = ({ idMovie, className }) => {
     const [favorite, setFavorite] = useState(false);
@@ -30,9 +30,9 @@ const FavoriteMovieButton = ({ idMovie, className }) => {
 
     const getFavoriteImage = () => {
         if (favorite) {
-            return 'https://raw.githubusercontent.com/prymakD/MoviePocket/47a2df3cfca6c558e3bbd9acc2eeb720923b4d85/src/main/frontend/src/images/liketrue.png';
+            return 'https://github.com/prymakD/MoviePocket/raw/220c79cf7b130a70dff2ad6423b52db5d99650b5/src/main/frontend/src/images/likeTrue.png';
         } else {
-            return 'https://raw.githubusercontent.com/prymakD/MoviePocket/47a2df3cfca6c558e3bbd9acc2eeb720923b4d85/src/main/frontend/src/images/likefalse.png';
+            return 'https://github.com/prymakD/MoviePocket/raw/220c79cf7b130a70dff2ad6423b52db5d99650b5/src/main/frontend/src/images/likeFalse.png';
         }
     };
 
