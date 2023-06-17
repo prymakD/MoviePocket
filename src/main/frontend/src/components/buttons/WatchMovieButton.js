@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import PropTypes from 'prop-types';
 import styles from './WatchMovieButton.module.css';
-import { getWatchedMovie, postWatchedMovie } from "../../api/server/WatchedMovieAPI";
+import {getWatchedMovie, postWatchedMovie} from "../../api/server/WatchedMovieAPI";
 
 const WatchMovieButton = ({ idMovie, className }) => {
     const [watched, setWatched] = useState(false);
@@ -42,13 +42,13 @@ const WatchMovieButton = ({ idMovie, className }) => {
 
     const getWatchedImage = () => {
         if (isHovered && watched && !isClicked) {
-            return 'https://raw.githubusercontent.com/prymakD/MoviePocket/47a2df3cfca6c558e3bbd9acc2eeb720923b4d85/src/main/frontend/src/images/eye_red.png';
+            return 'https://raw.githubusercontent.com/prymakD/MoviePocket/949a92f2aa9d518691eab7f1cad71b60654de0e6/src/main/frontend/src/images/eyeRed.png';
         } else if (isHovered && watched && isClicked) {
-            return 'https://raw.githubusercontent.com/prymakD/MoviePocket/47a2df3cfca6c558e3bbd9acc2eeb720923b4d85/src/main/frontend/src/images/eye_green.png';
+            return 'https://raw.githubusercontent.com/prymakD/MoviePocket/949a92f2aa9d518691eab7f1cad71b60654de0e6/src/main/frontend/src/images/eyeGreen.png';
         } else if (watched) {
-            return 'https://raw.githubusercontent.com/prymakD/MoviePocket/47a2df3cfca6c558e3bbd9acc2eeb720923b4d85/src/main/frontend/src/images/eye_green.png';
+            return 'https://raw.githubusercontent.com/prymakD/MoviePocket/949a92f2aa9d518691eab7f1cad71b60654de0e6/src/main/frontend/src/images/eyeGreen.png';
         }   else {
-            return 'https://raw.githubusercontent.com/prymakD/MoviePocket/47a2df3cfca6c558e3bbd9acc2eeb720923b4d85/src/main/frontend/src/images/eye.png';
+            return 'https://raw.githubusercontent.com/prymakD/MoviePocket/949a92f2aa9d518691eab7f1cad71b60654de0e6/src/main/frontend/src/images/eyeLogo.png';
         }
     };
 

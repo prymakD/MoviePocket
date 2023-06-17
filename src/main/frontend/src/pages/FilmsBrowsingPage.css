@@ -1,36 +1,37 @@
-.films-browser-container{
+.films-browser-container {
     padding-left: 12%;
     padding-right: 12%;
     color: whitesmoke;
 }
 
-.films-browser-list{
+.films-browser-list {
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
-    flex-direction: column;
+    flex-direction: row;
 }
 
 .film-browser-card {
-    border-top: 1px solid #ccc;
-    padding-top: 25px;
     display: flex;
+    align-items: flex-start;
     flex-direction: column;
-    background-color: rgba(0, 0, 0, 0);
 }
 
 .film-browser-poster {
     display: flex;
     flex-direction: column;
-    height: 36vh;
-    width: 24vh;
+    width: 25vh;
 }
 
 .poster-card {
     height: 30vh;
-    width: 20vh;
+    width: auto;
     border: 1px solid whitesmoke;
     transition: border-color 0.3s ease;
+}
+
+.film-browser-poster {
+    position: relative;
 }
 
 .poster-card:hover {
@@ -38,10 +39,17 @@
 }
 
 .film-poster-buttons {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    transform: translate(8vh, 1vh);
     display: flex;
-    justify-content: flex-start;
+    margin: auto; /* Add this line */
+    justify-content: center; /* Change to center */
+    align-items: center; /* Add this line */
     column-gap: 10px;
-    padding-top: 5px;
+    padding: 5px;
+    z-index: 2;
 }
 
 .film-browser-info {
@@ -51,13 +59,20 @@
     font-size: 18px;
 }
 
-.film-browser-title a{
+.film-browser-title {
     color: whitesmoke;
     font-family: 'Poppins', sans-serif;
+    max-width: 20vh; /* Задайте желаемую максимальную ширину */
+    overflow: hidden;
+    text-overflow: ellipsis; /* Добавляет многоточие (...) в конце */
+    white-space: nowrap;
+    margin-bottom: 1px;
+}
+
+.film-browser-title p {
+    margin-bottom: 0%; /* Задайте желаемое расстояние между параграфами */
 }
 
 .film-browser-title a:hover {
     color: #999999;
 }
-
-
