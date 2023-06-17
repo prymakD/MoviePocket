@@ -6,17 +6,17 @@ import {getToWatch, postToWatchMovie} from '../../api/server/ToWatchMovieAPI';
 const ToWatchMovieButton = ({idMovie, className}) => {
     const [toWatch, setToWatch] = useState(false);
 
-    const getFavouriteMovieState = async () => {
+    const getToWatchMovieState = async () => {
         try {
             const response = await getToWatch(idMovie);
-            setFavorite(response);
+            setToWatch(response);
         } catch (error) {
             console.log(error);
         }
     };
 
     useEffect(() => {
-        getToWatch();
+        getToWatchMovieState().then();
     }, [idMovie]);
 
     const handleClick = async () => {
@@ -28,7 +28,7 @@ const ToWatchMovieButton = ({idMovie, className}) => {
         }
     };
 
-    const getFavoriteImage = () => {
+    const getToWatchImage = () => {
         if (toWatch) {
             return 'https://raw.githubusercontent.com/prymakD/MoviePocket/fc14c86fd3b9108e7bd7d9297c49d7341b48d3a6/src/main/frontend/src/images/backpackYellow.png';
         } else {
@@ -38,9 +38,9 @@ const ToWatchMovieButton = ({idMovie, className}) => {
 
     return (
         <img
-            src={getFavoriteImage()}
-            className={`${styles.default} ${className}`}
-            alt="favorite"
+            src={getToWatchImage()}
+            className={!className ? styles.default : className}
+            alt="toWatch"
             onClick={handleClick}
         />
     );

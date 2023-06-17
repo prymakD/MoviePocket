@@ -1,0 +1,10 @@
+.default {
+    height: 30vh;
+    width: auto;
+    border: 1px solid whitesmoke;
+    transition: border-color 0.3s ease;
+}
+
+.default:hover {
+    border: 2px solid green;
+}

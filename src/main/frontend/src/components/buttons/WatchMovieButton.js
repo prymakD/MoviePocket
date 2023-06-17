@@ -18,7 +18,7 @@ const WatchMovieButton = ({ idMovie, className }) => {
     };
 
     useEffect(() => {
-        getWatchedMovieState();
+        getWatchedMovieState().then();
     }, [idMovie]);
 
     const handleClick = async () => {
@@ -55,7 +55,7 @@ const WatchMovieButton = ({ idMovie, className }) => {
     return (
         <img
             src={getWatchedImage()}
-            className={`${styles.default} ${className}`}
+            className={!className ? styles.default : className}
             alt="watched"
             onClick={handleClick}
             onMouseEnter={handleMouseEnter}

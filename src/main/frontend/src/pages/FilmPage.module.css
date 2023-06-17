@@ -39,14 +39,3 @@
 .toWatch-count {
 
 }
-
-.browsingPoster {
-    height: 30vh;
-    width: auto;
-    border: 1px solid whitesmoke;
-    transition: border-color 0.3s ease;
-}
-
-.browsingPoster:hover {
-    border: 2px solid green;
-}

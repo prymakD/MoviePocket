@@ -23,19 +23,8 @@
     width: 25vh;
 }
 
-.poster-card {
-    height: 30vh;
-    width: auto;
-    border: 1px solid whitesmoke;
-    transition: border-color 0.3s ease;
-}
-
 .film-browser-poster {
     position: relative;
-}
-
-.poster-card:hover {
-    border: 2px solid green;
 }
 
 .film-poster-buttons {
