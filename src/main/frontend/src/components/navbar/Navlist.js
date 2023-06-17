@@ -1,7 +1,19 @@
 import './Navlist.css'
 import {Link} from "react-router-dom";
+import {useEffect, useState} from "react";
+import {checkAuth} from "../../api/server/UserAPI";
 
-const Navlist = (isLoggedIn) => {
+const Navlist = () => {
+    const [isLoggedIn, setIsLoggedIn] = useState(null);
+
+    useEffect(() => {
+        const authenticate = async () => {
+            const isAuthenticated = await checkAuth();
+            setIsLoggedIn(isAuthenticated);
+        };
+
+        authenticate().then();
+    }, []);
     return (
         <ul className="Navlist">
             <div className="Search">
