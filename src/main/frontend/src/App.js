@@ -12,6 +12,7 @@ import LoginPage from "./pages/LoginPage";
 import LostPasswordPage from "./pages/LostPasswordPage"
 import {useEffect, useState} from "react";
 import {checkAuth} from "./api/server/UserAPI";
+import UserPage from "./pages/UserPage";
 
 const App = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(null);
@@ -43,7 +44,8 @@ const App = () => {
                                 (<Navigate to="/" replace/>)
                                 :
                                 (<RegistrationPage />)
-                        }/>
+                            }
+                    />
                     <Route
                         path='/login'
                         element={
@@ -51,7 +53,8 @@ const App = () => {
                                 (<Navigate to="/" replace/>)
                                 :
                                 (<LoginPage />)
-                        }/>
+                            }
+                    />
                     {/* For logged in */}
                     <Route
                         path='/forgotPassword'
@@ -60,7 +63,8 @@ const App = () => {
                                 (<Navigate to="/" replace/>)
                                 :
                                 (<LostPasswordPage />)
-                        }/>
+                            }
+                    />
                     <Route
                         path='/settings'
                         element={
@@ -68,7 +72,8 @@ const App = () => {
                                 (<Navigate to="/" replace/>)
                                 :
                                 (<SettingsPage />)
-                        }/>
+                            }
+                    />
                     {/* For everyone */}
                     <Route
                         path='films/:currentPage'
@@ -76,7 +81,12 @@ const App = () => {
                     />
                     <Route
                         path='film/:id'
-                        element={<FilmPage />} />
+                        element={<FilmPage />}
+                    />
+                    <Route
+                        path='user/:username'
+                        element={<UserPage />}
+                    />
                 </Route>
             </Routes>
         </div>

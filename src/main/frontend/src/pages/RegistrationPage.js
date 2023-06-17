@@ -42,7 +42,7 @@ const RegistrationPage = () => {
     };
 
     useEffect(() => {
-        getRandomMovieImage();
+        getRandomMovieImage().then();
     }, []);
 
     return (

@@ -35,7 +35,7 @@ const FilmsBrowsingPage = () => {
     };
 
     useEffect(() => {
-        getMovieList(currentPage);
+        getMovieList(currentPage).then();
     }, [currentPage]);
 
     const handlePreviousPage = () => {

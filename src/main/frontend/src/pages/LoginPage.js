@@ -26,6 +26,7 @@ const LoginPage = () => {
         } catch (error) {
             console.log(error);
         }
+
     };
 
     const getRandomMovieImage = async () => {
