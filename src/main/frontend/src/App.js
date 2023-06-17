@@ -13,6 +13,8 @@ import LostPasswordPage from "./pages/LostPasswordPage"
 import {createContext, useEffect, useState} from "react";
 import {checkAuth} from "./api/server/UserAPI";
 import UserPage from "./pages/UserPage";
+import UserWatchedPage from "./pages/UserWatchedPage";
+import UserFavoritePage from "./pages/UserFavoritePage";
 
 
 export const AuthContext = createContext(null)
@@ -89,6 +91,14 @@ const App = () => {
                         <Route
                             path='user/:username'
                             element={<UserPage />}
+                        />
+                        <Route
+                            path='user/:username/favorite'
+                            element={<UserFavoritePage />}
+                        />
+                        <Route
+                            path='user/:username/watched'
+                            element={<UserWatchedPage />}
                         />
                     </Route>
                 </Routes>

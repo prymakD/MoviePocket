@@ -1,4 +1,4 @@
-import {useParams} from "react-router-dom";
+import {Link, useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 import {getUser} from "../api/server/UserAPI";
 import {getRandomMovie} from "../api/tmdb/MovieAPI";
@@ -41,9 +41,15 @@ const UserPage = () => {
     return (
         <div className="user-page-container"
              style={{backgroundImage: `url(${backgroundImage})`}}>
+            <Link to={`/user/${username}/favorite`}>
+                <p style={{fontSize: '18px'}}>favorite</p>
+            </Link>
+            <Link to={`/user/${username}/watched`}>
+                <p style={{fontSize: '18px'}}>watched</p>
+            </Link>
             <h1>{user.username}</h1>
             <p>Bio: {user.bio}</p>
-            <p>Created: {user.created}</p>
+            <p>Created: {user.crated}</p>
             <h2>Liked Movies:</h2>
             <ul>
                 {user.likeMovie.map((movieId) => (

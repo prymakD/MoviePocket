@@ -4,17 +4,17 @@ import queryString from "query-string";
 
 // Delete a user
 export const deleteUser = async (password) => {
-    try {
-        const params = {
-            password: password
-        };
 
+    const params = {
+        password: password
+    };
+
+    try {
         const response = await axios.post(
             `http://localhost:8080/user/edit/delete`,
             queryString.stringify(params),
             { withCredentials: true },
         );
-
         return response.data;
     } catch (err) {
         console.log(err);
@@ -23,17 +23,17 @@ export const deleteUser = async (password) => {
 
 // Set a new bio
 export const postNewBio = async (bio) => {
-    try {
-        const params = {
-            bio: bio
-        };
 
+    const params = {
+        bio: bio
+    };
+
+    try {
         const response = await axios.post(
             `http://localhost:8080/user/edit/newbio`,
             queryString.stringify(params),
             { withCredentials: true },
         );
-
         return response.data;
     } catch (err) {
         console.log(err);
@@ -42,17 +42,17 @@ export const postNewBio = async (bio) => {
 
 // Set a new email
 export const postNewEmail = async (email) => {
-    try {
-        const params = {
-            email: email
-        };
 
+    const params = {
+        email: email
+    };
+
+    try {
         const response = await axios.post(
             `http://localhost:8080/user/edit/newemail`,
             queryString.stringify(params),
             { withCredentials: true },
         );
-
         return response.data;
     } catch (err) {
         console.log(err);
@@ -61,19 +61,19 @@ export const postNewEmail = async (email) => {
 
 // Set a new password(password is validated)
 export const postNewPassword = async (password0, password1, passwordold) => {
-    try {
-        const params = {
-            password0: password0,
-            password1: password1,
-            passwordold: passwordold
-        };
 
+    const params = {
+        password0: password0,
+        password1: password1,
+        passwordold: passwordold
+    };
+
+    try {
         const response = await axios.post(
             `http://localhost:8080/user/edit/newpas`,
             queryString.stringify(params),
             { withCredentials: true },
         );
-
         return response.data;
     } catch (err) {
         console.log(err);
@@ -82,17 +82,17 @@ export const postNewPassword = async (password0, password1, passwordold) => {
 
 // Set a new username
 export const postNewUsername = async (username) => {
-    try {
-        const params = {
-            username: username
-        };
 
+    const params = {
+        username: username
+    };
+
+    try {
         const response = await axios.post(
             `http://localhost:8080/user/edit/newusername`,
             queryString.stringify(params),
             { withCredentials: true },
         );
-
         return response.data;
     } catch (err) {
         console.log(err);

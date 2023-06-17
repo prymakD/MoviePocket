@@ -4,17 +4,17 @@ import queryString from "query-string";
 
 // Set or delete a movie from the disliked list
 export const postDislikedMovie = async (idMovie) => {
-    try {
-        const params = {
-            idMovie: idMovie
-        };
 
+    const params = {
+        idMovie: idMovie
+    };
+
+    try {
         const response = await axios.post(
             `http://localhost:8080/movies/dislike/set`,
             queryString.stringify(params),
             { withCredentials: true },
         );
-
         return response.data;
     } catch (err) {
         console.log(err);
@@ -23,15 +23,16 @@ export const postDislikedMovie = async (idMovie) => {
 
 // Check if a user has disliked a movie
 export const getDislikedMovie = async (idMovie) => {
+
+    const options = {
+        withCredentials: true
+    }
+
     try {
-        const options = {
-            withCredentials: true
-        }
         const response = await axios.get(
             `http://localhost:8080/movies/dislike/get?idMovie=${idMovie}`,
             options
         );
-
         return response.data;
     } catch (err) {
         console.log(err);
@@ -40,15 +41,16 @@ export const getDislikedMovie = async (idMovie) => {
 
 // getAllCountDislikedByIdMovie
 export const getDislikedCountMovie = async (idMovie) => {
+
+    const options = {
+        withCredentials: true
+    }
+
     try {
-        const options = {
-            withCredentials: true
-        }
         const response = await axios.get(
             `http://localhost:8080/movies/dislike/count/dislike?id=${idMovie}`,
             options
         );
-
         return response.data;
     } catch (err) {
         console.log(err);
@@ -57,15 +59,16 @@ export const getDislikedCountMovie = async (idMovie) => {
 
 // Get all movies disliked by a user
 export const getAllDislikedMovie = async () => {
+
+    const options = {
+        withCredentials: true
+    }
+
     try {
-        const options = {
-            withCredentials: true
-        }
         const response = await axios.get(
             `http://localhost:8080/movies/dislike/all`,
             options
         );
-
         return response.data;
     } catch (err) {
         console.log(err);
