@@ -3,10 +3,10 @@ import { Outlet } from 'react-router-dom';
 import React from 'react'
 import Navbar from "./navbar/Navbar";
 
-const Layout = () => {
+const Layout = (isLoggedIn) => {
     return(
         <>
-            <Navbar/>
+            <Navbar isLoggedIn={isLoggedIn}/>
             <Outlet/>
         </>
     )

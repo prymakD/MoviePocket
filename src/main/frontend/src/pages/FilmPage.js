@@ -164,7 +164,7 @@ const FilmPage = () => {
                                     <h3>{review.title}</h3>
                                     <p>{review.content}</p>
                                     <button
-                                        className = "delete-review-button"
+                                        className = "delete-review-button"  
                                         onClick={() => handleDelete(review.id)}>Delete Review</button>
                                 </div>
 
