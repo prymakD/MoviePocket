@@ -54,7 +54,7 @@ const FilmsBrowsingPage = () => {
 
     return (
         <div className="films-browser-container">
-            <h1>Movie Browser</h1>
+            <h1 className="blue-text">Movie Browser</h1>
             <div className="films-browser-list">
                 {movies.map(movie => (
                     <div className="film-browser-card" key={movie.id}>
@@ -81,7 +81,7 @@ const FilmsBrowsingPage = () => {
                         <div className="film-browser-info">
                             <div className="film-browser-title">
                                 <Link to={`/film/${movie.id}`}>
-                                    <p style={{fontSize: '18px'}}>{movie.title}</p>
+                                    <p className="yellow-text">{movie.title}</p>
                                 </Link>
                                 <div className="release-date-button">
                                     <p style={{fontSize: '12px'}}>{movie.release_date.split('-')[0]}</p>
