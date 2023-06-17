@@ -18,7 +18,7 @@ public class ParsUserPage {
 
     private String username;
     private String bio;
-    private Date crated;
+    private Date created;
     private List<ParsMovieList> movieLL;
     private List<ParsReview> reviewList;
     private List<Long> likeMovie;
