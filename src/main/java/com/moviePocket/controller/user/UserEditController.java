@@ -63,10 +63,9 @@ public class UserEditController {
             @ApiResponse(code = 200, message = "Successfully set the new email"),
             @ApiResponse(code = 400, message = "Bad request")
     })
-    public String newEmailGetForm(@RequestParam("email") String email) throws MessagingException {
+    public ResponseEntity<Void> newEmailGetForm(@RequestParam("email") String email) throws MessagingException {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        userService.setTokenEmail(authentication.getName(), email);
-        return "user_edit";
+        return userService.setTokenEmail(authentication.getName(), email);
     }
 
     @GetMapping("/newemail/{token}")
@@ -75,9 +74,8 @@ public class UserEditController {
             @ApiResponse(code = 200, message = "Successfully activated the new email"),
             @ApiResponse(code = 400, message = "Bad request")
     })
-    public String activate(@PathVariable String token) {
-        userService.activateNewEmail(token);
-        return "user_edit";
+    public ResponseEntity<Void> activate(@PathVariable String token) {
+        return userService.activateNewEmail(token);
     }
 
     @PostMapping("/newusername")
@@ -86,10 +84,9 @@ public class UserEditController {
             @ApiResponse(code = 200, message = "Successfully set the new username"),
             @ApiResponse(code = 400, message = "Bad request")
     })
-    public String newSetNewUsername(@RequestParam("username") String username) {
+    public ResponseEntity<Void> newSetNewUsername(@RequestParam("username") String username) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        userService.setNewUsername(authentication.getName(), username);
-        return "user_edit";
+        return userService.setNewUsername(authentication.getName(), username);
     }
 
 
@@ -99,9 +96,8 @@ public class UserEditController {
             @ApiResponse(code = 400, message = "Bad request")
     })
     @PostMapping("/newbio")
-    public String newSetNewBio(@RequestParam("bio") String bio) {
+    public ResponseEntity<Void> newSetNewBio(@RequestParam("bio") String bio) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        userService.setNewBio(authentication.getName(), bio);
-        return "user_edit";
+        return userService.setNewBio(authentication.getName(), bio);
     }
 }
