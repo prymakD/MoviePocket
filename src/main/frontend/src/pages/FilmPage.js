@@ -40,7 +40,7 @@ const FilmPage = () => {
     const handleDelete = async (idReview) => {
         try {
             const response = await delReview(idReview);
-            getReviews();
+            await getReviews();
         } catch (error) {
             console.log(error);
         }
@@ -84,10 +84,10 @@ const FilmPage = () => {
     };
 
     useEffect(() => {
-        getMovie();
-        getBack();
-        getTrailer();
-        getReviews();
+        getMovie().then();
+        getBack().then();
+        getTrailer().then();
+        getReviews().then();
     }, []);
 
     return (

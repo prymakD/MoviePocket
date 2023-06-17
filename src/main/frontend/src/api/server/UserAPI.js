@@ -15,6 +15,24 @@ export const getUser = async (username) => {
         return response.data;
     } catch (err) {
         console.log(err);
+        return false
+    }
+}
+
+// getUsernameByAuth
+export const getUsernameByAuth = async () => {
+    try {
+        const options = {
+            withCredentials: true
+        }
+        const response = await axios.get(
+            `http://localhost:8080/user/getUsernameAut`,
+            options
+        );
+
+        return response.data;
+    } catch (err) {
+        console.log(err);
     }
 }
 

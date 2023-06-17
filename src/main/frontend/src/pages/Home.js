@@ -15,7 +15,7 @@ function Home() {
     };
 
     useEffect(() => {
-        getMovies();
+        getMovies().then();
     }, [])
 
     return (
