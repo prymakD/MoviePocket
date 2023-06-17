@@ -2,7 +2,6 @@ package com.moviePocket.controller.user;
 
 import com.moviePocket.security.validation.ValidPassword;
 import com.moviePocket.service.UserService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,12 +13,17 @@ import javax.mail.MessagingException;
 
 @Controller
 @RequestMapping("/lostpassword")
-@RequiredArgsConstructor
+
 //@Validated
 //TODO password validation for lost password
 public class LostPasswordController {
 
-    private final UserService userService;
+    private UserService userService;
+
+    @GetMapping("")
+    public String registrationForm() {
+        return "lost_pas";
+    }
 
     @PostMapping("/")
     public String setMail(@RequestParam("username") String username) throws MessagingException {
