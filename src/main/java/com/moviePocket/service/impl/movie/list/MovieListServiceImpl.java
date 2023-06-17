@@ -124,7 +124,7 @@ public class MovieListServiceImpl implements MovieListService {
     }
 
     public ResponseEntity<List<ParsMovieList>> getAllByUsernameList(String username) {
-        User user = userRepository.findAllByUsername(username);
+        User user = userRepository.findByUsernameAndAccountActive(username, true);
         if (user == null)
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         else {
