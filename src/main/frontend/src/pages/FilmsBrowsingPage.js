@@ -7,6 +7,8 @@ import styles from './FilmsBrowsingPage.module.css';
 import {getFavoriteMovie} from "../api/server/FavoriteMovieAPI";
 import {getMovies} from "../api/tmdb/PaginationMovieAPI";
 import Pagination from "../components/pagination/Pagination";
+import ToWatchMovieButton from "../components/buttons/ToWatchMovieButton";
+import MoviePoster from "../components/poster/MoviePoster";
 
 const FilmsBrowsingPage = () => {
     const {currentPage} = useParams();
@@ -57,12 +59,20 @@ const FilmsBrowsingPage = () => {
                 {movies.map(movie => (
                     <div className="film-browser-card" key={movie.id}>
                         <div className="film-browser-poster">
-                            <Link to={`/film/${movie.id}`}>
-                                <img src={path + movie.poster_path} className="poster-card" alt="movie-poster"/>
-                            </Link>
+                            <MoviePoster
+                                movie={movie}
+                                className={styles.browsingPoster}
+                                responsible={true}/>
                             <div className="film-poster-buttons">
-                                <WatchMovieButton idMovie={movie.id} className={styles.watched}/>
-                                <FavoriteMovieButton idMovie={movie.id} className={styles.favorite}/>
+                                <WatchMovieButton
+                                    idMovie={movie.id}
+                                    className={styles.watched}/>
+                                <FavoriteMovieButton
+                                    idMovie={movie.id}
+                                    className={styles.favorite}/>
+                                <ToWatchMovieButton
+                                    idMovie={movie.id}
+                                    className={styles.toWatch}/>
                             </div>
                         </div>
                         <div className="film-browser-info">

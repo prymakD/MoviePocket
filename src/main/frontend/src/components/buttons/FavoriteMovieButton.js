@@ -16,7 +16,7 @@ const FavoriteMovieButton = ({ idMovie, className }) => {
     };
 
     useEffect(() => {
-        getFavouriteMovieState();
+        getFavouriteMovieState().then();
     }, [idMovie]);
 
     const handleClick = async () => {
@@ -39,7 +39,7 @@ const FavoriteMovieButton = ({ idMovie, className }) => {
     return (
         <img
             src={getFavoriteImage()}
-            className={`${styles.default} ${className}`}
+            className={!className ? styles.default : className}
             alt="favorite"
             onClick={handleClick}
         />

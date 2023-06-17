@@ -5,10 +5,11 @@ import './FilmPage.css';
 import {delReview, getAllReview, postReview} from "../api/server/ReviewAPI";
 import {getMovieBackDropImage, getMovieDetails, getMovieTrailer} from "../api/tmdb/MovieAPI";
 import WatchMovieButton from "../components/buttons/WatchMovieButton";
-import styles from "./FilmsBrowsingPage.module.css";
+import styles from "./FilmPage.module.css";
 import FavoriteMovieButton from "../components/buttons/FavoriteMovieButton";
 import Userbar from "../components/navbar/Userbar";
 import ToWatchMovieButton from "../components/buttons/ToWatchMovieButton";
+import MoviePoster from "../components/poster/MoviePoster";
 
 const FilmPage = () => {
     const {id} = useParams();
@@ -101,7 +102,8 @@ const FilmPage = () => {
                 <div className="film-media-container">
                     <div className="movie-like-contaner">
                         <div className="film-poster">
-                            <img src={path + movie.poster_path} alt="Movie poster"/>
+                            <MoviePoster
+                            movie={movie}/>
                         </div>
                         <div className="like-container">
                             <WatchMovieButton
