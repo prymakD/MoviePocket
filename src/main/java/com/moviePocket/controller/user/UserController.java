@@ -49,11 +49,9 @@ public class UserController {
     @GetMapping("/{username}")
     public ResponseEntity<ParsUserPage> getUserByUsername(@PathVariable String username) {
         User user = userService.findUserByUsername(username);
-
         if (user == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-
         ParsUserPage parsUserPage = new ParsUserPage(
                 user.getUsername(),
                 user.getBio(),
