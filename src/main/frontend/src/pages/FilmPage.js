@@ -7,6 +7,7 @@ import {getMovieBackDropImage, getMovieDetails, getMovieTrailer} from "../api/tm
 import WatchMovieButton from "../components/buttons/WatchMovieButton";
 import styles from "./FilmsBrowsingPage.module.css";
 import FavoriteMovieButton from "../components/buttons/FavoriteMovieButton";
+import Userbar from "../components/navbar/Userbar";
 
 const FilmPage = () => {
     const {id} = useParams();
@@ -157,10 +158,7 @@ const FilmPage = () => {
                         <h2>All Reviews</h2>
                         {reviews.map((review) => (
                             <div className="single-review" key={review.id}>
-                                <img src="https://cdn.icon-icons.com/icons2/1154/PNG/512/1486564400-account_81513.png" 
-                                     alt='USER'
-                                     className="user-profile"
-                                />
+                                <Userbar/>
                                 <div className="review-content">
                                     <p>
                                         Review by <strong>{review.username}</strong>
@@ -168,8 +166,9 @@ const FilmPage = () => {
                                     <h3>{review.title}</h3>
                                     <p>{review.content}</p>
                                     <button
-                                        className = "delete-review-button"  
-                                        onClick={() => handleDelete(review.id)}>Delete Review</button>
+                                        className="delete-review-button"
+                                        onClick={() => handleDelete(review.id)}>Delete Review
+                                    </button>
                                 </div>
 
                             </div>
