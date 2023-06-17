@@ -2,6 +2,7 @@ import './Navbar.css'
 import Navlist from "./Navlist";
 import Userbar from "./Userbar";
 import LogoBar from "./LogoBar";
+import {Link} from "react-router-dom";
 
 const Navbar = () => {
     return (
@@ -13,7 +14,9 @@ const Navbar = () => {
                         <strong>MoviePocket</strong>
                     </a>
                     <Navlist/>
-                    <Userbar/>
+                    <Link to="/settings">
+                        <Userbar/>
+                    </Link>
                 </div>
             </div>
         </nav>
