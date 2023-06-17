@@ -8,8 +8,10 @@ const UserPage = () => {
 
     const [user, setUser] = useState();
     const getUserInfo = async () => {
+        console.log(username)
         try {
             const response = await getUser(username);
+            console.log(response)
             setUser(response);
         } catch (error) {
             console.log(error);
