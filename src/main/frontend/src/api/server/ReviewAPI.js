@@ -4,17 +4,17 @@ import queryString from "query-string";
 
 // delMovieReview
 export const delReview = async(idReview) => {
-    try {
-        const params = {
-            idReview: idReview
-        }
 
+    const params = {
+        idReview: idReview
+    }
+
+    try {
         const response = await axios.post(
             `http://localhost:8080/movies/review/del`,
             queryString.stringify(params),
             {withCredentials: true},
         )
-
         return response.data
     } catch (err) {
         console.log(err)
@@ -23,19 +23,19 @@ export const delReview = async(idReview) => {
 
 // setMovieReview
 export const postReview = async (content, idMovie, title) => {
-    try {
-        const params = {
-            content: content,
-            idMovie: idMovie,
-            title: title
-        }
 
+    const params = {
+        content: content,
+        idMovie: idMovie,
+        title: title
+    }
+
+    try {
         const response = await axios.post(
             `http://localhost:8080/movies/review/set`,
             queryString.stringify(params),
             {withCredentials: true},
         )
-
         return response.data
     } catch (err) {
         console.log(err)
@@ -44,18 +44,18 @@ export const postReview = async (content, idMovie, title) => {
 
 // setLike
 export const postReviewLike = async (idReview, like) => {
-    try {
-        const params = {
-            id: idReview,
-            like: like
-        }
 
+    const params = {
+        id: idReview,
+        like: like
+    }
+
+    try {
         const response = await axios.post(
             `http://localhost:8080/movies/review/setlike`,
             queryString.stringify(params),
             {withCredentials: true},
         )
-
         return response.data
     } catch (err) {
         console.log(err)
@@ -64,19 +64,19 @@ export const postReviewLike = async (idReview, like) => {
 
 // setUpdateMovieReview
 export const postReviewUpdate = async (content, idReview, title) => {
-    try {
-        const params = {
-            content: content,
-            idReview: idReview,
-            title: title
-        }
 
+    const params = {
+        content: content,
+        idReview: idReview,
+        title: title
+    }
+
+    try {
         const response = await axios.post(
             `http://localhost:8080/movies/review/up`,
             queryString.stringify(params),
             {withCredentials: true},
         )
-
         return response.data
     } catch (err) {
         console.log(err)
@@ -85,11 +85,12 @@ export const postReviewUpdate = async (content, idReview, title) => {
 
 // getByIdReview
 export const getReviewById = async (idReview) => {
-    try {
-        const options = {
-            withCredentials: true
-        }
 
+    const options = {
+        withCredentials: true
+    }
+
+    try {
         const response = await axios.get(
             `http://localhost:8080/movies/review/get?idReview=${idReview}`,
             options
@@ -102,11 +103,12 @@ export const getReviewById = async (idReview) => {
 
 // getAllReviewByIdMovie
 export const getAllReview = async (idMovie) => {
-    try {
-        const options = {
-            withCredentials: true
-        }
 
+    const options = {
+        withCredentials: true
+    }
+
+    try {
         const response = await axios.get(
             `http://localhost:8080/movies/review/getAllByMovie?idMovie=${idMovie}`,
             options
@@ -119,11 +121,12 @@ export const getAllReview = async (idMovie) => {
 
 // getAllReviewByUser
 export const getAllReviewByUser = async () => {
-    try {
-        const options = {
-            withCredentials: true
-        }
 
+    const options = {
+        withCredentials: true
+    }
+
+    try {
         const response = await axios.get(
             `http://localhost:8080/movies/review/getAllMy`,
             options

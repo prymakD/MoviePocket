@@ -3,15 +3,16 @@ import axios from "axios";
 
 // getUserByUsername
 export const getUser = async (username) => {
+
+    const options = {
+        withCredentials: true
+    }
+
     try {
-        const options = {
-            withCredentials: true
-        }
         const response = await axios.get(
             `http://localhost:8080/user/${username}`,
             options
         );
-
         return response.data;
     } catch (err) {
         console.log(err);
@@ -21,15 +22,16 @@ export const getUser = async (username) => {
 
 // getUsernameByAuth
 export const getUsernameByAuth = async () => {
+
+    const options = {
+        withCredentials: true
+    }
+
     try {
-        const options = {
-            withCredentials: true
-        }
         const response = await axios.get(
             `http://localhost:8080/user/getUsernameAut`,
             options
         );
-
         return response.data;
     } catch (err) {
         console.log(err);
@@ -52,5 +54,4 @@ export const checkAuth = async () => {
     } catch (err) {
         return false;
     }
-
 }
