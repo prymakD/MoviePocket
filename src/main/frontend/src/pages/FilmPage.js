@@ -8,6 +8,7 @@ import WatchMovieButton from "../components/buttons/WatchMovieButton";
 import styles from "./FilmsBrowsingPage.module.css";
 import FavoriteMovieButton from "../components/buttons/FavoriteMovieButton";
 import Userbar from "../components/navbar/Userbar";
+import ToWatchMovieButton from "../components/buttons/ToWatchMovieButton";
 
 const FilmPage = () => {
     const {id} = useParams();
@@ -108,6 +109,10 @@ const FilmPage = () => {
                                 className={styles.watched}
                             />
                             <FavoriteMovieButton
+                                idMovie={movie.id}
+                                className={styles.favorite}
+                            />
+                            <ToWatchMovieButton
                                 idMovie={movie.id}
                                 className={styles.favorite}
                             />
