@@ -43,3 +43,11 @@
 .browsingPoster:hover {
     border: 2px solid green;
 }
+
+.blue-text {
+    color: #74F8F2;
+}
+
+.yellow-text {
+    color: #F1B36E;
+}
