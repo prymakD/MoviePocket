@@ -2,6 +2,7 @@ import {Link, useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 import {getUser} from "../api/server/UserAPI";
 import {getRandomMovie} from "../api/tmdb/MovieAPI";
+import './UserPage.css';
 
 
 const UserPage = () => {
@@ -73,6 +74,39 @@ const UserPage = () => {
                     </li>
                 ))}
             </ul>
+            <div className="user-info-container">
+                <div className="username-container">
+                    <h1>{user.username}</h1>
+                </div>
+                <div className="bio-container">
+                    <p className="blue-text">Bio:</p>
+                    <p className="yellow-text">{user.bio}</p>
+                </div>
+            </div>
+            <p className="blue-text">Created: {user.сrated}</p>
+            {/*<h2>Liked Movies:</h2>*/}
+            {/*<ul>*/}
+            {/*    {user.likeMovie.map((movieId) => (*/}
+            {/*        <li key={movieId}>{movieId}</li>*/}
+            {/*    ))}*/}
+            {/*</ul>*/}
+            {/*<h2>Watched Movies:</h2>*/}
+            {/*<ul>*/}
+            {/*    {user.watchedMovie.map((movieId) => (*/}
+            {/*        <li key={movieId}>{movieId}</li>*/}
+            {/*    ))}*/}
+            {/*</ul>*/}
+            {/*<h2>Movie Reviews:</h2>*/}
+            {/*<ul>*/}
+            {/*    {user.reviewList.map((review) => (*/}
+            {/*        <li key={review.id}>*/}
+            {/*            <h3>{review.title}</h3>*/}
+            {/*            <p>{review.content}</p>*/}
+            {/*            <p>Created: {review.dataCreated}</p>*/}
+            {/*            <p>Updated: {review.dataUpdated}</p>*/}
+            {/*        </li>*/}
+            {/*    ))}*/}
+            {/*</ul>*/}
         </div>
     );
 }
