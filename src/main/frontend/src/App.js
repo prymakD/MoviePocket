@@ -33,7 +33,7 @@ const App = () => {
     return (
         <div className="App">
             <Routes>
-                <Route path='/' element={<Layout isLoggedIn={isLoggedIn}/>}>
+                <Route path='/' element={<Layout isLogged={isLoggedIn}/>}>
                     <Route index element={<Home />}></Route>
                     {/* For not logged in */}
                     <Route

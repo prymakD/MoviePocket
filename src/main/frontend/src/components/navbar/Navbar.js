@@ -3,7 +3,7 @@ import Navlist from "./Navlist";
 import Userbar from "./Userbar";
 import LogoBar from "./LogoBar";
 
-const Navbar = (isLoggedIn) => {
+const Navbar = () => {
     return (
         <nav className="Navbar">
             <div className="Container">
@@ -12,8 +12,8 @@ const Navbar = (isLoggedIn) => {
                     <a href="/" className="NavBrand">
                         <strong>MoviePocket</strong>
                     </a>
-                    <Navlist isLoggedIn={isLoggedIn}/>
-                    <Userbar isLoggedIn={isLoggedIn}/>
+                    <Navlist/>
+                    <Userbar/>
                 </div>
             </div>
         </nav>
