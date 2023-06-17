@@ -38,6 +38,14 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @GetMapping("/getUsernameAut")
+    public ResponseEntity<String> getUsernameAuthentication() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication.getName().equals("anonymousUser"))
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        return new ResponseEntity<>(userService.findUserByEmail(authentication.getName()).getUsername(), HttpStatus.OK);
+    }
+
     @GetMapping("/{username}")
     public ResponseEntity<ParsUserPage> getUserByUsername(@PathVariable String username) {
         User user = userService.findUserByUsername(username);
