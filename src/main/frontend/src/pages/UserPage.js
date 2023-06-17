@@ -8,10 +8,8 @@ const UserPage = () => {
 
     const [user, setUser] = useState();
     const getUserInfo = async () => {
-        console.log(username)
         try {
             const response = await getUser(username);
-            console.log(response)
             setUser(response);
         } catch (error) {
             console.log(error);
@@ -19,8 +17,13 @@ const UserPage = () => {
     };
 
     useEffect(() => {
-        getUserInfo().then();
+        getUserInfo().then()
     }, [])
+
+    if (!user) {
+        // Display loading state or a spinner while fetching user data
+        return <div>Loading...</div>;
+    }
 
     return (
         <div>
