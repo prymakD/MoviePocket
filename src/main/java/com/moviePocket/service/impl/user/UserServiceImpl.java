@@ -113,7 +113,7 @@ public class UserServiceImpl implements UserService {
         if (user == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else if (userRepository.existsByUsername(username)) {
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         } else {
             user.setUsername(username);
             userRepository.save(user);
