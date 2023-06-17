@@ -78,6 +78,10 @@ const UserPage = () => {
                 <div className="username-container">
                     <h1>{user.username}</h1>
                 </div>
+                <div className="user-created">
+                    <p className="blue-text">Created: </p>
+                    <p className="yellow-text">{new Date(user.created).toLocaleDateString()}</p>
+                </div>
                 <div className="bio-container">
                     <p className="blue-text">Bio:</p>
                     <p className="yellow-text">{user.bio}</p>
