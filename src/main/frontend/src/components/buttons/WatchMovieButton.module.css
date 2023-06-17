@@ -1,6 +1,6 @@
 .default {
-    height: 4vh;
-    width: 4vh;
+    height: 4px;
+    width: 4px;
 }
 
 .default:hover {
