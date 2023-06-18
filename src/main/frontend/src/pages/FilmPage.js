@@ -132,6 +132,7 @@ const FilmPage = () => {
                     {reviews.map((review) => (
                         <SingleReview
                             review={review}
+                            updateReviews={getReviews}
                         />
                     ))}
                 </div>
