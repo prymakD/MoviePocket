@@ -32,7 +32,6 @@ public class WatchedMovieController {
     public ResponseEntity<Void> setOrDeleteMovieWatched(@RequestParam("idMovie") Long idMovie, HttpServletRequest request) {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        System.out.println(authentication.getName());
         return watchedMovieService.setOrDeleteNewWatched(authentication.getName(), idMovie);
     }
 
