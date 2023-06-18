@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import {postReview} from "../../api/server/ReviewAPI";
 import "./CreateReviewForm.css"
 
@@ -28,24 +28,28 @@ const CreateReviewForm = ({ movieId, updateReviews }) => {
     };
 
     return (
-        <div className="review-form-container">
-            <h2>Leave a Review</h2>
-            <form onSubmit={handleSubmit}>
-                <input
-                    type="text"
-                    value={title}
-                    onChange={handleTitleChange}
-                    placeholder="Review Title"
-                    required
-                />
-                <textarea
-                    value={content}
-                    onChange={handleContentChange}
-                    placeholder="Write your review here"
-                    required
-                ></textarea>
-                <button type="submit">Submit Review</button>
-            </form>
+        <div>
+            <h2 className="text-title">Leave a Review</h2>
+            <div className="review-form-container">
+                <form onSubmit={handleSubmit}>
+                    <input
+                        className="title-input"
+                        type="text"
+                        value={title}
+                        onChange={handleTitleChange}
+                        placeholder="Review Title"
+                        required
+                    />
+                    <textarea
+                        className="content-input"
+                        value={content}
+                        onChange={handleContentChange}
+                        placeholder="Write your review here"
+                        required
+                    ></textarea>
+                    <button className="button-submit" type="submit">Submit Review</button>
+                </form>
+            </div>
         </div>
     );
 };
