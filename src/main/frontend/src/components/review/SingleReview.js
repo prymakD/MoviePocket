@@ -5,7 +5,7 @@ import ReviewDeleteButton from "./ReviewDeleteButton";
 import {UsernameContext} from "../../App";
 import PropTypes from "prop-types";
 
-const SingleReview = ({ review, className }) => {
+const SingleReview = ({ review, updateReviews, className }) => {
 
     const username = useContext(UsernameContext);
     return (
@@ -27,6 +27,7 @@ const SingleReview = ({ review, className }) => {
                 &&
                 <ReviewDeleteButton
                     idReview={review.id}
+                    updateReviews={updateReviews}
                 />
             }
         </div>
@@ -35,6 +36,7 @@ const SingleReview = ({ review, className }) => {
 
 SingleReview.propTypes = {
     review: PropTypes.object.isRequired,
+    updateReviews: PropTypes.func.isRequired,
     className: PropTypes.string,
 };
 

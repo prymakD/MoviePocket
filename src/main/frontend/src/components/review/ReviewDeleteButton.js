@@ -3,12 +3,13 @@ import {delReview} from "../../api/server/ReviewAPI";
 import styles from "./ReviewDeleteButton.module.css";
 import PropTypes from "prop-types";
 
-const ReviewDeleteButton = ({idReview, className}) => {
+const ReviewDeleteButton = ({idReview, updateReviews, className}) => {
     const [isHovered, setIsHovered] = useState(false);
 
     const handleClick = async () => {
         try {
             await delReview(idReview);
+            await updateReviews();
         } catch (error) {
             console.log(error);
         }
@@ -44,6 +45,7 @@ const ReviewDeleteButton = ({idReview, className}) => {
 
 ReviewDeleteButton.propTypes = {
     idReview: PropTypes.number.isRequired,
+    updateReviews: PropTypes.func.isRequired,
     className: PropTypes.string,
 };
 
