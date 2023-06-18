@@ -1,55 +1,70 @@
 .settings-container {
-    margin-left: 15%;
-    margin-right: 15%;
-    background-color: #28282A;
+    padding-left: 12%;
+    padding-right: 12%;
+    display: flex;
+    flex-direction: column;
 }
 
-.settings-container h1 {
-    font-size: 30px;
-    margin: 3%;
-    color: whitesmoke;
-    font-family: 'Poppins', sans-serif;
+.password-container {
+    display: flex;
+    margin-top: auto;
+    padding: 3vh;
+    flex-direction: column;
 }
 
-.settings-container form {
-    margin: 3%;
-    align-items: start;
+.edit-container {
+    display: flex;
+    flex-direction: column;
+    padding-left: 3vh;
+    padding-top: 2vh;
+    margin: 0.5vh;
 }
 
-.settings-container label {
-    font-weight: bold;
+.button-update {
+    border: 2px solid #E4416A;
+    background-color: black;
+    width: 10vh;
+    font-size: 14px;
+    border-radius: 1.5vh;
+    text-align: center;
 }
 
-.settings-container textarea,
-.settings-container input[type='text'],
-.settings-container input[type='email'],
-.settings-container input[type='password'] {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    color: whitesmoke;
-    font-family: 'Poppins', sans-serif;
+.button-update:active {
+    border-color: #75FBE2;
 }
 
-.settings-container button {
-    padding: 10px 20px;
-    background-color: #4caf50;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+.button-update:hover {
+    background-color: #E4416A;
 }
 
-.settings-container button:last-of-type {
-    background-color: #f44336;
+.input-text0 {
+    border: 2px solid #F1B36E;
+    width: 35vh;
+    height: 5vh;
+    border-radius: 1.5vh;
+    color: #74F8F2;
 }
 
-.settings-container button:hover {
-    background-color: #45a049;
+.input-text1 {
+    border: 2px solid #F1B36E;
+    border-radius: 1.5vh;
+    color: #74F8F2;
 }
 
-.settings-container button:last-of-type:hover {
-    background-color: #e53935;
+.blue-text {
+    color: white;
+    font-size: 20px;
+}
+
+.yellow-text {
+    color: #F1B36E;
+    font-size: 22px;
+}
+
+.white-text {
+    color: white;
+}
+
+.logo-text {
+    color: #E4416A;
 }
