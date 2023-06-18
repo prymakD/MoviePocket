@@ -85,9 +85,13 @@
     height: 7vh;
 }
 
-.delete-review-button{
+.delete-review-button {
     width: 25vh;
     height: 13vh;
     font-size: 14px;
     margin-bottom: 3vh;
+}
+
+.logo-text {
+    color: #E4416A;
 }
