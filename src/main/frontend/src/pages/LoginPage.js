@@ -21,8 +21,12 @@ const LoginPage = () => {
         event.preventDefault();
 
         try {
-            await postLogin(email, password);
-            window.location.href = '/'
+            const response = await postLogin(email, password);
+            if (response) {
+                window.location.href = '/'
+            } else {
+
+            }
         } catch (error) {
             console.log(error);
         }

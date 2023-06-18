@@ -18,9 +18,10 @@ export const postLogin = async (email, password) => {
         const authToken = response.headers['set-cookie'];
         // Save cookie on the client
         document.cookie = `authToken=${authToken.join(';')}`;
-        return response
+        return true
     } catch (err) {
         console.log(err);
+        return false
     }
 };
 
