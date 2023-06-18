@@ -1,7 +1,23 @@
 import axios from "axios";
 import queryString from "query-string";
 
+// getUserDto
+export const getUserDto = async () => {
 
+    const options = {
+        withCredentials: true
+    }
+
+    try {
+        const response = await axios.get(
+            `http://localhost:8080/user/edit/getUserDto`,
+            options
+        );
+        return response.data;
+    } catch (err) {
+        console.log(err);
+    }
+}
 // Delete a user
 export const deleteUser = async (password) => {
 

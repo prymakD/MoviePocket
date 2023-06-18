@@ -35,7 +35,7 @@ const Navbar = () => {
                     <Navlist/>
                     {isLoggedIn
                         &&
-                        <Link to={`/user/${userName}`}>
+                        <Link to={`/settings`}>
                             <Userbar/>
                         </Link>
                     }
