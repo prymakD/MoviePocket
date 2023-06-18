@@ -48,20 +48,19 @@ const UserPage = () => {
                         <h1>{user.username}</h1>
                     </div>
                     <p className="blue-text">Created: <span
-                        className="yellow-text">{new Date(user.created).toLocaleDateString()}</span></p>
-                    <p className="blue-text">Bio: <span className="yellow-text">{user.bio}</span></p>
+                        className="yellow-text">{user.created ? new Date(user.created).toLocaleDateString() : '0'}</span>
+                    </p>
+                    <p className="blue-text">Bio: <span className="yellow-text">{user.bio || '0'}</span></p>
                     <p className="blue-text">Total Liked Movies: <span
-                        className="yellow-text">{user.likeMovie.length}</span></p>
+                        className="yellow-text">{user.likeMovie ? user.likeMovie.length : 0}</span></p>
                     <p className="blue-text">Total Watched Movies: <span
-                        className="yellow-text">{user.watchedMovie.length}</span></p>
+                        className="yellow-text">{user.watchedMovie ? user.watchedMovie.length : 0}</span></p>
                     <p className="blue-text">Total Disliked Movies: <span
-                        className="yellow-text">{user.dislikeMovie.length}</span></p>
+                        className="yellow-text">{user.dislikeMovie ? user.dislikeMovie.length : 0}</span></p>
                     <p className="blue-text">Total Rating: <span
-                        className="yellow-text">{user.ratingMovie.length}</span>
-                    </p>
+                        className="yellow-text">{user.ratingMovie ? user.ratingMovie.length : 0}</span></p>
                     <p className="blue-text">Total Reviews: <span
-                        className="yellow-text">{user.reviewList.length}</span>
-                    </p>
+                        className="yellow-text">{user.reviewList ? user.reviewList.length : 0}</span></p>
                 </div>
             </div>
         </div>

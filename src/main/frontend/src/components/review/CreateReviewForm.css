@@ -48,13 +48,13 @@
 
 
 .title-input {
-    width: 1000px;
+    width: 100vh;
     border: 2px solid #75FBE2;
     border-radius: 2vh;
 }
 
 .content-input {
-    width: 1000px;
+    width: 100vh;
     border: 2px solid #75FBE2;
     border-radius: 2vh;
 
