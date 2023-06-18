@@ -135,9 +135,12 @@ const FilmPage = () => {
                         <div className="single-review" key={review.id}>
                             <Userbar/>
                             <div className="review-content">
-                                <p>
-                                    Review by <strong>{review.username}</strong>
-                                </p>
+                                <h>
+                                    Review by <strong className="logo-text">{review.username}</strong>
+                                    <p className="blue-text">Created: <span
+                                        className="yellow-text">{review.dataCreated ? new Date(review.dataCreated).toLocaleDateString() : '0'}</span>
+                                    </p>
+                                </h>
                                 <h3>{review.title}</h3>
                                 <p>{review.content}</p>
                                 {/*<button*/}
