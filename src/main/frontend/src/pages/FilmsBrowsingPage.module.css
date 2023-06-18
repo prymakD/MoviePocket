@@ -1,6 +1,6 @@
 .watched {
-    height: 4vh;
-    width: 4vh;
+    height: 20px;
+    width: 20px;
 }
 
 .watched:hover {
@@ -13,8 +13,8 @@
 }
 
 .favorite {
-    height: 4vh;
-    width: 4vh;
+    height: 20px;
+    width: 20px;
 }
 
 .favorite:hover {
@@ -27,8 +27,8 @@
 }
 
 .toWatch {
-    height: 4vh;
-    width: 4vh;
+    height: 20px;
+    width: 20px;
 }
 
 .toWatch:hover {
@@ -40,13 +40,14 @@
 
 }
 
-.browsingPoster {
-    height: 30vh;
-    width: auto;
-    border: 1px solid whitesmoke;
-    transition: border-color 0.3s ease;
-}
-
 .browsingPoster:hover {
     border: 2px solid green;
+}
+
+.blue-text {
+    color: #74F8F2;
+}
+
+.yellow-text {
+    color: #F1B36E;
 }

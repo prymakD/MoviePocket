@@ -4,6 +4,7 @@
     height: 92vh;
     background-size: cover;
     position: relative;
+    justify-content: center;
     z-index: 1;
 }
 
@@ -21,8 +22,18 @@
 }
 
 .user-info-container {
-    padding-left: 20%;
-    padding-right: 20%;
+    height: 500px;
+    width: 500px;
+    background-color: rgba(0, 0, 0, 0.8);
+    border-radius: 3vh;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    margin-top: 10vh;
+}
+
+.text-info-container {
+    margin-left: 10vh;
 }
 
 

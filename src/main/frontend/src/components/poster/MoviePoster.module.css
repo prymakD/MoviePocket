@@ -1,5 +1,5 @@
 .default {
-    height: 30vh;
+    height: 300px;
     width: auto;
     border: 1px solid whitesmoke;
     transition: border-color 0.3s ease;

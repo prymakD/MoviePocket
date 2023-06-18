@@ -6,6 +6,7 @@ import com.moviePocket.service.UserService;
 import com.moviePocket.service.movie.list.MovieListService;
 import com.moviePocket.service.movie.rating.DislikedMovieService;
 import com.moviePocket.service.movie.rating.FavoriteMovieService;
+import com.moviePocket.service.movie.rating.RatingMovieService;
 import com.moviePocket.service.movie.rating.WatchedMovieService;
 import com.moviePocket.service.movie.raview.MovieReviewService;
 import lombok.RequiredArgsConstructor;
@@ -29,6 +30,7 @@ public class UserController {
     public final FavoriteMovieService favoriteMovieService;
     public final DislikedMovieService dislikedMovieService;
     public final WatchedMovieService watchedMovieService;
+    public final RatingMovieService ratingMovieService;
 
     @GetMapping("/getAut")
     public ResponseEntity<Void> checkAuthentication() {
@@ -60,7 +62,8 @@ public class UserController {
                 movieReviewService.getAllByUser(user.getEmail()).getBody(),
                 favoriteMovieService.getAllUserFavoriteMovies(user.getEmail()).getBody(),
                 dislikedMovieService.getAllUserDislikedMovie(user.getEmail()).getBody(),
-                watchedMovieService.getAllUserWatched(user.getEmail()).getBody()
+                watchedMovieService.getAllUserWatched(user.getEmail()).getBody(),
+                ratingMovieService.getAllUserRatingMovie(user.getEmail()).getBody()
         );
         return new ResponseEntity<>(parsUserPage, HttpStatus.OK);
     }
