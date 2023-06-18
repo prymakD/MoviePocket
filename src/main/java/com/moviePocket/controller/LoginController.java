@@ -88,13 +88,7 @@ public class LoginController {
             @ApiResponse(code = 409, message = "User activation code is not found"),
     })
     @GetMapping("/activate/{code}")
-    public String activate(Model model, @PathVariable String code) {
-        boolean isActivated = userService.activateUser(code);
-        if (isActivated) {
-            model.addAttribute("message", "User successfully activated");
-        } else {
-            model.addAttribute("message", "Activation code is not found!");
-        }
-        return "login";
+    public ResponseEntity<Void> activate(Model model, @PathVariable String code) {
+        return userService.activateUser(code);
     }
 }

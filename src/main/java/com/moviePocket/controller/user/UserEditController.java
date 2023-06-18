@@ -100,4 +100,5 @@ public class UserEditController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return userService.setNewBio(authentication.getName(), bio);
     }
+
 }

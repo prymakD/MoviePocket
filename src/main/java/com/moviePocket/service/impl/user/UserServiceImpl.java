@@ -76,12 +76,12 @@ public class UserServiceImpl implements UserService {
     public ResponseEntity<Void> setNewLostPassword(String token, String password1, String password2) {
         User user = userRepository.findByTokenLostPassword(token);
         if (user == null)
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         else if (!user.getEmailVerification())
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         else if (!user.getTokenLostPassword().equals(token))
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-        else if (password1.equals(password2))
+        else if (!password1.equals(password2))
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         else {
             user.setPassword(passwordEncoder.encode(password1));
@@ -122,86 +122,78 @@ public class UserServiceImpl implements UserService {
     }
 
     public ResponseEntity<Void> setNewBio(String email, String bio) {
-        try {
-            User user = userRepository.findByEmail(email);
-            if (user != null) {
-                if (bio.isEmpty()) {
-                    throw new MessagingException("Bio cannot be empty");
-                }
-                user.setBio(bio);
-                userRepository.save(user);
-                return ResponseEntity.ok().build();
-            } else {
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-            }
-        } catch (MessagingException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        User user = userRepository.findByEmail(email);
+        if (user == null)
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        if (bio.isEmpty())
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        else {
+            user.setBio(bio);
+            userRepository.save(user);
+            return new ResponseEntity<>(HttpStatus.OK);
         }
     }
 
-    @Override
-    public boolean setTokenPassword(String mail) throws MessagingException {
+    public ResponseEntity<Void> setTokenPassword(String mail) throws MessagingException {
         User user = userRepository.findByEmail(mail);
-        if (user != null && user.getEmailVerification()) {
+        if (user == null)
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        else {
             user.setTokenLostPassword(UUID.randomUUID().toString());
             userRepository.save(user);
-
             String username = user.getUsername();
             String link = "http://localhost:8080/lostpassword/reset?token=" + user.getTokenLostPassword();
             String massage = "You are just in the middle of having your new password. \n Please confirm your new email address.";
-
             emailSenderService.sendMailWithAttachment(user.getEmail(), buildEmail(username, massage, link), "Password Recovery");
-
-
-            return true;
+            return new ResponseEntity<>(HttpStatus.OK);
         }
-        return false;
     }
 
     public ResponseEntity<Void> setTokenEmail(String email, String newEmail) throws MessagingException {
-        // User user = userRepository.findByEmail(email);
-//        if (user == null)
-//            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-//        else if (email.equals(newEmail))
-//            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-//        else {
-//            user.setNewEmail(newEmail);
-//            user.setNewEmailToken(UUID.randomUUID().toString());
-//            userRepository.save(user);
-//
-//            String username = user.getUsername();
-//            String link = "http://localhost:8080/user/edit/newemail/" + user.getNewEmailToken();
-//            String massage = "You are just in the middle of setting up your new email address. \n Please confirm your new email address.";
-//
-//            emailSenderService.sendMailWithAttachment(user.getNewEmail(), buildEmail(username, massage, link), "New Mail Confirmation");
-//            return new ResponseEntity<>(HttpStatus.OK);
-//        }
-        return new ResponseEntity<>(HttpStatus.OK);
+        User user = userRepository.findByEmail(email);
+        if (user == null)
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        else if (email.equals(newEmail))
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        else {
+            user.setNewEmail(newEmail);
+            user.setNewEmailToken(UUID.randomUUID().toString());
+            userRepository.save(user);
+
+            String username = user.getUsername();
+            String link = "http://localhost:8080/user/edit/newemail/" + user.getNewEmailToken();
+            String massage = "You are just in the middle of setting up your new email address. \n Please confirm your new email address.";
+
+            emailSenderService.sendMailWithAttachment(user.getNewEmail(), buildEmail(username, massage, link), "New Mail Confirmation");
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
     }
 
     @Override
     public ResponseEntity<Void> activateNewEmail(String token) {
         User user = userRepository.findByNewEmailToken(token);
-        if (user != null) {
+        if (user == null)
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        else {
             user.setEmail(user.getNewEmail());
             user.setNewEmail(null);
             user.setNewEmailToken(null);
             userRepository.save(user);
             return ResponseEntity.status(HttpStatus.OK).build();
         }
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }
 
     @Override
-    public boolean activateUser(String code) {
+    public ResponseEntity<Void> activateUser(String code) {
         User user = userRepository.findByActivationCode(code);
-        if (user != null) {
+        if (user == null)
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        else {
             user.setEmailVerification(Boolean.TRUE);
             user.setActivationCode(null);
             userRepository.save(user);
-            return true;
-        } else
-            return false;
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
     }
 
     @Override

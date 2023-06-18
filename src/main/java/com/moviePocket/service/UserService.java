@@ -14,9 +14,9 @@ public interface UserService extends UserDetailsService {
 
     User findUserByEmail(String email);
 
-    boolean activateUser(String code);
+    ResponseEntity<Void> activateUser(String code);
 
-    boolean setTokenPassword(String mail) throws MessagingException;
+    ResponseEntity<Void> setTokenPassword(String mail) throws MessagingException;
 
     ResponseEntity<Void> setNewLostPassword(String token, String password1, String password2);
 
