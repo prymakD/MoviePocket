@@ -25,5 +25,6 @@ public class ParsUserPage {
     private List<Long> likeMovie;
     private List<Long> dislikeMovie;
     private List<Long> watchedMovie;
+    private List<Long> toWatchMovie;
     private List<Rating> ratingMovie;
 }

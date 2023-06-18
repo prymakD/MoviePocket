@@ -55,6 +55,8 @@ const UserPage = () => {
                         className="yellow-text">{user.likeMovie ? user.likeMovie.length : 0}</span></p>
                     <p className="blue-text">Total Watched Movies: <span
                         className="yellow-text">{user.watchedMovie ? user.watchedMovie.length : 0}</span></p>
+                    <p className="blue-text">Total ToWatch Movies: <span
+                        className="yellow-text">{user.toWatchMovie ? user.toWatchMovie.length : 0}</span></p>
                     <p className="blue-text">Total Disliked Movies: <span
                         className="yellow-text">{user.dislikeMovie ? user.dislikeMovie.length : 0}</span></p>
                     <p className="blue-text">Total Rating: <span
