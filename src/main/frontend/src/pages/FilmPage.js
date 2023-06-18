@@ -130,7 +130,7 @@ const FilmPage = () => {
                 </div>
                 <CreateReviewForm movieId={movie.id} updateReviews={getReviews()} />
                 <div className="review-list">
-                    <h2>All Reviews</h2>
+                    <h2 color="#F1B36E">All Reviews</h2>
                     {reviews.map((review) => (
                         <div className="single-review" key={review.id}>
                             <Userbar/>
@@ -140,10 +140,10 @@ const FilmPage = () => {
                                 </p>
                                 <h3>{review.title}</h3>
                                 <p>{review.content}</p>
-                                <button
-                                    className="delete-review-button"
-                                    onClick={() => handleDelete(review.id)}>Delete Review
-                                </button>
+                                {/*<button*/}
+                                {/*    className="delete-review-button"*/}
+                                {/*    onClick={() => handleDelete(review.id)}>Delete Review*/}
+                                {/*</button>*/}
                             </div>
 
                         </div>

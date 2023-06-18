@@ -69,9 +69,11 @@
 }
 
 .single-review {
+    border: 2px solid #F1B36E;
+    border-radius: 5vh;
     margin-top: 3vh;
     display: flex;
-    border-bottom: 1px solid gray;
+    padding: 2vh;
 }
 
 .review-content {
