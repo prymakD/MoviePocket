@@ -16,6 +16,8 @@ const Navlist = () => {
             {!isLoggedIn
                 &&
                 (<li className="NavListItem"><Link to="/login" className="NavListLink">SIGN IN</Link></li>)
+            }
+            {!isLoggedIn
                 &&
                 (<li className="NavListItem"><Link to="/registration" className="NavListLink">CREATE ACCOUNT</Link></li>)
             }

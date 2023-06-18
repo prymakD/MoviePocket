@@ -1,10 +1,12 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import PropTypes from 'prop-types';
 import styles from './FavoriteMovieButton.module.css';
 import {getFavoriteMovie, postFavoriteMovie} from '../../api/server/FavoriteMovieAPI';
+import {AuthContext} from "../../App";
 
 const FavoriteMovieButton = ({ idMovie, className }) => {
     const [favorite, setFavorite] = useState(false);
+    const isLoggedIn = useContext(AuthContext);
 
     const getFavouriteMovieState = async () => {
         try {
@@ -16,15 +18,19 @@ const FavoriteMovieButton = ({ idMovie, className }) => {
     };
 
     useEffect(() => {
-        getFavouriteMovieState().then();
+        getFavouriteMovieState().then()
     }, [idMovie]);
 
     const handleClick = async () => {
-        setFavorite(!favorite)
-        try {
-            const response = await postFavoriteMovie(idMovie);
-        } catch (error) {
-            console.log(error);
+        if (isLoggedIn) {
+            setFavorite(!favorite)
+            try {
+                await postFavoriteMovie(idMovie);
+            } catch (error) {
+                console.log(error);
+            }
+        } else {
+            window.location.href = '/login'
         }
     };
 

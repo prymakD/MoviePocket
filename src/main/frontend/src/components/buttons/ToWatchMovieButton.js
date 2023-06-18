@@ -1,10 +1,12 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import PropTypes from 'prop-types';
 import styles from './ToWatchMovieButton.module.css';
 import {getToWatch, postToWatchMovie} from '../../api/server/ToWatchMovieAPI';
+import {AuthContext} from "../../App";
 
 const ToWatchMovieButton = ({idMovie, className}) => {
     const [toWatch, setToWatch] = useState(false);
+    const isLoggedIn = useContext(AuthContext);
 
     const getToWatchMovieState = async () => {
         try {
@@ -16,17 +18,21 @@ const ToWatchMovieButton = ({idMovie, className}) => {
     };
 
     useEffect(() => {
-        getToWatchMovieState().then();
+        getToWatchMovieState().then()
     }, [idMovie]);
 
     const handleClick = async () => {
-        setToWatch(!toWatch)
-        try {
-            const response = await postToWatchMovie(idMovie);
-        } catch (error) {
-            console.log(error);
+        if (isLoggedIn) {
+            setToWatch(!toWatch)
+            try {
+                await postToWatchMovie(idMovie);
+            } catch (error) {
+                console.log(error);
+            }
+        } else {
+            window.location.href = '/login'
         }
-    };
+    }
 
     const getToWatchImage = () => {
         if (toWatch) {

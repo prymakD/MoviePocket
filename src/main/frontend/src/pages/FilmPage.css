@@ -72,39 +72,6 @@
     margin-top: 40px;
 }
 
-.review-container h2 {
-    font-size: 24px;
-    margin-bottom: 10px;
-}
-
-.review-container form {
-    display: flex;
-    flex-direction: column;
-    margin-top: 20px;
-}
-
-.review-container input,
-.review-container textarea {
-    padding: 10px;
-    margin-bottom: 10px;
-}
-
-.review-container textarea {
-    height: 150px;
-}
-
-.review-container button {
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    cursor: pointer;
-}
-
-.review-container button:hover {
-    background-color: #0069d9;
-}
-
 .single-review {
     margin-top: 3vh;
     display: flex;

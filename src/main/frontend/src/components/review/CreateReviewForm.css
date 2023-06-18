@@ -1,0 +1,37 @@
+.review-form-container {
+    margin-top: 20px;
+}
+
+.review-form-container h2 {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.review-form-container form {
+    display: flex;
+    flex-direction: column;
+    max-width: 500px;
+}
+
+.review-form-container input[type="text"],
+.review-form-container textarea {
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.review-form-container textarea {
+    height: 100px;
+}
+
+.review-form-container button[type="submit"] {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+}
+
+.review-form-container button[type="submit"]:hover {
+    background-color: #0056b3;
+}
