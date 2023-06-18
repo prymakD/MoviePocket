@@ -25,7 +25,7 @@ const LoginPage = () => {
             if (response) {
                 window.location.href = '/'
             } else {
-
+                console.log(response)
             }
         } catch (error) {
             console.log(error);

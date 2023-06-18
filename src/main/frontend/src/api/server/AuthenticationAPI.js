@@ -16,8 +16,13 @@ export const postLogin = async (email, password) => {
             {withCredentials: true}
         );
         const authToken = response.headers['set-cookie'];
-        // Save cookie on the client
-        document.cookie = `authToken=${authToken.join(';')}`;
+
+        if (Array.isArray(authToken)) {
+            const cookieValue = authToken.join(';');
+            document.cookie = `authToken=${cookieValue}`;
+        } else if (typeof authToken === 'string') {
+            document.cookie = `authToken=${authToken}`;
+        }
         return true
     } catch (err) {
         console.log(err);
