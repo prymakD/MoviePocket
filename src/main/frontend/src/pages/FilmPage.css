@@ -38,10 +38,6 @@
     z-index: 2;
 }
 
-.film-poster {
-    width: 200px;
-    z-index: auto;
-}
 
 .film-details {
     margin-top: -10px;

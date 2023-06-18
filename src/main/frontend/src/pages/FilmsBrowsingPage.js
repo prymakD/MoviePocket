@@ -54,7 +54,7 @@ const FilmsBrowsingPage = () => {
 
     return (
         <div className="films-browser-container">
-            <h1>Movie Browser</h1>
+            <h1 className="blue-text">Movie Browser</h1>
             <div className="films-browser-list">
                 {movies.map(movie => (
                     <div className="film-browser-card" key={movie.id}>
@@ -66,24 +66,31 @@ const FilmsBrowsingPage = () => {
                             <div className="film-poster-buttons">
                                 <WatchMovieButton
                                     idMovie={movie.id}
-                                    className={styles.watched}/>
+                                    className={styles.watched}
+                                />
                                 <FavoriteMovieButton
                                     idMovie={movie.id}
-                                    className={styles.favorite}/>
+                                    className={styles.favorite}
+                                />
                                 <ToWatchMovieButton
                                     idMovie={movie.id}
-                                    className={styles.toWatch}/>
+                                    className={styles.toWatch}
+                                />
                             </div>
                         </div>
                         <div className="film-browser-info">
                             <div className="film-browser-title">
                                 <Link to={`/film/${movie.id}`}>
-                                    <p style={{fontSize: '18px'}}>{movie.title}</p>
+                                    <p className="yellow-text">{movie.title}</p>
                                 </Link>
-                                <p style={{fontSize: '12px'}}>{movie.release_date.split('-')[0]}</p>
-                                {movie.genres && movie.genres.length > 0 && (
-                                    <p style={{fontSize: '14px'}}>Genres: {movie.genres.map((genre) => genre.name).join(", ")}</p>
-                                )}
+                                <div className="release-date-button">
+                                    <p style={{fontSize: '12px'}}>{movie.release_date.split('-')[0]}</p>
+                                    {movie.genres && movie.genres.length > 0 && (
+                                        <p style={{fontSize: '14px'}}>Genres: {movie.genres.map((genre) => genre.name).join(", ")}</p>
+                                    )}
+
+                                </div>
+
                             </div>
                         </div>
                     </div>
