@@ -86,10 +86,14 @@
 }
 
 .delete-review-button {
-    width: 25vh;
-    height: 13vh;
-    font-size: 14px;
-    margin-bottom: 3vh;
+    width: 4vh;
+    height: 4vh;
+    display: flex;
+    margin-left: auto;
+}
+
+.delete-review-button:hover {
+    color: #E4416A;
 }
 
 .logo-text {
