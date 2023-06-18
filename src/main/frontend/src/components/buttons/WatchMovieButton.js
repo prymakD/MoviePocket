@@ -1,12 +1,14 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import PropTypes from 'prop-types';
 import styles from './WatchMovieButton.module.css';
 import {getWatchedMovie, postWatchedMovie} from "../../api/server/WatchedMovieAPI";
+import {AuthContext} from "../../App";
 
 const WatchMovieButton = ({ idMovie, className }) => {
     const [watched, setWatched] = useState(false);
     const [isHovered, setIsHovered] = useState(false);
     const [isClicked, setIsClicked] = useState(false);
+    const isLoggedIn = useContext(AuthContext);
 
     const getWatchedMovieState = async () => {
         try {
@@ -18,18 +20,22 @@ const WatchMovieButton = ({ idMovie, className }) => {
     };
 
     useEffect(() => {
-        getWatchedMovieState().then();
+        getWatchedMovieState().then()
     }, [idMovie]);
 
     const handleClick = async () => {
-        setWatched(!watched)
-        setIsClicked(true);
-        try {
-            const response = await postWatchedMovie(idMovie);
-        } catch (error) {
-            console.log(error);
+        if (isLoggedIn){
+            setWatched(!watched)
+            setIsClicked(true);
+            try {
+                await postWatchedMovie(idMovie);
+            } catch (error) {
+                console.log(error);
+            }
+        } else {
+            window.location.href = '/login'
         }
-    };
+    }
 
     const handleMouseEnter = () => {
         setIsHovered(true);

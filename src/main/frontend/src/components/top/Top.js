@@ -4,7 +4,6 @@ import {Link} from "react-router-dom";
 
 const Top = ({movies}) => {
     const path = 'https://www.themoviedb.org/t/p/w220_and_h330_face';
-    //const temp = 'https://alienhive.pl/wp-content/uploads/2020/09/film-diuna-2020-dune.jpg'
     return (
         <div className='movie-carousel-container'>
             <Carousel indicators={false}>
