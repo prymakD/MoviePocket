@@ -2,7 +2,7 @@ import {useParams} from 'react-router-dom';
 import {useContext, useEffect, useState} from 'react';
 import ReactPlayer from 'react-player';
 import './FilmPage.css';
-import {delReview, getAllReview} from "../api/server/ReviewAPI";
+import {getAllReview} from "../api/server/ReviewAPI";
 import {getMovieBackDropImage, getMovieDetails, getMovieTrailer} from "../api/tmdb/MovieAPI";
 import WatchMovieButton from "../components/buttons/WatchMovieButton";
 import styles from "./FilmPage.module.css";
@@ -11,7 +11,8 @@ import Userbar from "../components/navbar/Userbar";
 import ToWatchMovieButton from "../components/buttons/ToWatchMovieButton";
 import MoviePoster from "../components/poster/MoviePoster";
 import CreateReviewForm from "../components/review/CreateReviewForm";
-import {AuthContext} from "../App";
+import {AuthContext, UsernameContext} from "../App";
+import SingleReview from "../components/review/SingleReview";
 
 const FilmPage = () => {
     const {id} = useParams();
@@ -21,17 +22,9 @@ const FilmPage = () => {
     const [trailer, setTrailer] = useState('');
     const [reviews, setReviews] = useState([]);
     const isLoggedIn = useContext(AuthContext);
+    const username = useContext(UsernameContext);
 
     const path = 'https://www.themoviedb.org/t/p/w220_and_h330_face';
-
-    const handleDelete = async (idReview) => {
-        try {
-            const response = await delReview(idReview);
-            await getReviews();
-        } catch (error) {
-            console.log(error);
-        }
-    };
 
     const getMovie = async () => {
         try {
@@ -64,7 +57,7 @@ const FilmPage = () => {
     const getReviews = async () => {
         try {
             const response = await getAllReview(id);
-            if (response) setReviews(response);
+            if (response) setReviews(response.reverse());
         } catch (error) {
             console.log(error);
         }
@@ -88,7 +81,8 @@ const FilmPage = () => {
                     <div className="movie-like-contaner">
                         <div className="film-poster">
                             <MoviePoster
-                            movie={movie}/>
+                            movie={movie}
+                            />
                         </div>
                         <div className="like-container">
                             <WatchMovieButton
@@ -128,31 +122,17 @@ const FilmPage = () => {
                 </div>
                 {isLoggedIn
                     &&
-                    <CreateReviewForm movieId={movie.id} updateReviews={getReviews()} />
+                    <CreateReviewForm
+                        movieId={movie.id}
+                        updateReviews={getReviews}
+                    />
                 }
                 <div className="review-list">
                     <h2 color="#F1B36E">All Reviews</h2>
                     {reviews.map((review) => (
-                        <div className="single-review" key={review.id}>
-                            <Userbar/>
-                            <div className="review-content">
-                                <h>
-                                    Review by <strong className="logo-text">{review.username}</strong>
-                                    <p className="blue-text">Created: <span
-                                        className="yellow-text">{review.dataCreated ? new Date(review.dataCreated).toLocaleDateString() : '0'}</span>
-                                    </p>
-                                </h>
-                                <h3>{review.title}</h3>
-                                <p>{review.content}</p>
-                            </div>
-                            <div className='delete-review-button'>
-                                <img
-                                    src="https://github.com/prymakD/MoviePocket/raw/c93b14bd6de8d7960d20287b6cd87ba2d3197dcd/src/main/frontend/src/images/trash_blue.png"
-                                    alt="USER"
-                                    onClick={() => handleDelete(review.id)}
-                                />
-                            </div>
-                        </div>
+                        <SingleReview
+                            review={review}
+                        />
                     ))}
                 </div>
             </div>

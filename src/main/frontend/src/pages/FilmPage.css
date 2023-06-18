@@ -76,26 +76,7 @@
     padding: 2vh;
 }
 
-.review-content {
-    margin-left: 2vh;
-}
-
 .user-profile {
     width: 7vh;
     height: 7vh;
-}
-
-.delete-review-button {
-    width: 4vh;
-    height: 4vh;
-    display: flex;
-    margin-left: auto;
-}
-
-.delete-review-button:hover {
-    color: #E4416A;
-}
-
-.logo-text {
-    color: #E4416A;
 }

@@ -1,0 +1,15 @@
+.singleReview {
+    border: 2px solid #F1B36E;
+    border-radius: 5vh;
+    margin-top: 3vh;
+    display: flex;
+    padding: 2vh;
+}
+
+.reviewContent {
+    margin-left: 2vh;
+}
+
+.logoText {
+    color: #E4416A;
+}

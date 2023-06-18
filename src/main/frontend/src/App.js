@@ -11,7 +11,7 @@ import FilmsBrowsingPage from "./pages/FilmsBrowsingPage";
 import LoginPage from "./pages/LoginPage";
 import LostPasswordPage from "./pages/LostPasswordPage"
 import {createContext, useEffect, useState} from "react";
-import {checkAuth} from "./api/server/UserAPI";
+import {checkAuth, getUsernameByAuth} from "./api/server/UserAPI";
 import UserPage from "./pages/UserPage";
 import UserWatchedPage from "./pages/UserWatchedPage";
 import UserFavoritePage from "./pages/UserFavoritePage";
@@ -19,15 +19,19 @@ import {ToastContainer} from "react-bootstrap";
 
 
 export const AuthContext = createContext(null)
+export const UsernameContext = createContext(null)
 const App = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(null);
+    const [username, setUsername] = useState(null);
+
+    const authenticate = async () => {
+        const isAuthenticated = await checkAuth();
+        setIsLoggedIn(isAuthenticated);
+        const name = await getUsernameByAuth();
+        setUsername(name);
+    };
 
     useEffect(() => {
-        const authenticate = async () => {
-            const isAuthenticated = await checkAuth();
-            setIsLoggedIn(isAuthenticated);
-        };
-
         authenticate().then();
     }, []);
 
@@ -39,70 +43,72 @@ const App = () => {
     return (
         <div className="App">
             <AuthContext.Provider value={isLoggedIn}>
-                <Routes>
-                    <Route path='/' element={<Layout isLogged={isLoggedIn}/>}>
-                        <Route index element={<Home />}></Route>
-                        {/* For not logged in */}
-                        <Route
-                            path='/registration'
-                            element={
-                                isLoggedIn ?
-                                    (<Navigate to="/" replace/>)
-                                    :
-                                    (<RegistrationPage />)
-                                }
-                        />
-                        <Route
-                            path='/login'
-                            element={
-                                isLoggedIn ?
-                                    (<Navigate to="/" replace/>)
-                                    :
-                                    (<LoginPage />)
-                                }
-                        />
-                        {/* For logged in */}
-                        <Route
-                            path='/forgotPassword'
-                            element={
-                                !isLoggedIn ?
-                                    (<Navigate to="/" replace/>)
-                                    :
-                                    (<LostPasswordPage />)
-                                }
-                        />
-                        <Route
-                            path='/settings'
-                            element={
-                                !isLoggedIn ?
-                                    (<Navigate to="/" replace/>)
-                                    :
-                                    (<SettingsPage />)
-                                }
-                        />
-                        {/* For everyone */}
-                        <Route
-                            path='films/:currentPage'
-                            element={<FilmsBrowsingPage />}
-                        />
-                        <Route
-                            path='film/:id'
-                            element={<FilmPage />}
-                        />
-                        <Route
-                            path='user/:username'
-                            element={<UserPage />}
-                        />
-                        <Route
-                            path='user/:username/favorite'
-                            element={<UserFavoritePage/>}
-                        />
-                        <Route
-                            path='user/:username/watched'
-                            element={<UserWatchedPage/>}
-                        />
-                    </Route>
-                </Routes>
+                <UsernameContext.Provider value={username}>
+                    <Routes>
+                        <Route path='/' element={<Layout isLogged={isLoggedIn}/>}>
+                            <Route index element={<Home />}></Route>
+                            {/* For not logged in */}
+                            <Route
+                                path='/registration'
+                                element={
+                                    isLoggedIn ?
+                                        (<Navigate to="/" replace/>)
+                                        :
+                                        (<RegistrationPage />)
+                                    }
+                            />
+                            <Route
+                                path='/login'
+                                element={
+                                    isLoggedIn ?
+                                        (<Navigate to="/" replace/>)
+                                        :
+                                        (<LoginPage />)
+                                    }
+                            />
+                            {/* For logged in */}
+                            <Route
+                                path='/forgotPassword'
+                                element={
+                                    !isLoggedIn ?
+                                        (<Navigate to="/" replace/>)
+                                        :
+                                        (<LostPasswordPage />)
+                                    }
+                            />
+                            <Route
+                                path='/settings'
+                                element={
+                                    !isLoggedIn ?
+                                        (<Navigate to="/" replace/>)
+                                        :
+                                        (<SettingsPage />)
+                                    }
+                            />
+                            {/* For everyone */}
+                            <Route
+                                path='films/:currentPage'
+                                element={<FilmsBrowsingPage />}
+                            />
+                            <Route
+                                path='film/:id'
+                                element={<FilmPage />}
+                            />
+                            <Route
+                                path='user/:username'
+                                element={<UserPage />}
+                            />
+                            <Route
+                                path='user/:username/favorite'
+                                element={<UserFavoritePage/>}
+                            />
+                            <Route
+                                path='user/:username/watched'
+                                element={<UserWatchedPage/>}
+                            />
+                        </Route>
+                    </Routes>
+                </UsernameContext.Provider>
             </AuthContext.Provider>
             <ToastContainer/>
         </div>

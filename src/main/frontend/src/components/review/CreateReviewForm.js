@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {postReview} from "../../api/server/ReviewAPI";
 import "./CreateReviewForm.css"
+import PropTypes from "prop-types";
 
 
 const CreateReviewForm = ({ movieId, updateReviews }) => {
@@ -52,6 +53,11 @@ const CreateReviewForm = ({ movieId, updateReviews }) => {
             </div>
         </div>
     );
+};
+
+CreateReviewForm.propTypes = {
+    movieId: PropTypes.number.isRequired,
+    updateReviews: PropTypes.func.isRequired,
 };
 
 export default CreateReviewForm;
