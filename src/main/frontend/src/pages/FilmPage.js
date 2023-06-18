@@ -143,12 +143,14 @@ const FilmPage = () => {
                                 </h>
                                 <h3>{review.title}</h3>
                                 <p>{review.content}</p>
-                                {/*<button*/}
-                                {/*    className="delete-review-button"*/}
-                                {/*    onClick={() => handleDelete(review.id)}>Delete Review*/}
-                                {/*</button>*/}
                             </div>
-
+                            <div className='delete-review-button'>
+                                <img
+                                    src="https://github.com/prymakD/MoviePocket/raw/c93b14bd6de8d7960d20287b6cd87ba2d3197dcd/src/main/frontend/src/images/trash_blue.png"
+                                    alt="USER"
+                                    onClick={() => handleDelete(review.id)}
+                                />
+                            </div>
                         </div>
                     ))}
                 </div>
