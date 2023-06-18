@@ -8,6 +8,8 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -36,29 +38,48 @@ public class LoginController {
 
     @ApiOperation(value = "Register a user ", notes = "Registration with username, password(with validation) and email, email and username should be unique, cookie based")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Successfully registered"),
-            @ApiResponse(code = 409, message = "User already registered"),
-            @ApiResponse(code = 400, message = "Password does not match the criteria")
+            @ApiResponse(code = 201, message = "Successfully registered"),
+            @ApiResponse(code = 403, message = "User already registered"),
+            @ApiResponse(code = 400, message = "Password does not match the criteria"),
+            @ApiResponse(code = 404, message = "Username or email is empty"),
+            @ApiResponse(code = 401, message = "Username is already occupied")
+
+
     })
     @PostMapping("/registration")
-    public String registration(
-            @Valid @ModelAttribute("user") UserRegistrationDto userDto,
-            BindingResult result,
-            Model model) throws MessagingException {
-        User existingUser = userService.findUserByEmail(userDto.getEmail());
+    public ResponseEntity<?> registration(
+            @Valid @ModelAttribute("user") UserRegistrationDto userDto, BindingResult result) throws MessagingException {
+        User existingUser = userService.findUserByUsername(userDto.getUsername());
 
-
+        if ((existingUser != null) && existingUser.isAccountActive()) {
+            System.out.println(existingUser);
+            System.out.println(existingUser.isAccountActive());
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+        //403
         if (existingUser != null)
-            result.rejectValue("email", null,
-                    "User already registered !!!");
+            return new ResponseEntity<>("User already registered !!!", HttpStatus.FORBIDDEN);
 
-        if (result.hasErrors()) {
-            model.addAttribute("user", userDto);
-            return "/registration";
+        //400
+        if (result.hasFieldErrors("password")) {
+            String passwordErrorMessage = result.getFieldError("password").getDefaultMessage();
+            // Handle the password validation error, e.g., add a custom message to the response
+            return new ResponseEntity<>(passwordErrorMessage, HttpStatus.BAD_REQUEST);
         }
 
+        //404
+        if (userDto.getUsername().isEmpty() || userDto.getEmail().isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        //404
+        if (result.hasErrors()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        //201
         userService.save(userDto);
-        return "redirect:/registration?success";
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @ApiOperation(value = "Activate a user by email", notes = "Link is sent to the email after registration, returns whether user is activated(confirmed his/her mail or not ")

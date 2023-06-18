@@ -112,7 +112,7 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findByEmail(email);
         if (user == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        } else if (userRepository.existsByUsername(username)) {
+        } else if (userRepository.existsByUsername(username) && user.isAccountActive()) {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         } else {
             user.setUsername(username);

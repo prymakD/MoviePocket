@@ -39,14 +39,11 @@ export const postRegistration = async (username, email, password) => {
         password: password,
     }
 
-    try {
-        const response = await axios.post(
-            'http://localhost:8080/registration',
-            queryString.stringify(params));
-        return response.data;
-    } catch (error) {
-        console.error('Error occurred during registration:', error);
-    }
+    const response = await axios.post(
+        'http://localhost:8080/registration',
+        queryString.stringify(params));
+    return response;
+
 };
 
 // not ready function

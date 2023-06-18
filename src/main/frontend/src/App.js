@@ -15,6 +15,7 @@ import {checkAuth} from "./api/server/UserAPI";
 import UserPage from "./pages/UserPage";
 import UserWatchedPage from "./pages/UserWatchedPage";
 import UserFavoritePage from "./pages/UserFavoritePage";
+import {ToastContainer} from "react-bootstrap";
 
 
 export const AuthContext = createContext(null)
@@ -94,15 +95,16 @@ const App = () => {
                         />
                         <Route
                             path='user/:username/favorite'
-                            element={<UserFavoritePage />}
+                            element={<UserFavoritePage/>}
                         />
                         <Route
                             path='user/:username/watched'
-                            element={<UserWatchedPage />}
+                            element={<UserWatchedPage/>}
                         />
                     </Route>
                 </Routes>
             </AuthContext.Provider>
+            <ToastContainer/>
         </div>
     );
 }
