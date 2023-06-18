@@ -16,7 +16,6 @@ const FilmsBrowsingPage = () => {
 
     const [movies, setMovies] = useState([]);
     const [totalPages, setTotalPages] = useState(6);
-    const path = 'https://www.themoviedb.org/t/p/w220_and_h330_face';
 
     const getMovieList = async (page) => {
         try {
@@ -36,10 +35,6 @@ const FilmsBrowsingPage = () => {
         }
     };
 
-    useEffect(() => {
-        getMovieList(currentPage).then();
-    }, [currentPage]);
-
     const handlePreviousPage = () => {
         if (parseInt(currentPage) > 1) {
             navigate(`/films/${parseInt(currentPage) - 1}`);
@@ -51,6 +46,10 @@ const FilmsBrowsingPage = () => {
             navigate(`/films/${parseInt(currentPage) + 1}`);
         }
     };
+
+    useEffect(() => {
+        getMovieList(currentPage).then();
+    }, [currentPage]);
 
     return (
         <div className="films-browser-container">

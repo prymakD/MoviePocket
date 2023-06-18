@@ -46,17 +46,19 @@ export const postRegistration = async (username, email, password) => {
 
 };
 
-// not ready function
+// log out
 export const postLogout = async () => {
 
-    const options = {
+    const params = {
         withCredentials: true
     }
 
     try {
-        const response = await axios.get(
-            'http://localhost:8080/user',
-            options);
+        const response = await axios.post(
+            'http://localhost:8080/logout',
+            queryString.stringify(params),
+            {withCredentials: true}
+        );
         return response.data;
     } catch (error) {
         console.error('Error occurred during logout:', error);
