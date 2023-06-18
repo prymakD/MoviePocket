@@ -1,5 +1,5 @@
 import {useParams} from 'react-router-dom';
-import {useEffect, useState} from 'react';
+import {useContext, useEffect, useState} from 'react';
 import ReactPlayer from 'react-player';
 import './FilmPage.css';
 import {delReview, getAllReview} from "../api/server/ReviewAPI";
@@ -11,6 +11,7 @@ import Userbar from "../components/navbar/Userbar";
 import ToWatchMovieButton from "../components/buttons/ToWatchMovieButton";
 import MoviePoster from "../components/poster/MoviePoster";
 import CreateReviewForm from "../components/review/CreateReviewForm";
+import {AuthContext} from "../App";
 
 const FilmPage = () => {
     const {id} = useParams();
@@ -19,6 +20,7 @@ const FilmPage = () => {
     const [back, setBack] = useState([]);
     const [trailer, setTrailer] = useState('');
     const [reviews, setReviews] = useState([]);
+    const isLoggedIn = useContext(AuthContext);
 
     const path = 'https://www.themoviedb.org/t/p/w220_and_h330_face';
 
@@ -66,10 +68,6 @@ const FilmPage = () => {
         } catch (error) {
             console.log(error);
         }
-    };
-
-    const handleReviewSubmit = () => {
-        getReviews().then();
     };
 
     useEffect(() => {
@@ -128,7 +126,10 @@ const FilmPage = () => {
                         />
                     )}
                 </div>
-                <CreateReviewForm movieId={movie.id} updateReviews={getReviews()} />
+                {isLoggedIn
+                    &&
+                    <CreateReviewForm movieId={movie.id} updateReviews={getReviews()} />
+                }
                 <div className="review-list">
                     <h2 color="#F1B36E">All Reviews</h2>
                     {reviews.map((review) => (
