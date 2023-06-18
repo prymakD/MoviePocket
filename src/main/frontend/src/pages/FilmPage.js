@@ -7,11 +7,10 @@ import {getMovieBackDropImage, getMovieDetails, getMovieTrailer} from "../api/tm
 import WatchMovieButton from "../components/buttons/WatchMovieButton";
 import styles from "./FilmPage.module.css";
 import FavoriteMovieButton from "../components/buttons/FavoriteMovieButton";
-import Userbar from "../components/navbar/Userbar";
 import ToWatchMovieButton from "../components/buttons/ToWatchMovieButton";
 import MoviePoster from "../components/poster/MoviePoster";
 import CreateReviewForm from "../components/review/CreateReviewForm";
-import {AuthContext, UsernameContext} from "../App";
+import {AuthContext} from "../App";
 import SingleReview from "../components/review/SingleReview";
 
 const FilmPage = () => {
@@ -22,7 +21,6 @@ const FilmPage = () => {
     const [trailer, setTrailer] = useState('');
     const [reviews, setReviews] = useState([]);
     const isLoggedIn = useContext(AuthContext);
-    const username = useContext(UsernameContext);
 
     const path = 'https://www.themoviedb.org/t/p/w220_and_h330_face';
 
@@ -64,10 +62,11 @@ const FilmPage = () => {
     };
 
     useEffect(() => {
-        getMovie().then();
-        getBack().then();
-        getTrailer().then();
-        getReviews().then();
+
+        getMovie().then()
+        getBack().then()
+        getTrailer().then()
+        getReviews().then()
     }, []);
 
     return (

@@ -5,6 +5,7 @@ import PropTypes from "prop-types";
 
 
 const CreateReviewForm = ({ movieId, updateReviews }) => {
+
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
 
