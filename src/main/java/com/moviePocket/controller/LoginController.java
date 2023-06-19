@@ -50,14 +50,13 @@ public class LoginController {
     public ResponseEntity<?> registration(
             @Valid @ModelAttribute("user") UserRegistrationDto userDto, BindingResult result) throws MessagingException {
         User existingUser = userService.findUserByUsername(userDto.getUsername());
+        User existingUserByMail = userService.findUserByEmail(userDto.getEmail());
 
         if ((existingUser != null) && existingUser.isAccountActive()) {
-            System.out.println(existingUser);
-            System.out.println(existingUser.isAccountActive());
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
         //403
-        if (existingUser != null)
+        if ((existingUser != null) || (existingUserByMail != null))
             return new ResponseEntity<>("User already registered !!!", HttpStatus.FORBIDDEN);
 
         //400
@@ -87,8 +86,8 @@ public class LoginController {
             @ApiResponse(code = 200, message = "User is activated"),
             @ApiResponse(code = 409, message = "User activation code is not found"),
     })
-    @GetMapping("/activate/{code}")
-    public ResponseEntity<Void> activate(Model model, @PathVariable String code) {
-        return userService.activateUser(code);
+    @PostMapping("/activate")
+    public ResponseEntity<Void> activate(@RequestParam("token") String token) {
+        return userService.activateUser(token);
     }
 }
