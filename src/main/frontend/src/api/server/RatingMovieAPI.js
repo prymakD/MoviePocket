@@ -66,7 +66,7 @@ export const getMovieRating = async (idMovie) => {
 
     try {
         const response = await axios.get(
-            `http://localhost:8080/movies/rating/count/rating?MovieId=${idMovie}`,
+            `http://localhost:8080/movies/rating/rating?id=${idMovie}`,
             options
         );
         return response.data;

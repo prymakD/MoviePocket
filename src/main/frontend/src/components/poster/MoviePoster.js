@@ -1,32 +1,54 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import styles from "./MoviePoster.module.css";
+import {getMovieRating} from "../../api/server/RatingMovieAPI";
 
 const MoviePoster = ({ movie, className, responsible }) => {
+    const [rating, setRating] = useState();
     const path_db = "https://www.themoviedb.org/t/p/w220_and_h330_face";
     const path = path_db + movie.poster_path;
 
-    if (responsible) {
-        return (
-            <Link to={`/film/${movie.id}`}>
-                <img
-                    src={path}
-                    className={!className ? styles.default : className}
-                    alt="movie-poster"
-                />
-            </Link>
-        );
-    } else {
-        return (
-            <img
-                src={path}
-                className={!className ? styles.default : className}
-                alt="movie-poster"
-            />
-        );
-    }
-};
+
+    const getRatingMovie = async () => {
+        try {
+            const response = await getMovieRating(movie.id);
+            setRating(response);
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    useEffect(() => {
+        getRatingMovie().then()
+    }, []);
+
+    return (
+        <div>
+            {responsible
+                &&
+                (
+                    <Link to={`/film/${movie.id}`}>
+                        <img
+                            src={path}
+                            className={!className ? styles.default : className}
+                            alt="movie-poster"
+                        />
+                    </Link>
+                )}
+            {!responsible
+                &&
+                (
+                    <img
+                        src={path}
+                        className={!className ? styles.default : className}
+                        alt="movie-poster"
+                    />
+                )}
+            <h1>{rating}</h1>
+        </div>
+    )
+}
 
 MoviePoster.propTypes = {
     movie: PropTypes.object.isRequired,
