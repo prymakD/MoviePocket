@@ -40,10 +40,12 @@ const LikeReviewButton = ({idReview, className}) => {
     };
 
     const getLikeImage = () => {
-        if (!isHovered) {
-            return "https://github.com/prymakD/MoviePocket/raw/c93b14bd6de8d7960d20287b6cd87ba2d3197dcd/src/main/frontend/src/images/trash_blue.png";
+        if (isHovered) {
+            return 'https://github.com/prymakD/MoviePocket/raw/4b60404ce52704d1c756c33139a4c58817bb4f6c/src/main/frontend/src/images/like_blue.png';
+        } else if (like) {
+            return 'https://github.com/prymakD/MoviePocket/raw/4b60404ce52704d1c756c33139a4c58817bb4f6c/src/main/frontend/src/images/like_logo.png';
         } else {
-            return 'https://github.com/prymakD/MoviePocket/raw/c93b14bd6de8d7960d20287b6cd87ba2d3197dcd/src/main/frontend/src/images/trash_logo.png';
+            return 'https://github.com/prymakD/MoviePocket/raw/4b60404ce52704d1c756c33139a4c58817bb4f6c/src/main/frontend/src/images/like_yellow.png';
         }
     };
 
