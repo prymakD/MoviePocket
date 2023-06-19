@@ -88,9 +88,7 @@ const LoginPage = () => {
                         />
                     </div>
                     <button className="button-login_sign_in" type="submit">Sign in</button>
-                    <Link to={`/forgotPassword`}>
-                        <button className="link-primary">Forgot password</button>
-                    </Link>
+                    <Link to="/forgotPassword" className="link-primary">Forgot password</Link>
                 </form>
             </div>
             <ToastContainer/>
