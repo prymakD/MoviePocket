@@ -74,7 +74,7 @@ public class RatingMovieController {
 
     @GetMapping("/rating")
     public ResponseEntity<Double> getMovieRating(@RequestParam("id") Long id) {
-        return ratingMovieService.getAllMovieRating(id);
+        return ratingMovieService.getMovieRating(id);
     }
 
     @GetMapping("/count/rating")

@@ -15,7 +15,7 @@ public interface RatingMovieService {
 
     ResponseEntity<List<Rating>> getAllUserRatingMovie(String email);
 
-    ResponseEntity<Double> getAllMovieRating(Long idFilm);
+    ResponseEntity<Double> getMovieRating(Long idFilm);
 
     ResponseEntity<Integer> getAllCountByIdMovie(Long idMovie);
 }
