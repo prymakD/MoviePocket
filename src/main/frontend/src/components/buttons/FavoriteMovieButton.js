@@ -5,8 +5,8 @@ import {getFavoriteMovie, postFavoriteMovie} from '../../api/server/FavoriteMovi
 import {AuthContext} from "../../App";
 
 const FavoriteMovieButton = ({ idMovie, className }) => {
-    const [favorite, setFavorite] = useState(false);
     const isLoggedIn = useContext(AuthContext);
+    const [favorite, setFavorite] = useState(false);
 
     const getFavouriteMovieState = async () => {
         try {
@@ -16,10 +16,6 @@ const FavoriteMovieButton = ({ idMovie, className }) => {
             console.log(error);
         }
     };
-
-    useEffect(() => {
-        getFavouriteMovieState().then()
-    }, [idMovie]);
 
     const handleClick = async () => {
         if (isLoggedIn) {
@@ -41,6 +37,10 @@ const FavoriteMovieButton = ({ idMovie, className }) => {
             return 'https://github.com/prymakD/MoviePocket/raw/220c79cf7b130a70dff2ad6423b52db5d99650b5/src/main/frontend/src/images/likeFalse.png';
         }
     };
+
+    useEffect(() => {
+        getFavouriteMovieState().then()
+    }, [idMovie]);
 
     return (
         <img

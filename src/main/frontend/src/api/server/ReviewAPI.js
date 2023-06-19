@@ -62,6 +62,24 @@ export const postReviewLike = async (idReview, like) => {
     }
 };
 
+// getLikeReviewByIdMovie
+export const getReviewLike = async (idReview) => {
+
+    const options = {
+        withCredentials: true
+    }
+
+    try {
+        const response = await axios.get(
+            `http://localhost:8080/movies/review/getLike?idReview=${idReview}`,
+            options
+        );
+        return response.data;
+    } catch (err) {
+        console.log(err);
+    }
+};
+
 // setUpdateMovieReview
 export const postReviewUpdate = async (content, idReview, title) => {
 

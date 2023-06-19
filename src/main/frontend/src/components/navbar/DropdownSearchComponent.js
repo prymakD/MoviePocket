@@ -31,11 +31,11 @@ const DropdownSearchComponent = ({ query }) => {
         <div className={styles.DropdownSearchComponent}>
             <ul ref={resultsRef} className={styles.SearchResults}>
                 {searchResults.map((result, index) => (
-                    <li key={index}>
-                        <Link to={`/film/${result.id}`}>
+                    <Link to={`/film/${result.id}`}>
+                        <li key={index}>
                             {result.title}
-                        </Link>
-                    </li>
+                        </li>
+                    </Link>
                 ))}
             </ul>
         </div>

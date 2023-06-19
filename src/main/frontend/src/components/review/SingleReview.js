@@ -4,10 +4,11 @@ import styles from "./SingleReview.module.css";
 import ReviewDeleteButton from "./ReviewDeleteButton";
 import {UsernameContext} from "../../App";
 import PropTypes from "prop-types";
+import LikeReviewButton from "./LikeReviewButton";
 
 const SingleReview = ({ review, updateReviews, className }) => {
-
     const username = useContext(UsernameContext);
+
     return (
         <div className={!className ? styles.singleReview : className} key={review.id}>
             <Userbar/>
@@ -30,6 +31,9 @@ const SingleReview = ({ review, updateReviews, className }) => {
                     updateReviews={updateReviews}
                 />
             }
+            <LikeReviewButton
+                idReview={review.id}
+            />
         </div>
     );
 };

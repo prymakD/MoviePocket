@@ -1,14 +1,10 @@
 .DropdownSearchComponent {
     position: absolute;
-    top: 100%;
-    left: 0;
-    width: 100%;
-    background-color: #fff;
+    margin-top: 1vh;
+    background-color: var(--primary-black);
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-    z-index: 10;
     overflow-y: auto;
-    max-height: 200px;
-    display: none;
+    max-height: 30vh;
 }
 
 .SearchResults {
@@ -23,9 +19,4 @@
 }
 
 .SearchResults li:hover {
-    background-color: #f1f1f1;
-}
-
-.Search:hover .DropdownSearchComponent {
-    display: block;
 }
