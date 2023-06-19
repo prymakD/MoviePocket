@@ -74,7 +74,7 @@ public class UserEditController {
         return userService.setTokenEmail(authentication.getName(), email);
     }
 
-    @PostMapping("/activateNewEmail/{token}")
+    @GetMapping("/activateNewEmail/{token}")
     @ApiOperation("Activate a new email")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Successfully activated the new email")
