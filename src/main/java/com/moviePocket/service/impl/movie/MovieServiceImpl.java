@@ -3,7 +3,6 @@ package com.moviePocket.service.impl.movie;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.moviePocket.controller.dto.MovieDto;
-import com.moviePocket.repository.movie.MovieRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
@@ -17,9 +16,6 @@ import java.util.Map;
 
 @Service
 public class MovieServiceImpl {
-
-    @Autowired
-    private MovieRepository movieRepository;
 
     @Value("${api.key}")
     private  String apiKey;
