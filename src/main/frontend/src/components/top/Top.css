@@ -5,6 +5,7 @@
     color: whitesmoke;
     display: flex;
     flex-direction: column;
+    z-index: 1;
 }
 
 .movie-card {
