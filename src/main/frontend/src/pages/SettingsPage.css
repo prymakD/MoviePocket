@@ -21,7 +21,7 @@
 }
 
 .button-update {
-    border: 2px solid #E4416A;
+    border: 2px solid var(--primary-red);
     background-color: black;
     width: 10vh;
     font-size: 14px;
@@ -30,25 +30,25 @@
 }
 
 .button-update:active {
-    border-color: #75FBE2;
+    border-color: var(--primary-blue);
 }
 
 .button-update:hover {
-    background-color: #E4416A;
+    background-color: var(--primary-red);
 }
 
 .input-text0 {
-    border: 2px solid #F1B36E;
+    border: 2px solid var(--primary-yellow);
     width: 35vh;
     height: 5vh;
     border-radius: 1.5vh;
-    color: #74F8F2;
+    color: var(--primary-blue);
 }
 
 .input-text1 {
-    border: 2px solid #F1B36E;
+    border: 2px solid var(--primary-yellow);
     border-radius: 1.5vh;
-    color: #74F8F2;
+    color: var(--primary-blue);
 }
 
 .blue-text {
@@ -57,7 +57,7 @@
 }
 
 .yellow-text {
-    color: #F1B36E;
+    color: var(--primary-yellow);
     font-size: 22px;
 }
 
@@ -66,5 +66,5 @@
 }
 
 .logo-text {
-    color: #E4416A;
+    color: var(--primary-red);
 }

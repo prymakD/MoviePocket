@@ -55,7 +55,7 @@ const FilmPage = () => {
     const getReviews = async () => {
         try {
             const response = await getAllReview(id);
-            if (response) setReviews(response.reverse());
+            setReviews(response.reverse());
         } catch (error) {
             console.log(error);
         }

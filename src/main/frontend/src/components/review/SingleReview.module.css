@@ -1,5 +1,5 @@
 .singleReview {
-    border: 2px solid #F1B36E;
+    border: 2px solid var(--primary-yellow);
     border-radius: 5vh;
     margin-top: 3vh;
     display: flex;
@@ -11,5 +11,5 @@
 }
 
 .logoText {
-    color: #E4416A;
+    color: var(--primary-red);
 }

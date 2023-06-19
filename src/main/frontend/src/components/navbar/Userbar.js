@@ -1,11 +1,8 @@
 import './Userbar.css'
-import React, {useContext, useState} from "react";
-import {Link} from "react-router-dom";
-import {UsernameContext} from "../../App";
+import React, {useState} from "react";
+import DropdownUserComponent from "./DropdownUserComponent";
 
 const Userbar = () => {
-
-    const username = useContext(UsernameContext)
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
     const handleDropdownToggle = () => {
@@ -20,10 +17,7 @@ const Userbar = () => {
                 onClick={handleDropdownToggle}
             />
             {isDropdownOpen && (
-                <div className="dropdown-content">
-                    <Link to={`/user/${username}`}>My page</Link>
-                    <Link to={"/settings"}>Settings</Link>
-                </div>
+                <DropdownUserComponent/>
             )}
         </div>
     )

@@ -38,7 +38,7 @@
 
 
 .username-container {
-    color: #E4416A;
+    color: var(--primary-red);
 }
 
 .user-page-container {
@@ -46,9 +46,9 @@
 }
 
 .blue-text {
-    color: #74F8F2;
+    color: var(--primary-blue);
 }
 
 .yellow-text {
-    color: #F1B36E;
+    color: var(--primary-yellow);
 }

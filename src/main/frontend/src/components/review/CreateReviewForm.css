@@ -29,7 +29,7 @@
 }
 
 .button-submit {
-    border: 2px solid #F1B36E;
+    border: 2px solid var(--primary-yellow);
     width: 120px;
     height: 50px;
     border-radius: 1vh;
@@ -38,30 +38,30 @@
 }
 
 .button-submit:active {
-    border-color: #75FBE2 !important;
+    border-color: var(--primary-blue) !important;
 }
 
 .button-submit:hover {
-    border-color: #E4416A !important;
+    border-color: var(--primary-yellow) !important;
     background-color: transparent;
 }
 
 
 .title-input {
     width: 100vh;
-    border: 2px solid #75FBE2;
+    border: 2px solid var(--primary-blue);
     border-radius: 2vh;
 }
 
 .content-input {
     width: 100vh;
-    border: 2px solid #75FBE2;
+    border: 2px solid var(--primary-blue);
     border-radius: 2vh;
 
 }
 
 .text-title {
-    color: #F1B36E;
+    color: var(--primary-yellow);
     margin-top: -2vh;
 }
 
