@@ -7,12 +7,12 @@ import variables from '../styles/styles.module.css'; // DON'T DELETE
 
 const Layout = () => {
     return(
-        <>
+        <div className={styles.default}>
             <Navbar/>
             <div className={styles.Layout}>
                 <Outlet/>
             </div>
-        </>
+        </div>
     )
 }
 
