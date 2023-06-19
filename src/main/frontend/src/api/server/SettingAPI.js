@@ -31,7 +31,7 @@ export const deleteUser = async (password) => {
             queryString.stringify(params),
             { withCredentials: true },
         );
-        return response.data;
+        return true;
     } catch (err) {
         console.log(err);
     }
@@ -50,9 +50,10 @@ export const postNewBio = async (bio) => {
             queryString.stringify(params),
             { withCredentials: true },
         );
-        return response.data;
+        return true;
     } catch (err) {
         console.log(err);
+        return false;
     }
 };
 
@@ -69,9 +70,10 @@ export const postNewEmail = async (email) => {
             queryString.stringify(params),
             { withCredentials: true },
         );
-        return response.data;
+        return true;
     } catch (err) {
         console.log(err);
+        return false;
     }
 };
 
@@ -90,9 +92,10 @@ export const postNewPassword = async (password0, password1, passwordOld) => {
             queryString.stringify(params),
             { withCredentials: true },
         );
-        return response.data;
+        return true;
     } catch (err) {
         console.log(err);
+        return false;
     }
 };
 
@@ -109,8 +112,9 @@ export const postNewUsername = async (username) => {
             queryString.stringify(params),
             { withCredentials: true },
         );
-        return response.data;
+        return true;
     } catch (err) {
         console.log(err);
+        return false;
     }
 };
