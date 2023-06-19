@@ -83,14 +83,14 @@ public class RatingMovieServiceImpl implements RatingMovieService {
         return ratingList;
     }
 
-    public ResponseEntity<Double> getAllMovieRating(Long idMovie) {
+    public ResponseEntity<Double> getMovieRating(Long idMovie) {
         Double rating = ratingMovieRepository.getAverageRatingByMovieId(idMovie);
         if (rating != null) {
             BigDecimal bd = BigDecimal.valueOf(rating);
             BigDecimal roundedNumber = bd.setScale(1, RoundingMode.HALF_UP);
             return ResponseEntity.ok(roundedNumber.doubleValue());
         }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        return ResponseEntity.ok(0.0);
     }
 
     public ResponseEntity<Integer> getAllCountByIdMovie(Long idMovie) {

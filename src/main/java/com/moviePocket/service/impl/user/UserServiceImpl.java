@@ -95,12 +95,9 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findByEmail(email);
         if (user == null)
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-        else if (user.getEmailVerification())
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         else if (!passwordEncoder.matches(passwordOld, user.getPassword()))
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         else if (!passwordNew0.equals(passwordNew1)) {
-            System.out.println("HI");
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         } else {
             user.setPassword(passwordEncoder.encode(passwordNew0));

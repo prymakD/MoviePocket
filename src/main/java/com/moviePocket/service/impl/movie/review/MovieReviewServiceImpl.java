@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
@@ -74,22 +75,25 @@ public class MovieReviewServiceImpl implements MovieReviewService {
 
 
     public ResponseEntity<ParsReview> getByIDMovieReview(Long idMovieReview) {
-        ReviewMovie movieReview = movieReviewRepository.getById(idMovieReview);
-        if (movieReview == null)
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        return ResponseEntity.ok(new ParsReview(
-                movieReview.getTitle(),
-                movieReview.getContent(),
-                movieReview.getUser().getUsername(),
-                movieReview.getCreated(),
-                movieReview.getUpdated(),
-                movieReview.getId(),
-                movieReview.getId(),
-                new int[]{
-                        likeMovieReviewRepository.countByMovieReviewAndLickOrDisIsTrue(movieReview),
-                        likeMovieReviewRepository.countByMovieReviewAndLickOrDisIsFalse(movieReview)
-                }
-        ));
+        try {
+            ReviewMovie movieReview = movieReviewRepository.getById(idMovieReview);
+            return ResponseEntity.ok(new ParsReview(
+                    movieReview.getTitle(),
+                    movieReview.getContent(),
+                    movieReview.getUser().getUsername(),
+                    movieReview.getCreated(),
+                    movieReview.getUpdated(),
+                    movieReview.getId(),
+                    movieReview.getId(),
+                    new int[]{
+                            likeMovieReviewRepository.countByMovieReviewAndLickOrDisIsTrue(movieReview),
+                            likeMovieReviewRepository.countByMovieReviewAndLickOrDisIsFalse(movieReview)
+                    }
+            ));
+        } catch (EntityNotFoundException e) {
+            List<ParsReview> reviewList = new ArrayList<>();
+            return ResponseEntity.ok().body(null);
+        }
     }
 
 
@@ -115,25 +119,29 @@ public class MovieReviewServiceImpl implements MovieReviewService {
 
     public ResponseEntity<List<ParsReview>> getAllByIDMovie(Long idMovie) {
         List<ReviewMovie> movieList = movieReviewRepository.getAllByIdMovie(idMovie);
-        if (movieList.size() == 0)
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        if (movieList.size() == 0) {
+            List<ParsReview> reviewList = new ArrayList<>();
+            return new ResponseEntity<>(reviewList, HttpStatus.OK);
+        }
         return ResponseEntity.ok(parsMovieReview(movieList));
     }
 
     public ResponseEntity<List<ParsReview>> getAllByUserAndIdMovie(String email, Long idMovie) {
         User user = userRepository.findByEmail(email);
-        if (user == null)
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        if (user == null) {
+            List<ParsReview> reviewList = new ArrayList<>();
+            return new ResponseEntity<>(reviewList, HttpStatus.OK);
+        }
         return ResponseEntity.ok(
                 parsMovieReview(movieReviewRepository.getAllByUserAndIdMovie(user, idMovie)));
-
     }
 
     public ResponseEntity<List<ParsReview>> getAllByUser(String email) {
         User user = userRepository.findByEmail(email);
-        if (user == null)
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        else {
+        if (user == null) {
+            List<ParsReview> reviewList = new ArrayList<>();
+            return new ResponseEntity<>(reviewList, HttpStatus.OK);
+        } else {
             List<ReviewMovie> movieReviewList = movieReviewRepository.getAllByUser(user);
             return ResponseEntity.ok(parsMovieReview(movieReviewList));
         }
