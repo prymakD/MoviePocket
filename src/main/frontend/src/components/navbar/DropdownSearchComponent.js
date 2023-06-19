@@ -1,18 +1,17 @@
-import React, {useEffect, useState} from 'react';
-import './DropdownSearchComponent.css';
-import {getMovieInfoSearch} from "../../api/server/SearchAPI";
+import React, { useEffect, useState, useRef } from 'react';
+import styles from './DropdownSearchComponent.module.css';
+import { getMovieSearch } from '../../api/tmdb/MovieAPI';
+import {Link} from "react-router-dom";
 
 const DropdownSearchComponent = ({ query }) => {
     const [searchResults, setSearchResults] = useState([]);
+    const resultsRef = useRef(null);
 
     const getSearchList = async () => {
         try {
-            const searchList = await getMovieInfoSearch(query)
-            if (searchList.length > 6){
-                setSearchResults(searchList.slice(0,5));
-            } else {
-                setSearchResults(searchList)
-            }
+            const response = await getMovieSearch(query);
+            const searchList = response.results;
+            setSearchResults(searchList);
         } catch (error) {
             console.log(error);
         }
@@ -20,16 +19,27 @@ const DropdownSearchComponent = ({ query }) => {
 
     useEffect(() => {
         getSearchList(query).then();
-    }, []);
+    }, [query]);
+
+    useEffect(() => {
+        if (resultsRef.current) {
+            resultsRef.current.scrollTop = 0;
+        }
+    }, [searchResults]);
 
     return (
-        <div className="DropdownSearchComponent">
-            <ul className="SearchResults">
+        <div className={styles.DropdownSearchComponent}>
+            <ul ref={resultsRef} className={styles.SearchResults}>
                 {searchResults.map((result, index) => (
-                    <li key={index}>{result.title}</li>
+                    <li key={index}>
+                        <Link to={`/film/${result.id}`}>
+                            {result.title}
+                        </Link>
+                    </li>
                 ))}
             </ul>
         </div>
     );
 };
+
 export default DropdownSearchComponent;
