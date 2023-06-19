@@ -1,0 +1,24 @@
+.DropdownSearchComponent {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    z-index: 10;
+}
+
+.DropdownSearchComponent ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.DropdownSearchComponent li {
+    padding: 10px;
+    cursor: pointer;
+}
+
+.DropdownSearchComponent li:hover {
+    background-color: #f1f1f1;
+}

@@ -17,7 +17,6 @@ import UserWatchedPage from "./pages/UserWatchedPage";
 import UserFavoritePage from "./pages/UserFavoritePage";
 import {ToastContainer} from "react-bootstrap";
 
-
 export const AuthContext = createContext(null)
 export const UsernameContext = createContext(null)
 const App = () => {

@@ -10,7 +10,7 @@ export const getMovieInfoSearch = async (query) => {
 
     try {
         const response = await axios.get(
-            `http://localhost:8080http://localhost:8080/movies/search/${query}`,
+            `http://localhost:8080/movies/search/${query}`,
             options
         );
         return response.data;

@@ -1,0 +1,27 @@
+.dropdown-content {
+    margin-top: 5vh;
+    display: none;
+    position: absolute;
+    background-color: var(--secondary-yellow);
+    z-index: 5;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 1vh 2vh;
+    display: block;
+    border-bottom: 1px solid black;
+}
+
+.dropdown-content a:last-child {
+    border-bottom: none;
+}
+
+.dropdown-content a:hover {
+    background-color: var(--primary-yellow);
+    color: white;
+}
+
+.User:hover .dropdown-content {
+    display: block;
+}

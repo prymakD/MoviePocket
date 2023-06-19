@@ -3,7 +3,6 @@ import {postReview} from "../../api/server/ReviewAPI";
 import "./CreateReviewForm.css"
 import PropTypes from "prop-types";
 
-
 const CreateReviewForm = ({ movieId, updateReviews }) => {
 
     const [title, setTitle] = useState('');

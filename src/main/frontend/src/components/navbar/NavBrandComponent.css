@@ -1,0 +1,11 @@
+.NavBrand {
+    color: var(--primary-blue);
+    z-index: 3;
+    font-size: 2.5vh;
+    font-family: 'Poppins', sans-serif;
+    transition: opacity 0.3s ease;
+}
+
+.NavBrand:hover {
+    opacity: 0.8;
+}
