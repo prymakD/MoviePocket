@@ -6,5 +6,6 @@
 
 .LogOut:hover {
     background-color: var(--primary-red);
+    border-radius: 1.5vh;
     color: white;
 }
