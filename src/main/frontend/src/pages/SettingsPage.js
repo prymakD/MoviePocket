@@ -18,6 +18,7 @@ const SettingsPage = () => {
     const [newPassword1, setNewPassword1] = useState('');
     const [passwordOld, setPasswordOld] = useState('');
     const [newUsername, setNewUsername] = useState('');
+    const [passwordDeletion, setPasswordDeletion] = useState('');
     const [backgroundImage, setBackgroundImage] = useState('');
 
     const getUserSettings = async () => {
@@ -47,6 +48,10 @@ const SettingsPage = () => {
 
     const handlePasswordOldChange = (event) => {
         setPasswordOld(event.target.value);
+    };
+
+    const handlePasswordDeletionChange = (event) => {
+        setPasswordDeletion(event.target.value);
     };
 
     const handleUsernameChange = (event) => {
@@ -92,8 +97,9 @@ const SettingsPage = () => {
     const handleAccountDeletion = async () => {
 
         try {
-            const response = await deleteUser(password);
+            const response = await deleteUser(passwordDeletion);
             console.log('Account deletion successful!', response.data);
+            window.location.href = '/'
         } catch (error) {
             console.error('Error occurred during account deletion:', error);
         }
@@ -196,13 +202,13 @@ const SettingsPage = () => {
             </div>
             <div className="edit-container">
                 <div>
-                    <label className="blue-text" htmlFor="newPassword1">Password:</label>
+                    <label className="blue-text" htmlFor="passwordDeletion">Password:</label>
                     <br/>
                     <input
                         className="input-text0"
-                        type="password0"
-                        id="Password0"
-                        onChange={handlePassword1Change}
+                        type="password"
+                        id="passwordDeletion"
+                        onChange={handlePasswordDeletionChange}
                     />
                 </div>
                 <button className="button-update" onClick={handleAccountDeletion}>Delete Account</button>
