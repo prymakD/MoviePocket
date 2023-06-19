@@ -1,10 +1,10 @@
-span {
+.LogOut {
     display: block;
     color: black;
     padding: 1vh 2vh;
 }
 
-span:hover {
+.LogOut:hover {
     background-color: var(--primary-red);
     color: white;
 }
