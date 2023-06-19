@@ -67,7 +67,7 @@ public class RatingMovieController {
             @ApiResponse(code = 400, message = "Bad request"),
             @ApiResponse(code = 401, message = "User is not authentificated")
     })
-    public ResponseEntity<List<Rating>> allRatingMovieByUser() {
+    public ResponseEntity<List<Rating>> allRatingByUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return ratingMovieService.getAllUserRatingMovie(authentication.getName());
     }
