@@ -46,8 +46,8 @@ public class UserServiceImpl implements UserService {
         userRepository.save(user);
 
         String username = user.getUsername();
-        String link = "http://localhost:3000/activate/" + user.getActivationCode();
-        String massage = "Welcome to MoviePocket. We really hope that you will enjoy being a part of MoviePocket family \n" +
+        String link = "http://localhost:3000/activateUser?token=" + user.getActivationCode();
+        String massage = "Welcome to MoviePocket family. We really hope that you will enjoy being a part of MoviePocket family \n" +
                 " We want to make sure it's really you. To do that please confirm your mail by clicking the link below.";
 
         emailSenderService.sendMailWithAttachment(user.getEmail(), buildEmail(username, massage, link), "Email Verification");
@@ -81,7 +81,7 @@ public class UserServiceImpl implements UserService {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         else if (!user.getTokenLostPassword().equals(token))
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-        else if (!password1.equals(password2))
+        else if (!password1.equals(password2) || password1.isEmpty() || password2.isEmpty())
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         else {
             user.setPassword(passwordEncoder.encode(password1));
@@ -99,9 +99,10 @@ public class UserServiceImpl implements UserService {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         else if (!passwordEncoder.matches(passwordOld, user.getPassword()))
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-        else if (!passwordNew0.equals(passwordNew1))
+        else if (!passwordNew0.equals(passwordNew1)) {
+            System.out.println("HI");
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        else {
+        } else {
             user.setPassword(passwordEncoder.encode(passwordNew0));
             userRepository.save(user);
             return new ResponseEntity<>(HttpStatus.OK);
@@ -142,8 +143,8 @@ public class UserServiceImpl implements UserService {
             user.setTokenLostPassword(UUID.randomUUID().toString());
             userRepository.save(user);
             String username = user.getUsername();
-            String link = "http://localhost:8080/lostpassword/reset?token=" + user.getTokenLostPassword();
-            String massage = "You are just in the middle of having your new password. \n Please confirm your new email address.";
+            String link = "http://localhost:3000/newPassword?token=" + user.getTokenLostPassword();
+            String massage = "You are just in the middle of having your new password. \n Please confirm your email address by going by the link.";
             emailSenderService.sendMailWithAttachment(user.getEmail(), buildEmail(username, massage, link), "Password Recovery");
             return new ResponseEntity<>(HttpStatus.OK);
         }
@@ -186,9 +187,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public ResponseEntity<Void> activateUser(String code) {
         User user = userRepository.findByActivationCode(code);
-        if (user == null)
+        if (user == null) {
+            System.out.println("fuck");
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        else {
+        } else {
+            System.out.println(user);
             user.setEmailVerification(Boolean.TRUE);
             user.setActivationCode(null);
             userRepository.save(user);
@@ -295,7 +298,7 @@ public class UserServiceImpl implements UserService {
                 "      <td width=\"10\" valign=\"middle\"><br></td>\n" +
                 "      <td style=\"font-family:Helvetica,Arial,sans-serif;font-size:19px;line-height:1.315789474;max-width:560px\">\n" +
                 "        \n" +
-                "            <p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\">Hello " + username + ",</p><p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\">" + massage + "</p><blockquote style=\"Margin:0 0 20px 0;border-left:10px solid #b1b4b6;padding:15px 0 0.1px 15px;font-size:19px;line-height:25px\"><p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\"> <a href=\"" + link + "\">Confirm your email</a> </p></blockquote>\n <p>See you soon</p>" +
+                "            <p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\">Hello " + username + ",</p><p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\">" + massage + "</p><blockquote style=\"Margin:0 0 20px 0;border-left:10px solid #b1b4b6;padding:15px 0 0.1px 15px;font-size:19px;line-height:25px\"><p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\"> <a href=\"" + link + "\">Confirm your email</a> </p></blockquote>\n <p>See you soon</p> \n <p>Best wishes</p> \n <p>MoviePocket team</p>" +
                 "        \n" +
                 "      </td>\n" +
                 "      <td width=\"10\" valign=\"middle\"><br></td>\n" +

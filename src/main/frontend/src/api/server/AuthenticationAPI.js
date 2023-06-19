@@ -46,6 +46,22 @@ export const postRegistration = async (username, email, password) => {
 
 };
 
+export const postActivateUser = async (token) => {
+
+    const params = {
+        token: token
+    }
+    try {
+        const response = await axios.post(
+            'http://localhost:8080/activate',
+            queryString.stringify(params));
+        return response.data;
+    } catch (error) {
+        console.log(error);
+    }
+
+};
+
 // not ready function
 export const postLogout = async () => {
 

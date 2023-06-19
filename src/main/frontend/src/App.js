@@ -15,6 +15,9 @@ import {checkAuth, getUsernameByAuth} from "./api/server/UserAPI";
 import UserPage from "./pages/UserPage";
 import UserWatchedPage from "./pages/UserWatchedPage";
 import UserFavoritePage from "./pages/UserFavoritePage";
+import NewPasswordPage from "./pages/NewPasswordPage";
+import ActivateUserPage from "./pages/ActivateUserPage";
+
 import {ToastContainer} from "react-bootstrap";
 
 
@@ -46,7 +49,7 @@ const App = () => {
                 <UsernameContext.Provider value={username}>
                     <Routes>
                         <Route path='/' element={<Layout isLogged={isLoggedIn}/>}>
-                            <Route index element={<Home />}></Route>
+                            <Route index element={<Home/>}></Route>
                             {/* For not logged in */}
                             <Route
                                 path='/registration'
@@ -54,8 +57,8 @@ const App = () => {
                                     isLoggedIn ?
                                         (<Navigate to="/" replace/>)
                                         :
-                                        (<RegistrationPage />)
-                                    }
+                                        (<RegistrationPage/>)
+                                }
                             />
                             <Route
                                 path='/login'
@@ -63,18 +66,27 @@ const App = () => {
                                     isLoggedIn ?
                                         (<Navigate to="/" replace/>)
                                         :
-                                        (<LoginPage />)
-                                    }
+                                        (<LoginPage/>)
+                                }
                             />
                             {/* For logged in */}
                             <Route
                                 path='/forgotPassword'
                                 element={
-                                    !isLoggedIn ?
-                                        (<Navigate to="/" replace/>)
-                                        :
-                                        (<LostPasswordPage />)
-                                    }
+                                    <LostPasswordPage/>
+                                }
+                            />
+                            <Route
+                                path='/newPassword'
+                                element={
+                                    <NewPasswordPage/>
+                                }
+                            />
+                            <Route
+                                path='/activateUser'
+                                element={
+                                    <ActivateUserPage/>
+                                }
                             />
                             <Route
                                 path='/settings'
@@ -82,21 +94,21 @@ const App = () => {
                                     !isLoggedIn ?
                                         (<Navigate to="/" replace/>)
                                         :
-                                        (<SettingsPage />)
-                                    }
+                                        (<SettingsPage/>)
+                                }
                             />
                             {/* For everyone */}
                             <Route
                                 path='films/:currentPage'
-                                element={<FilmsBrowsingPage />}
+                                element={<FilmsBrowsingPage/>}
                             />
                             <Route
                                 path='film/:id'
-                                element={<FilmPage />}
+                                element={<FilmPage/>}
                             />
                             <Route
                                 path='user/:username'
-                                element={<UserPage />}
+                                element={<UserPage/>}
                             />
                             <Route
                                 path='user/:username/favorite'

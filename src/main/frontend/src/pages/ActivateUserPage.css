@@ -1,0 +1,55 @@
+.image-activate-container {
+    display: flex;
+    width: 100%;
+    height: 92vh;
+    justify-content: center;
+    background-size: cover;
+    position: relative;
+    z-index: 1;
+}
+
+.image-activate-container::after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(300deg, #000000 8.0%, rgba(0, 0, 0, 0) 30.0%),
+    linear-gradient(60deg, #000000 8.0%, rgba(0, 0, 0, 0) 30.0%),
+    linear-gradient(0deg, #000000 2.0%, rgba(0, 0, 0, 0) 30.0%),
+    linear-gradient(90deg, #000000 0%, rgba(0, 0, 0, 0) 32.0%),
+    linear-gradient(270deg, #000000 0%, rgba(0, 0, 0, 0) 32.0%);
+    backdrop-filter: blur(8px);
+    z-index: -1;
+}
+
+.activate-container {
+    height: 50vh;
+    width: 40vh;
+    background-color: rgba(0, 0, 0, 0.8);
+    border-radius: 3vh;
+}
+
+.head-activate {
+    font-size: 30px;
+    margin-top: 3%;
+    margin-bottom: 3%;
+    text-align: center;
+    color: whitesmoke;
+    font-family: 'Poppins', sans-serif;
+}
+
+.activate-button {
+    background-color: black;
+    border-radius: 1vh;
+    width: 18vh;
+    height: 7vh;
+}
+
+.activate-button:active {
+    background-color: blueviolet;
+    border-radius: 1vh;
+}
+
+.activate-button:hover {
+    background-color: #021750;
+}
