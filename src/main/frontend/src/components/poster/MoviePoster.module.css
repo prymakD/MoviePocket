@@ -8,3 +8,13 @@
 .default:hover {
     border: 2px solid green;
 }
+
+.rating {
+    color: var(--primary-blue);
+    font-size: 50px;
+    padding: 1vh;
+    position: relative;
+    display: inline-block;
+    font-family: 'Poor Story', serif;
+}
+

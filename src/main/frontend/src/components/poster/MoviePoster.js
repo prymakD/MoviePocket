@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
+import {Link} from "react-router-dom";
 import styles from "./MoviePoster.module.css";
 import {getMovieRating} from "../../api/server/RatingMovieAPI";
 
@@ -25,28 +25,35 @@ const MoviePoster = ({ movie, className, responsible }) => {
 
     return (
         <div>
-            {responsible
-                &&
-                (
-                    <Link to={`/film/${movie.id}`}>
+            {responsible && (
+                <Link to={`/film/${movie.id}`}>
+                    <div style={{position: 'relative', display: 'inline-block'}}>
                         <img
                             src={path}
                             className={!className ? styles.default : className}
                             alt="movie-poster"
                         />
-                    </Link>
-                )}
-            {!responsible
-                &&
-                (
+                        <div className={styles.rating} style={{position: 'absolute', bottom: '0', right: '0'}}>
+                            {rating}
+                        </div>
+                    </div>
+                </Link>
+            )}
+            {!responsible && (
+                <div style={{position: 'relative', display: 'inline-block'}}>
                     <img
                         src={path}
                         className={!className ? styles.default : className}
                         alt="movie-poster"
                     />
-                )}
-            <h1>{rating}</h1>
+                    <div className={styles.rating} style={{position: 'absolute', bottom: '0', right: '0'}}>
+                        {rating}
+                    </div>
+                </div>
+            )}
         </div>
+
+
     )
 }
 

@@ -74,7 +74,7 @@ public class ReviewMovieController {
     }
 
     @GetMapping("/getLike")
-    public ResponseEntity<Boolean> getLikeReviewByIdMovie(@RequestParam("idReview") Long idReview) {
+    public ResponseEntity<Boolean> getLikeOrDisByIdReview(@RequestParam("idReview") Long idReview) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return likeMovieReviewService.getLikeOrDis(authentication.getName(), idReview);
     }
