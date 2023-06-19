@@ -16,7 +16,7 @@ const SettingsPage = () => {
     const [newEmail, setNewEmail] = useState('');
     const [newPassword0, setNewPassword0] = useState('');
     const [newPassword1, setNewPassword1] = useState('');
-    const [newPasswordOld, setNewPasswordOld] = useState('');
+    const [passwordOld, setPasswordOld] = useState('');
     const [newUsername, setNewUsername] = useState('');
     const [backgroundImage, setBackgroundImage] = useState('');
 
@@ -46,14 +46,14 @@ const SettingsPage = () => {
     };
 
     const handlePasswordOldChange = (event) => {
-        setNewPasswordOld(event.target.value);
+        setPasswordOld(event.target.value);
     };
 
     const handleUsernameChange = (event) => {
         setNewUsername(event.target.value);
     };
 
-    const handleUpdateBio = async (bio) => {
+    const handleUpdateBio = async () => {
         try {
             const response = await postNewBio(bio);
             getUserSettings().then()
@@ -62,7 +62,7 @@ const SettingsPage = () => {
         }
     };
 
-    const handleUpdateEmail = async (newEmail) => {
+    const handleUpdateEmail = async () => {
         try {
             const response = await postNewEmail(newEmail);
             getUserSettings().then()
@@ -71,16 +71,16 @@ const SettingsPage = () => {
         }
     };
 
-    const handleUpdatePassword = async (password0, password1, passwordOld) => {
+    const handleUpdatePassword = async () => {
         try {
-            const response = await postNewPassword(password0, password1, passwordOld);
+            const response = await postNewPassword(newPassword0, newPassword1, passwordOld);
             getUserSettings().then()
         } catch (err) {
             console.error(err);
         }
     };
 
-    const handleUpdateUsername = async (newUsername) => {
+    const handleUpdateUsername = async () => {
         try {
             const response = await postNewUsername(newUsername);
             getUserSettings().then()
@@ -89,7 +89,7 @@ const SettingsPage = () => {
         }
     };
 
-    const handleAccountDeletion = async (password) => {
+    const handleAccountDeletion = async () => {
 
         try {
             const response = await deleteUser(password);
@@ -164,7 +164,7 @@ const SettingsPage = () => {
                         className="input-text0"
                         type="password"
                         id="newPasswordOld"
-                        value={newPasswordOld}
+                        value={passwordOld}
                         onChange={handlePasswordOldChange}
                     />
                 </div>

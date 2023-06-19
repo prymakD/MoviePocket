@@ -46,7 +46,7 @@ export const postNewBio = async (bio) => {
 
     try {
         const response = await axios.post(
-            `http://localhost:8080/user/edit/newbio`,
+            `http://localhost:8080/user/edit/newBio`,
             queryString.stringify(params),
             { withCredentials: true },
         );
@@ -65,7 +65,7 @@ export const postNewEmail = async (email) => {
 
     try {
         const response = await axios.post(
-            `http://localhost:8080/user/edit/newemail`,
+            `http://localhost:8080/user/edit/newEmail`,
             queryString.stringify(params),
             { withCredentials: true },
         );
@@ -76,17 +76,17 @@ export const postNewEmail = async (email) => {
 };
 
 // Set a new password(password is validated)
-export const postNewPassword = async (password0, password1, passwordold) => {
+export const postNewPassword = async (password0, password1, passwordOld) => {
 
     const params = {
         password0: password0,
         password1: password1,
-        passwordold: passwordold
+        passwordold: passwordOld
     };
 
     try {
         const response = await axios.post(
-            `http://localhost:8080/user/edit/newpas`,
+            `http://localhost:8080/user/edit/newPas`,
             queryString.stringify(params),
             { withCredentials: true },
         );
@@ -105,7 +105,7 @@ export const postNewUsername = async (username) => {
 
     try {
         const response = await axios.post(
-            `http://localhost:8080/user/edit/newusername`,
+            `http://localhost:8080/user/edit/newUsername`,
             queryString.stringify(params),
             { withCredentials: true },
         );

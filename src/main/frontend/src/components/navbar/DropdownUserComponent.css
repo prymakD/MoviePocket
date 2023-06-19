@@ -3,7 +3,7 @@
     display: none;
     position: absolute;
     background-color: var(--secondary-yellow);
-    z-index: 5;
+    z-index: 10;
 }
 
 .dropdown-content a {
