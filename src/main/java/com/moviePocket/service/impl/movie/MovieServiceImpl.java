@@ -27,11 +27,6 @@ public class MovieServiceImpl {
     @Autowired
     private RestTemplate restTemplate;
 
-    public MovieDto getMovieById(Long movieId) {
-
-        MovieDto movieSummary = restTemplate.getForObject("https://api.themoviedb.org/3/movie/" + movieId + "?api_key=" +  apiKey, MovieDto.class);
-        return new MovieDto(movieId, movieSummary.getTitle(), movieSummary.getOverview(), movieSummary.getRuntime());
-    }
 
     public List<MovieDto> searchMovie(String query) {
         List<MovieDto> movieSearchResult = new ArrayList<>();

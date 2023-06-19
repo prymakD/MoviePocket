@@ -75,8 +75,10 @@ public class MovieReviewServiceImpl implements MovieReviewService {
 
     public ResponseEntity<ParsReview> getByIDMovieReview(Long idMovieReview) {
         ReviewMovie movieReview = movieReviewRepository.getById(idMovieReview);
-        if (movieReview == null)
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        if (movieReview == null) {
+            List<ParsReview> reviewList = new ArrayList<>();
+            return ResponseEntity.ok().body(null);
+        }
         return ResponseEntity.ok(new ParsReview(
                 movieReview.getTitle(),
                 movieReview.getContent(),
@@ -115,25 +117,29 @@ public class MovieReviewServiceImpl implements MovieReviewService {
 
     public ResponseEntity<List<ParsReview>> getAllByIDMovie(Long idMovie) {
         List<ReviewMovie> movieList = movieReviewRepository.getAllByIdMovie(idMovie);
-        if (movieList.size() == 0)
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        if (movieList.size() == 0) {
+            List<ParsReview> reviewList = new ArrayList<>();
+            return new ResponseEntity<>(reviewList, HttpStatus.OK);
+        }
         return ResponseEntity.ok(parsMovieReview(movieList));
     }
 
     public ResponseEntity<List<ParsReview>> getAllByUserAndIdMovie(String email, Long idMovie) {
         User user = userRepository.findByEmail(email);
-        if (user == null)
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        if (user == null) {
+            List<ParsReview> reviewList = new ArrayList<>();
+            return new ResponseEntity<>(reviewList, HttpStatus.OK);
+        }
         return ResponseEntity.ok(
                 parsMovieReview(movieReviewRepository.getAllByUserAndIdMovie(user, idMovie)));
-
     }
 
     public ResponseEntity<List<ParsReview>> getAllByUser(String email) {
         User user = userRepository.findByEmail(email);
-        if (user == null)
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        else {
+        if (user == null) {
+            List<ParsReview> reviewList = new ArrayList<>();
+            return new ResponseEntity<>(reviewList, HttpStatus.OK);
+        } else {
             List<ReviewMovie> movieReviewList = movieReviewRepository.getAllByUser(user);
             return ResponseEntity.ok(parsMovieReview(movieReviewList));
         }
