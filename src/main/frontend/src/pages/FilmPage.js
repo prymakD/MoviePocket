@@ -77,7 +77,7 @@ const FilmPage = () => {
                     style={{backgroundImage: `url(${path + back})`}}
                 ></div>
                 <div className="film-media-container">
-                    <div className="movie-like-contaner">
+                    <div className="movie-like-container">
                         <div className="film-poster">
                             <MoviePoster
                             movie={movie}

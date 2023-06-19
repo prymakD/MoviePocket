@@ -12,9 +12,12 @@
     height: 60vh;
     position: relative;
     filter: blur(10px);
-    z-index: -1;
+    z-index: 0;
 }
 
+.movie-like-container{
+    z-index: 1;
+}
 
 .film-header::after {
     content: "";
@@ -43,6 +46,7 @@
     margin-left: 10vh;
     height: 60vh;
     width: 70vh;
+    z-index: 1;
 }
 
 .player-wrapper {
