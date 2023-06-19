@@ -14,7 +14,7 @@ const LogoutComponent = () => {
     };
 
     return (
-        <span onClick={handleLogout}>LogOut</span>
+        <span className="LogOut" onClick={handleLogout}>LogOut</span>
     );
 };
 
