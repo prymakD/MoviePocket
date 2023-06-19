@@ -6,19 +6,26 @@
     background-color: #fff;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     z-index: 10;
+    overflow-y: auto;
+    max-height: 200px;
+    display: none;
 }
 
-.DropdownSearchComponent ul {
+.SearchResults {
     list-style-type: none;
     padding: 0;
     margin: 0;
 }
 
-.DropdownSearchComponent li {
+.SearchResults li {
     padding: 10px;
     cursor: pointer;
 }
 
-.DropdownSearchComponent li:hover {
+.SearchResults li:hover {
     background-color: #f1f1f1;
+}
+
+.Search:hover .DropdownSearchComponent {
+    display: block;
 }
