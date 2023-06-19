@@ -159,7 +159,7 @@ public class UserServiceImpl implements UserService {
             userRepository.save(user);
 
             String username = user.getUsername();
-            String link = "http://localhost:8080/user/edit/newemail/" + user.getNewEmailToken();
+            String link = "http://localhost:8080/user/edit/activateNewEmail/" + user.getNewEmailToken();
             String massage = "You are just in the middle of setting up your new email address. \n Please confirm your new email address.";
 
             emailSenderService.sendMailWithAttachment(user.getNewEmail(), buildEmail(username, massage, link), "New Mail Confirmation");

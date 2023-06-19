@@ -9,6 +9,9 @@ import {
     postNewUsername
 } from "../api/server/SettingAPI";
 import {getRandomMovie} from "../api/tmdb/MovieAPI";
+import {toast, ToastContainer} from "react-toastify";
+import {postLogout} from "../api/server/AuthenticationAPI";
+
 
 const SettingsPage = () => {
     const [settings, setSettings] = useState('');
@@ -61,7 +64,17 @@ const SettingsPage = () => {
     const handleUpdateBio = async () => {
         try {
             const response = await postNewBio(bio);
-            getUserSettings().then()
+            if (!response) {
+                toast.error('Something went wrong! \n Please try again)', {
+                    position: toast.POSITION.TOP_CENTER,
+                });
+            } else if (response) {
+                getUserSettings().then()
+                toast.success('Bio is successfully changed)', {
+                    position: toast.POSITION.TOP_CENTER,
+                });
+                setBio('');
+            }
         } catch (err) {
             console.error(err);
         }
@@ -70,7 +83,18 @@ const SettingsPage = () => {
     const handleUpdateEmail = async () => {
         try {
             const response = await postNewEmail(newEmail);
-            getUserSettings().then()
+
+            if (!response) {
+                toast.error('Something went wrong! \n Please try again)', {
+                    position: toast.POSITION.TOP_CENTER,
+                });
+            } else if (response) {
+                getUserSettings().then()
+                toast.success('Email is successfully changed)', {
+                    position: toast.POSITION.TOP_CENTER,
+                });
+                setNewEmail('');
+            }
         } catch (err) {
             console.error(err);
         }
@@ -79,8 +103,23 @@ const SettingsPage = () => {
     const handleUpdatePassword = async () => {
         try {
             const response = await postNewPassword(newPassword0, newPassword1, passwordOld);
-            getUserSettings().then()
+
+            if (!response) {
+                toast.error('Something went wrong! \n Please try again)', {
+                    position: toast.POSITION.TOP_CENTER,
+                });
+            } else if (response) {
+                getUserSettings().then()
+                toast.success('Password is successfully changed)', {
+                    position: toast.POSITION.TOP_CENTER,
+                });
+                setNewPassword0('');
+                setNewPassword1('');
+                setPasswordOld('');
+
+            }
         } catch (err) {
+
             console.error(err);
         }
     };
@@ -88,7 +127,18 @@ const SettingsPage = () => {
     const handleUpdateUsername = async () => {
         try {
             const response = await postNewUsername(newUsername);
-            getUserSettings().then()
+            if (!response) {
+                toast.error('Something went wrong! \n Please try again)', {
+                    position: toast.POSITION.TOP_CENTER,
+                });
+                console.error("Something wrong");
+            } else if (response) {
+                getUserSettings().then()
+                toast.success('Username is successfully changed)', {
+                    position: toast.POSITION.TOP_CENTER,
+                });
+                setNewUsername('')
+            }
         } catch (err) {
             console.error(err);
         }
@@ -98,8 +148,20 @@ const SettingsPage = () => {
 
         try {
             const response = await deleteUser(passwordDeletion);
-            console.log('Account deletion successful!', response.data);
-            window.location.href = '/'
+            if (!response) {
+                toast.error('Something went wrong! \n Please try again)', {
+                    position: toast.POSITION.TOP_CENTER,
+                });
+                console.error("Something wrong");
+            } else if (response) {
+                getUserSettings().then()
+                toast.success('User is successfully deleted)', {
+                    position: toast.POSITION.TOP_CENTER,
+                });
+                await postLogout();
+                window.location.href = '/'
+
+            }
         } catch (error) {
             console.error('Error occurred during account deletion:', error);
         }
@@ -181,17 +243,17 @@ const SettingsPage = () => {
                                 onChange={handlePasswordOldChange}
                             />
                         </div>
-                    <div>
-                        <br/>
-                        <input
-                            className="input-text0"
-                            placeholder="New Password"
-                            type="password"
-                            id="newPassword0"
-                            value={newPassword0}
-                            onChange={handlePassword0Change}
-                        />
-                    </div>
+                        <div>
+                            <br/>
+                            <input
+                                className="input-text0"
+                                placeholder="New Password"
+                                type="password"
+                                id="newPassword0"
+                                value={newPassword0}
+                                onChange={handlePassword0Change}
+                            />
+                        </div>
                         <br/>
                         <div className="input-button">
 
@@ -221,6 +283,7 @@ const SettingsPage = () => {
                     </div>
                 </div>
             </div>
+            <ToastContainer/>
         </div>
     );
 };
