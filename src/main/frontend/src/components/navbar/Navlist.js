@@ -19,7 +19,7 @@ const Navlist = () => {
                 (<li><Link to="/registration" className="NavListLink">CREATE ACCOUNT</Link></li>)
             }
             <li><Link to="/films/1" className="NavListLink">FILMS</Link></li>
-            <li><Link to="#" className="NavListLink">COMMUNITY</Link></li>
+            {/*<li><Link to="#" className="NavListLink">COMMUNITY</Link></li>*/}
         </ul>
     )
 }
