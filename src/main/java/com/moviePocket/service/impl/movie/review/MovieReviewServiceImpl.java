@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
@@ -74,24 +75,25 @@ public class MovieReviewServiceImpl implements MovieReviewService {
 
 
     public ResponseEntity<ParsReview> getByIDMovieReview(Long idMovieReview) {
-        ReviewMovie movieReview = movieReviewRepository.getById(idMovieReview);
-        if (movieReview == null) {
+        try {
+            ReviewMovie movieReview = movieReviewRepository.getById(idMovieReview);
+            return ResponseEntity.ok(new ParsReview(
+                    movieReview.getTitle(),
+                    movieReview.getContent(),
+                    movieReview.getUser().getUsername(),
+                    movieReview.getCreated(),
+                    movieReview.getUpdated(),
+                    movieReview.getId(),
+                    movieReview.getId(),
+                    new int[]{
+                            likeMovieReviewRepository.countByMovieReviewAndLickOrDisIsTrue(movieReview),
+                            likeMovieReviewRepository.countByMovieReviewAndLickOrDisIsFalse(movieReview)
+                    }
+            ));
+        } catch (EntityNotFoundException e) {
             List<ParsReview> reviewList = new ArrayList<>();
             return ResponseEntity.ok().body(null);
         }
-        return ResponseEntity.ok(new ParsReview(
-                movieReview.getTitle(),
-                movieReview.getContent(),
-                movieReview.getUser().getUsername(),
-                movieReview.getCreated(),
-                movieReview.getUpdated(),
-                movieReview.getId(),
-                movieReview.getId(),
-                new int[]{
-                        likeMovieReviewRepository.countByMovieReviewAndLickOrDisIsTrue(movieReview),
-                        likeMovieReviewRepository.countByMovieReviewAndLickOrDisIsFalse(movieReview)
-                }
-        ));
     }
 
 
