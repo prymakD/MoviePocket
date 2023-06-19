@@ -120,101 +120,108 @@ const SettingsPage = () => {
     };
 
     return (
-        // <div className="user-page-container"
-        //      style={{backgroundImage: `url(${backgroundImage})`}}>
-        <div className="settings-container">
-            <h1 className="white-text">Settings</h1>
-            <div className="edit-container">
-                <div className="username-info">
-                    <label className="blue-text" htmlFor="username">Username: </label>
-                    <span className="yellow-text">{settings.username}</span>
-                </div>
-                <input
-                    className="input-text0"
-                    type="text"
-                    id="newUsername"
-                    placeholder="New username"
-                    value={newUsername}
-                    onChange={handleUsernameChange}
-                />
-                <button className="button-update" onClick={handleUpdateUsername}>Update</button>
-            </div>
-            <div className="edit-container">
-                <div className="username-info">
-                    <label className="blue-text" htmlFor="email">Email:</label>
-                    <span className="yellow-text">{settings.email}</span>
-                </div>
-                <input
-                    className="input-text0"
-                    placeholder="New Email"
-                    type="email"
-                    id="newEmail"
-                    value={newEmail}
-                    onChange={handleEmailChange}
-                />
-                <button className="button-update" onClick={handleUpdateEmail}>update</button>
-            </div>
-            <div className="edit-container">
-                <div className="username-info">
-                    <label className="blue-text" htmlFor="bio">Biography:</label>
-                    <span className="yellow-text">{settings.bio}</span>
-                </div>
-                <textarea className="input-text1" id="newBio" value={bio} onChange={handleBioChange}/>
-                <button className="button-update" onClick={handleUpdateBio}>update</button>
-            </div>
-            <div className="password-container">
-                <div>
-                    <label className="blue-text" htmlFor="newPasswordOld">Old Password:</label>
-                    <br/>
-                    <input
-                        className="input-text0"
-                        type="password"
-                        id="newPasswordOld"
-                        value={passwordOld}
-                        onChange={handlePasswordOldChange}
-                    />
-                </div>
-                <div>
+        <div className="settings-page-container"
+             style={{backgroundImage: `url(${backgroundImage})`, backgroundAttachment: 'fixed'}}>
+            <div className="main">
+                <div className="settings-container">
+                    <h1 className="white-text">Settings</h1>
+                    <div className="edit-container">
+                        <div className="username-info">
+                            <label className="blue-text" htmlFor="username">Username: </label>
+                            <span className="yellow-text">{settings.username}</span>
+                        </div>
+                        <div className="input-button">
+                            <input
+                                className="input-text0"
+                                type="text"
+                                id="newUsername"
+                                placeholder="New username"
+                                value={newUsername}
+                                onChange={handleUsernameChange}
+                            />
+                            <button className="button-update" onClick={handleUpdateUsername}>Update</button>
+                        </div>
+                    </div>
+                    <div className="edit-container">
+                        <div className="username-info">
+                            <label className="blue-text" htmlFor="email">Email:</label>
+                            <span className="yellow-text">{settings.email}</span>
+                        </div>
+                        <div className="input-button">
+                            <input
+                                className="input-text0"
+                                placeholder="New Email"
+                                type="email"
+                                id="newEmail"
+                                value={newEmail}
+                                onChange={handleEmailChange}
+                            />
+                            <button className="button-update" onClick={handleUpdateEmail}>Update</button>
+                        </div>
+                    </div>
+                    <div className="edit-container">
+                        <div className="username-info">
+                            <label className="blue-text" htmlFor="bio">Biography:</label>
+                            <span className="yellow-text">{settings.bio}</span>
+                        </div>
+                        <div className="input-button">
+                            <textarea className="input-text1" id="newBio" value={bio} onChange={handleBioChange}/>
+                            <button className="button-update" onClick={handleUpdateBio}>Update</button>
+                        </div>
+                    </div>
+                    <div className="password-container">
+                        <label className="blue-text" htmlFor="newPasswordOld">New Password:</label>
+                        <div>
+                            <input
+                                className="input-text0"
+                                placeholder="Old Password"
+                                type="password"
+                                id="newPasswordOld"
+                                value={passwordOld}
+                                onChange={handlePasswordOldChange}
+                            />
+                        </div>
                     <div>
-                        <label className="blue-text" htmlFor="newPassword0">New Password:</label>
                         <br/>
                         <input
                             className="input-text0"
+                            placeholder="New Password"
                             type="password"
                             id="newPassword0"
                             value={newPassword0}
                             onChange={handlePassword0Change}
                         />
                     </div>
-                    <div>
-                        <label className="blue-text" htmlFor="newPassword1">Confirm New Password:</label>
                         <br/>
-                        <input
-                            className="input-text0"
-                            type="password"
-                            id="newPassword1"
-                            value={newPassword1}
-                            onChange={handlePassword1Change}
-                        />
+                        <div className="input-button">
+
+                            <input
+                                className="input-text0"
+                                placeholder="Confirm New Password"
+                                type="password"
+                                id="newPassword1"
+                                value={newPassword1}
+                                onChange={handlePassword1Change}
+                            />
+                            <button className="button-update" onClick={handleUpdatePassword}>Update</button>
+                        </div>
+                    </div>
+                    <div className="edit-container">
+                        <label className="blue-text" htmlFor="passwordDeletion">Delete Account:</label>
+                        <div className="input-button">
+                            <input
+                                className="input-text0"
+                                placeholder="Password"
+                                type="password"
+                                id="passwordDeletion"
+                                onChange={handlePasswordDeletionChange}
+                            />
+                            <button className="button-update" onClick={handleAccountDeletion}>Delete</button>
+                        </div>
                     </div>
                 </div>
-                <button className="button-update" onClick={handleUpdatePassword}>Update</button>
-            </div>
-            <div className="edit-container">
-                <div>
-                    <label className="blue-text" htmlFor="passwordDeletion">Password:</label>
-                    <br/>
-                    <input
-                        className="input-text0"
-                        type="password"
-                        id="passwordDeletion"
-                        onChange={handlePasswordDeletionChange}
-                    />
-                </div>
-                <button className="button-update" onClick={handleAccountDeletion}>Delete Account</button>
             </div>
         </div>
-        // </div>
     );
 };
 

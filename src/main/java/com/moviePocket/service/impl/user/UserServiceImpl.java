@@ -81,7 +81,7 @@ public class UserServiceImpl implements UserService {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         else if (!user.getTokenLostPassword().equals(token))
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-        else if (!password1.equals(password2) || password1.isEmpty() || password2.isEmpty())
+        else if (!password1.equals(password2) || password1.isEmpty())
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         else {
             user.setPassword(passwordEncoder.encode(password1));
@@ -109,8 +109,8 @@ public class UserServiceImpl implements UserService {
     public ResponseEntity<Void> setNewUsername(String email, String username) {
         User user = userRepository.findByEmail(email);
         if (user == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        } else if (userRepository.existsByUsername(username) && user.isAccountActive()) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        } else if (userRepository.existsByUsername(username) && user.isAccountActive() && username.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         } else {
             user.setUsername(username);
