@@ -16,6 +16,8 @@ import UserWatchedPage from "./pages/UserWatchedPage";
 import UserFavoritePage from "./pages/UserFavoritePage";
 import NewPasswordPage from "./pages/NewPasswordPage";
 import ActivateUserPage from "./pages/ActivateUserPage";
+import AboutUsPage from "./pages/AboutUsPage";
+
 
 import {ToastContainer} from "react-bootstrap";
 
@@ -99,6 +101,10 @@ const App = () => {
                             <Route
                                 path='films/:currentPage'
                                 element={<FilmsBrowsingPage/>}
+                            />
+                            <Route
+                                path='/aboutUs'
+                                element={<AboutUsPage/>}
                             />
                             <Route
                                 path='film/:id'
