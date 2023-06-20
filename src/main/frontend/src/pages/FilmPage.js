@@ -13,6 +13,7 @@ import CreateReviewForm from "../components/review/CreateReviewForm";
 import {AuthContext} from "../App";
 import SingleReview from "../components/review/SingleReview";
 import RatingComponent from "../components/buttons/RatingComponent";
+import DislikedMovieButton from "../components/buttons/DislikedMovieButton";
 
 const FilmPage = () => {
     const {id} = useParams();
@@ -94,6 +95,10 @@ const FilmPage = () => {
                                 className={styles.favorite}
                             />
                             <ToWatchMovieButton
+                                idMovie={movie.id}
+                                className={styles.favorite}
+                            />
+                            <DislikedMovieButton
                                 idMovie={movie.id}
                                 className={styles.favorite}
                             />
