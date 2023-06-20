@@ -1,25 +1,25 @@
 package com.moviePocket.service.movie.raview;
 
 import com.moviePocket.entities.movie.review.ParsReview;
-import com.moviePocket.entities.movie.review.ReviewMovie;
+import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
 public interface MovieReviewService {
 
-    ReviewMovie creatMovieReview(String username, Long idMovie, String title, String content);
+    ResponseEntity<Void> creatMovieReview(String username, Long idMovie, String title, String content);
 
-    List<ParsReview> getAllByIDMovie(Long idMovie);
+    ResponseEntity<List<ParsReview>> getAllByIDMovie(Long idMovie);
 
-    List<ParsReview> getAllByUser(String email);
+    ResponseEntity<List<ParsReview>> getAllByUser(String email);
 
-    boolean delMovieReview(Long idMovieReview, String username);
+    ResponseEntity<Void> delMovieReview(Long idMovieReview, String username);
 
-    int getAllCountByIdMovie(Long idMovie);
+    ResponseEntity<Integer> getAllCountByIdMovie(Long idMovie);
 
-    ParsReview getByIDMovieReview(Long idMovieReview);
+    ResponseEntity<ParsReview> getByIDMovieReview(Long idMovieReview);
 
-    List<ParsReview> getAllByUserAndIdMovie(String email, Long idMovie);
+    ResponseEntity<List<ParsReview>> getAllByUserAndIdMovie(String email, Long idMovie);
 
-    ReviewMovie updateMovieReview(Long idMovieReview, String username, String title, String content);
+    ResponseEntity<Void> updateMovieReview(Long idMovieReview, String username, String title, String content);
 }

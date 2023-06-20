@@ -1,0 +1,53 @@
+.watched {
+    height: 20px;
+    width: 20px;
+}
+
+.watched:hover {
+    transform: scale(1.2);
+    cursor: pointer;
+}
+
+.watched-count {
+
+}
+
+.favorite {
+    height: 20px;
+    width: 20px;
+}
+
+.favorite:hover {
+    transform: scale(1.2);
+    cursor: pointer;
+}
+
+.favorite-count {
+
+}
+
+.toWatch {
+    height: 20px;
+    width: 20px;
+}
+
+.toWatch:hover {
+    transform: scale(1.2);
+    cursor: pointer;
+}
+
+.toWatch-count {
+
+}
+
+.browsingPoster:hover {
+    border: 2px solid green;
+}
+
+.blue-text {
+    color: #74F8F2;
+}
+
+.yellow-text {
+    color: #F1B36E;
+}

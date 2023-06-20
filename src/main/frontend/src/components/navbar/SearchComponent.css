@@ -1,0 +1,19 @@
+.Search {
+    position: relative;
+    width: 30vh;
+}
+
+.Round {
+    width: 100%;
+    border-radius: 10px;
+    padding: 5px 15px 5px 30px;
+    background-color: var(--secondary-yellow);
+}
+
+.Submit {
+    position: absolute;
+    top: 6px;
+    left: 5px;
+    height: 20px;
+    width: 20px;
+}

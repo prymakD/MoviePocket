@@ -2,6 +2,7 @@ package com.moviePocket.controller.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.moviePocket.entities.user.User;
+import com.moviePocket.security.validation.ValidPassword;
 import lombok.Data;
 
 import javax.validation.constraints.Email;
@@ -21,7 +22,7 @@ public class UserRegistrationDto {
 
     //TODO password validation for registrasion
 
-    //    @ValidPassword
+    @ValidPassword
     private String password;
 
     public User toUser() {

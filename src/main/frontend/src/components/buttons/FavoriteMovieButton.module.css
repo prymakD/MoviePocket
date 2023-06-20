@@ -1,0 +1,9 @@
+.default {
+    height: 4px;
+    width: 4px;
+}
+
+.default:hover {
+    transform: scale(1.2);
+    cursor: pointer;
+}

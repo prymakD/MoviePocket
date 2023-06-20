@@ -3,7 +3,13 @@ package com.moviePocket.controller;
 import com.moviePocket.controller.dto.UserRegistrationDto;
 import com.moviePocket.entities.user.User;
 import com.moviePocket.service.UserService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -14,34 +20,10 @@ import javax.validation.Valid;
 
 @Controller
 @RequiredArgsConstructor
+@Api(value = "Login and Registration Controller", description = "Controller for user login/registration")
 public class LoginController {
 
     private final UserService userService;
-
-//    private final AuthenticationManager authenticationManager;
-
-    /*@PostMapping("/login")
-    public String login(@RequestParam("username") String email,
-                                   @RequestParam("password") String password, Model model) {
-        try {
-            // create an authentication token using the provided email and password
-            Authentication authenticationToken = new UsernamePasswordAuthenticationToken(email, password);
-
-            // authenticate the user
-            Authentication authentication = authenticationManager.authenticate(authenticationToken);
-
-            // set the authentication in the security context
-            SecurityContextHolder.getContext().setAuthentication(authentication);
-
-            // redirect to the default success URL
-            return "redirect:/user/";
-        } catch (AuthenticationException e) {
-            // add an error message to the model if authentication fails
-            model.addAttribute("error", true);
-            return "login";
-        }
-    }*/
-
     @RequestMapping("/login")
     public String loginForm() {
         return "login";
@@ -54,35 +36,58 @@ public class LoginController {
         return "registration";
     }
 
+    @ApiOperation(value = "Register a user ", notes = "Registration with username, password(with validation) and email, email and username should be unique, cookie based")
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Successfully registered"),
+            @ApiResponse(code = 403, message = "User already registered"),
+            @ApiResponse(code = 400, message = "Password does not match the criteria"),
+            @ApiResponse(code = 404, message = "Username or email is empty"),
+            @ApiResponse(code = 401, message = "Username is already occupied")
+
+
+    })
     @PostMapping("/registration")
-    public String registration(
-            @Valid @ModelAttribute("user") UserRegistrationDto userDto,
-            BindingResult result,
-            Model model) throws MessagingException {
-        User existingUser = userService.findUserByEmail(userDto.getEmail());
+    public ResponseEntity<?> registration(
+            @Valid @ModelAttribute("user") UserRegistrationDto userDto, BindingResult result) throws MessagingException {
+        User existingUser = userService.findUserByUsername(userDto.getUsername());
+        User existingUserByMail = userService.findUserByEmail(userDto.getEmail());
 
+        if ((existingUser != null) && existingUser.isAccountActive()) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+        //403
+        if ((existingUser != null) || (existingUserByMail != null))
+            return new ResponseEntity<>("User already registered !!!", HttpStatus.FORBIDDEN);
 
-        if (existingUser != null)
-            result.rejectValue("email", null,
-                    "User already registered !!!");
-
-        if (result.hasErrors()) {
-            model.addAttribute("user", userDto);
-            return "/registration";
+        //400
+        if (result.hasFieldErrors("password")) {
+            String passwordErrorMessage = result.getFieldError("password").getDefaultMessage();
+            // Handle the password validation error, e.g., add a custom message to the response
+            return new ResponseEntity<>(passwordErrorMessage, HttpStatus.BAD_REQUEST);
         }
 
+        //404
+        if (userDto.getUsername().isEmpty() || userDto.getEmail().isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        //404
+        if (result.hasErrors()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        //201
         userService.save(userDto);
-        return "redirect:/registration?success";
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    @GetMapping("/activate/{code}")
-    public String activate(Model model, @PathVariable String code) {
-        boolean isActivated = userService.activateUser(code);
-        if (isActivated) {
-            model.addAttribute("message", "User successfully activated");
-        } else {
-            model.addAttribute("message", "Activation code is not found!");
-        }
-        return "login";
+    @ApiOperation(value = "Activate a user by email", notes = "Link is sent to the email after registration, returns whether user is activated(confirmed his/her mail or not ")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "User is activated"),
+            @ApiResponse(code = 409, message = "User activation code is not found"),
+    })
+    @PostMapping("/activate")
+    public ResponseEntity<Void> activate(@RequestParam("token") String token) {
+        return userService.activateUser(token);
     }
 }

@@ -3,7 +3,6 @@ package com.moviePocket.service.impl.movie;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.moviePocket.controller.dto.MovieDto;
-import com.moviePocket.repository.movie.MovieRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
@@ -18,20 +17,12 @@ import java.util.Map;
 @Service
 public class MovieServiceImpl {
 
-    @Autowired
-    private MovieRepository movieRepository;
-
     @Value("${api.key}")
     private  String apiKey;
 
     @Autowired
     private RestTemplate restTemplate;
 
-    public MovieDto getMovieById(Long movieId) {
-
-        MovieDto movieSummary = restTemplate.getForObject("https://api.themoviedb.org/3/movie/" + movieId + "?api_key=" +  apiKey, MovieDto.class);
-        return new MovieDto(movieId, movieSummary.getTitle(), movieSummary.getOverview(), movieSummary.getRuntime());
-    }
 
     public List<MovieDto> searchMovie(String query) {
         List<MovieDto> movieSearchResult = new ArrayList<>();

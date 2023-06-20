@@ -1,0 +1,197 @@
+-- we don't know how to generate root <with-no-name> (class Root) :(
+create table movie_categories
+(
+	id bigint auto_increment
+		primary key,
+	name varchar(255) not null,
+	constraint UK_a38g6o1s19wveiela1awos1vw
+		unique (name)
+);
+
+
+create table roles
+(
+	id bigint auto_increment
+		primary key,
+	name varchar(255) not null,
+	constraint UK_ofx66keruapi6vyqpv6f2or37
+		unique (name)
+);
+
+create table users
+(
+	id bigint auto_increment
+		primary key,
+	activation_code varchar(255) null,
+	bio longtext null,
+	email varchar(255) not null,
+	email_verification bit not null,
+	new_email varchar(255) null,
+	new_email_token varchar(255) null,
+	password varchar(255) not null,
+	token_lost_password varchar(255) null,
+	username varchar(255) not null,
+	created datetime null,
+	updated datetime null,
+	status varchar(255) null,
+	account_active bit not null
+);
+
+create table movie_list
+(
+	id bigint auto_increment
+		primary key,
+	created datetime null,
+	updated datetime null,
+	title varchar(255) not null,
+	id_user bigint null,
+	content varchar(255) not null,
+	constraint UK_7xdv310od2atfin6www0p5l29
+		unique (content),
+	constraint UK_aafeynyn5vdpcf8vanaf1jeb4
+		unique (title),
+	constraint FK75rxptdhdif46l1w5wyxsmj79
+		foreign key (id_user) references users (id)
+);
+
+create table categories_list
+(
+	id bigint auto_increment
+		primary key,
+	id_movie_categories bigint null,
+	id_movie_list bigint null,
+	created datetime null,
+	updated datetime null,
+	constraint FKafcdu8ks3qr6gags9ql5kskjm
+		foreign key (id_movie_list) references movie_list (id),
+	constraint FKctydn69rwlctq6dkkfmnt0xv9
+		foreign key (id_movie_categories) references movie_categories (id)
+);
+
+create table like_list
+(
+	id bigint auto_increment
+		primary key,
+	created datetime null,
+	updated datetime null,
+	lick_or_dis bit not null,
+	movie_list_id bigint null,
+	user_id bigint null,
+	constraint FKnht2krqokuq9xfc9i9ft1jdf8
+		foreign key (user_id) references users (id),
+	constraint FKrei139qfw2rsbmrs3nwwv2q44
+		foreign key (movie_list_id) references movie_list (id)
+);
+
+create table movie_in_list
+(
+	id bigint auto_increment
+		primary key,
+	created datetime null,
+	updated datetime null,
+	id_movie bigint not null,
+	id_movie_list bigint null,
+	constraint FKm01i0pjvboqkrts6lw7qifo73
+		foreign key (id_movie_list) references movie_list (id)
+);
+
+create table review_movie
+(
+	id bigint auto_increment
+		primary key,
+	created datetime null,
+	updated datetime null,
+	content varchar(255) not null,
+	id_movie bigint not null,
+	title varchar(255) not null,
+	id_user bigint null,
+	constraint FK6bpjeby5ut1nowd2y0r4ctg1o
+		foreign key (id_user) references users (id)
+);
+
+create table like_review
+(
+	id bigint auto_increment
+		primary key,
+	lick_or_dis bit not null,
+	review_id bigint null,
+	user_id bigint null,
+	created datetime null,
+	updated datetime null,
+	constraint FKojygqnovyvngkqy5e8hotfr0k
+		foreign key (review_id) references review_movie (id),
+	constraint FKq1j8ul3phs1jfq2iwtgujb4y3
+		foreign key (user_id) references users (id)
+);
+
+create table user_disliked_movies
+(
+	id bigint auto_increment
+		primary key,
+	id_movie bigint not null,
+	id_user bigint null,
+	created datetime null,
+	updated datetime null,
+	constraint FK3790i81xxtmj7eko4wcgbg73e
+		foreign key (id_user) references users (id)
+);
+
+create table user_favorite_movies
+(
+	id bigint auto_increment
+		primary key,
+	id_movie bigint not null,
+	id_user bigint null,
+	created datetime null,
+	updated datetime null,
+	constraint FKry0xq8e4g5unxuc8lrnuarxgx
+		foreign key (id_user) references users (id)
+);
+
+create table user_rating_movies
+(
+	id bigint auto_increment
+		primary key,
+	id_movie bigint not null,
+	rating int not null,
+	id_user bigint null,
+	created datetime null,
+	updated datetime null,
+	constraint FKcxgv32tuv2j8wwdmkj3wi619n
+		foreign key (id_user) references users (id)
+);
+
+create table user_to_watch_movies
+(
+	id bigint auto_increment
+		primary key,
+	id_movie bigint not null,
+	id_user bigint null,
+	created datetime null,
+	updated datetime null,
+	constraint FKhaoc90imw0tuxyua3yikyy06i
+		foreign key (id_user) references users (id)
+);
+
+create table user_watched_movies
+(
+	id bigint auto_increment
+		primary key,
+	id_movie bigint not null,
+	id_user bigint null,
+	created datetime null,
+	updated datetime null,
+	constraint FKhwnqwypsub68d1b7a4sw4xywp
+		foreign key (id_user) references users (id)
+);
+
+create table users_roles
+(
+	user_id bigint not null,
+	role_id bigint not null,
+	constraint FK2o0jvgh89lemvvo17cbqvdxaa
+		foreign key (user_id) references users (id),
+	constraint FKj6m8fwv7oqv74fcehir1a9ffy
+		foreign key (role_id) references roles (id)
+);
+

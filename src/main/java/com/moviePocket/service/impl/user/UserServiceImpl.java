@@ -9,12 +9,13 @@ import com.moviePocket.service.UserService;
 import com.moviePocket.util.TbConstants;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.webjars.NotFoundException;
 
 import javax.mail.MessagingException;
 import java.util.Arrays;
@@ -45,8 +46,8 @@ public class UserServiceImpl implements UserService {
         userRepository.save(user);
 
         String username = user.getUsername();
-        String link = "http://localhost:8080/activate/" + user.getActivationCode();
-        String massage = "Welcome to MoviePocket. We really hope that you will enjoy being a part of MoviePocket family \n" +
+        String link = "http://localhost:3000/activateUser?token=" + user.getActivationCode();
+        String massage = "Welcome to MoviePocket family. We really hope that you will enjoy being a part of MoviePocket family \n" +
                 " We want to make sure it's really you. To do that please confirm your mail by clicking the link below.";
 
         emailSenderService.sendMailWithAttachment(user.getEmail(), buildEmail(username, massage, link), "Email Verification");
@@ -54,141 +55,145 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean deleteUser(String email, String pas) {
+    public ResponseEntity<Void> deleteUser(String email, String pas) {
         User user = findUserByEmail(email);
-        if (user != null) {
-            if (passwordEncoder.matches(pas, user.getPassword())) {
-                user.setAccountActive(false);
-                user.setEmail(user.getEmail() + " not active");
-                user.setPassword("");
-                userRepository.save(user);
-                return true;
-            }
+        if (user == null)
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        else if (!passwordEncoder.matches(pas, user.getPassword()))
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        else {
+            user.setAccountActive(false);
+            user.setEmailVerification(false);
+            user.setEmail(user.getEmail() + "not active" + user.getId());
+            user.setPassword("");
+            user.setUsername(String.valueOf(user.getId()));
+            userRepository.save(user);
+            return new ResponseEntity<>(HttpStatus.OK);
         }
-        return false;
     }
 
     @Override
-    public boolean setNewLostPassword(String token, String pas) {
+    public ResponseEntity<Void> setNewLostPassword(String token, String password1, String password2) {
         User user = userRepository.findByTokenLostPassword(token);
-        if (user != null && user.getEmailVerification()) {
-            user.setPassword(passwordEncoder.encode(pas));
+        if (user == null)
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        else if (!user.getEmailVerification())
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        else if (!user.getTokenLostPassword().equals(token))
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        else if (!password1.equals(password2) || password1.isEmpty())
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        else {
+            user.setPassword(passwordEncoder.encode(password1));
             user.setTokenLostPassword(null);
             userRepository.save(user);
-            return true;
-        } else
-            return false;
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
     }
 
-    @Override
-    public boolean setNewPassword(String email, String passwordOld, String passwordNew) {
+    public ResponseEntity<Void> setNewPassword(String email, String passwordOld, String passwordNew0, String passwordNew1) {
         User user = userRepository.findByEmail(email);
-        if (user != null && user.getEmailVerification() && passwordEncoder.matches(passwordOld, user.getPassword())) {
-            user.setPassword(passwordEncoder.encode(passwordNew));
+        if (user == null)
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        else if (!passwordEncoder.matches(passwordOld, user.getPassword()))
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        else if (!passwordNew0.equals(passwordNew1)) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        } else {
+            user.setPassword(passwordEncoder.encode(passwordNew0));
             userRepository.save(user);
-            return true;
-        } else
-            return false;
-    }
-
-    @Override
-    public void setNewUsername(String email, String username) {
-        try {
-            User user = userRepository.findByEmail(email);
-            if (user != null && !userRepository.existsByUsername(username)) {
-                if (username.isEmpty()) {
-                    throw new MessagingException("Username cannot be empty");
-                }
-                user.setUsername(username);
-                userRepository.save(user);
-            } else {
-                throw new NotFoundException("User not found");
-            }
-        } catch (NotFoundException | MessagingException e) {
-            e.getStackTrace();
+            return new ResponseEntity<>(HttpStatus.OK);
         }
     }
 
-    @Override
-    public boolean setNewBio(String email, String bio) {
-        try {
-            User user = userRepository.findByEmail(email);
-            if (user != null) {
-                if (bio.isEmpty()) {
-                    throw new MessagingException("Bio cannot be empty");
-                }
-                user.setBio(bio);
-                userRepository.save(user);
-                return true;
-            } else {
-                throw new NotFoundException("User not found");
-            }
-        } catch (NotFoundException | MessagingException e) {
-            e.getStackTrace();
-            return false;
+    public ResponseEntity<Void> setNewUsername(String email, String username) {
+        User user = userRepository.findByEmail(email);
+        if (user == null) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        } else if (userRepository.existsByUsername(username) && user.isAccountActive() || username.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        } else {
+            user.setUsername(username);
+            userRepository.save(user);
+            return new ResponseEntity<>(HttpStatus.OK);
         }
     }
 
-    @Override
-    public boolean setTokenPassword(String mail) throws MessagingException {
+    public ResponseEntity<Void> setNewBio(String email, String bio) {
+        User user = userRepository.findByEmail(email);
+        if (user == null)
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        if (bio.isEmpty())
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        else {
+            user.setBio(bio);
+            userRepository.save(user);
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
+    }
+
+    public ResponseEntity<Void> setTokenPassword(String mail) throws MessagingException {
         User user = userRepository.findByEmail(mail);
-        if (user != null && user.getEmailVerification()) {
+        if (user == null)
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        else {
             user.setTokenLostPassword(UUID.randomUUID().toString());
             userRepository.save(user);
-
             String username = user.getUsername();
-            String link = "http://localhost:8080/lostpassword/reset?token=" + user.getTokenLostPassword();
-            String massage = "You are just in the middle of having your new password. \n Please confirm your new email address.";
-
+            String link = "http://localhost:3000/newPassword?token=" + user.getTokenLostPassword();
+            String massage = "You are just in the middle of having your new password. \n Please confirm your email address by going by the link.";
             emailSenderService.sendMailWithAttachment(user.getEmail(), buildEmail(username, massage, link), "Password Recovery");
-
-
-            return true;
+            return new ResponseEntity<>(HttpStatus.OK);
         }
-        return false;
     }
 
-    @Override
-    public boolean setTokenEmail(String oldEmail, String newEmail) throws MessagingException {
-        User user = userRepository.findByEmail(oldEmail);
-        if (user != null) {
+    public ResponseEntity<Void> setTokenEmail(String email, String newEmail) throws MessagingException {
+        User user = userRepository.findByEmail(email);
+        if (user == null)
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        else if (email.equals(newEmail))
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        else {
             user.setNewEmail(newEmail);
             user.setNewEmailToken(UUID.randomUUID().toString());
             userRepository.save(user);
 
             String username = user.getUsername();
-            String link = "http://localhost:8080/user/edit/newemail/" + user.getNewEmailToken();
+            String link = "http://localhost:8080/user/edit/activateNewEmail/" + user.getNewEmailToken();
             String massage = "You are just in the middle of setting up your new email address. \n Please confirm your new email address.";
 
             emailSenderService.sendMailWithAttachment(user.getNewEmail(), buildEmail(username, massage, link), "New Mail Confirmation");
-            return true;
+            return new ResponseEntity<>(HttpStatus.OK);
         }
-        return false;
     }
 
     @Override
-    public boolean activateNewEmail(String token) {
+    public ResponseEntity<Void> activateNewEmail(String token) {
         User user = userRepository.findByNewEmailToken(token);
-        if (user != null) {
+        if (user == null)
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        else {
             user.setEmail(user.getNewEmail());
             user.setNewEmail(null);
             user.setNewEmailToken(null);
             userRepository.save(user);
-            return true;
+            return ResponseEntity.status(HttpStatus.OK).build();
         }
-        return false;
     }
 
     @Override
-    public boolean activateUser(String code) {
+    public ResponseEntity<Void> activateUser(String code) {
         User user = userRepository.findByActivationCode(code);
-        if (user != null) {
+        if (user == null) {
+            System.out.println("fuck");
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } else {
+            System.out.println(user);
             user.setEmailVerification(Boolean.TRUE);
             user.setActivationCode(null);
             userRepository.save(user);
-            return true;
-        } else
-            return false;
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
     }
 
     @Override
@@ -230,7 +235,7 @@ public class UserServiceImpl implements UserService {
     }
 
     public User findUserByUsername(String username) {
-        return userRepository.findAllByUsername(username);
+        return userRepository.findByUsernameAndAccountActive(username, true);
     }
 
 
@@ -290,7 +295,7 @@ public class UserServiceImpl implements UserService {
                 "      <td width=\"10\" valign=\"middle\"><br></td>\n" +
                 "      <td style=\"font-family:Helvetica,Arial,sans-serif;font-size:19px;line-height:1.315789474;max-width:560px\">\n" +
                 "        \n" +
-                "            <p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\">Hello " + username + ",</p><p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\">" + massage + "</p><blockquote style=\"Margin:0 0 20px 0;border-left:10px solid #b1b4b6;padding:15px 0 0.1px 15px;font-size:19px;line-height:25px\"><p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\"> <a href=\"" + link + "\">Confirm your email</a> </p></blockquote>\n <p>See you soon</p>" +
+                "            <p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\">Hello " + username + ",</p><p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\">" + massage + "</p><blockquote style=\"Margin:0 0 20px 0;border-left:10px solid #b1b4b6;padding:15px 0 0.1px 15px;font-size:19px;line-height:25px\"><p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\"> <a href=\"" + link + "\">Confirm your email</a> </p></blockquote>\n <p>See you soon</p> \n <p>Best wishes</p> \n <p>MoviePocket team</p>" +
                 "        \n" +
                 "      </td>\n" +
                 "      <td width=\"10\" valign=\"middle\"><br></td>\n" +

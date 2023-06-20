@@ -1,0 +1,34 @@
+.singleReview {
+    border: 2px solid var(--primary-yellow);
+    border-radius: 5vh;
+    margin-top: 3vh;
+    display: flex;
+    padding: 2vh;
+}
+
+.reviewContent {
+    margin-left: 2vh;
+}
+
+.logoText {
+    color: var(--primary-red);
+}
+
+.RightContainer {
+    display: flex;
+    flex-direction: column;
+    column-gap: 1vh;
+    margin-left: auto;
+}
+
+.RightBottomContainer {
+    display: flex;
+    column-gap: 1vh;
+    margin-top: auto;
+}
+
+.RightTopContainer {
+    display: flex;
+    column-gap: 1vh;
+    margin-bottom: auto;
+}

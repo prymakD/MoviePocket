@@ -1,34 +1,19 @@
 .Navlist{
     margin: 0 0;
     display: flex;
+    justify-content: center;
     align-items: center;
-    justify-content: space-between;
-    column-gap: 30px;
-    font-size: 16px;
+    column-gap: 3vh;
     font-family: 'Poppins', sans-serif;
 }
+
 .NavListLink{
-    color: #FFFFFF;
-}
-.Round {
-    width: 100%;
-    border-radius: 15px;
-    padding: 5px 15px 5px 30px;
-    z-index: 5;
-    background-color: grey;
+    color: var(--primary-yellow);
+    font-size: 16px;
+    transition: opacity 0.3s ease;
 }
 
-.Submit {
-    position: absolute;
-    top: 5px;
-    left: 5px;
-    height: 20px;
-    width: 20px;
-    background-image: url("search.png");
-}
-
-.Search {
-    position: relative;
-    width: 300px;
-    height: 30px;
+.NavListLink:hover{
+    color: var(--primary-yellow);
+    opacity: 0.8;
 }

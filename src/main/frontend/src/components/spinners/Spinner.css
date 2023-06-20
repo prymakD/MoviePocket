@@ -1,0 +1,23 @@
+.line-spinner-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: auto;
+}
+
+.line-spinner {
+    width: auto;
+    height: auto;
+    background-color: #000;
+    position: relative;
+    animation: line-spinner-animation 1s infinite linear;
+}
+
+@keyframes line-spinner-animation {
+    0% {
+        left: -100%;
+    }
+    100% {
+        left: 100%;
+    }
+}

@@ -1,0 +1,105 @@
+.image-container {
+    display: flex;
+    width: 100%;
+    height: 92vh;
+    justify-content: center;
+    background-size: cover;
+    position: relative;
+    z-index: 1;
+
+}
+
+.image-container::after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(300deg, #000000 8.0%, rgba(0, 0, 0, 0) 30.0%),
+    linear-gradient(60deg, #000000 8.0%, rgba(0, 0, 0, 0) 30.0%),
+    linear-gradient(0deg, #000000 2.0%, rgba(0, 0, 0, 0) 30.0%),
+    linear-gradient(90deg, #000000 0%, rgba(0, 0, 0, 0) 32.0%),
+    linear-gradient(270deg, #000000 0%, rgba(0, 0, 0, 0) 32.0%);
+    backdrop-filter: blur(8px);
+    z-index: -1;
+}
+
+.registration-container {
+    height: 60vh;
+    width: 42vh;
+    background-color: rgba(0, 0, 0, 0.8);
+    border-radius: 2vh;
+}
+
+.head {
+    font-size: 30px;
+    margin-top: 3%;
+    margin-bottom: 3%;
+    text-align: center;
+    color: whitesmoke;
+    font-family: 'Poppins', sans-serif;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.form-group{
+    text-align: center;
+}
+
+label {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    color: whitesmoke;
+    font-family: 'Poppins', sans-serif;
+    font-size: 18px;
+}
+
+.registration-input {
+    font-family: 'Poppins', sans-serif;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid whitesmoke;
+    border-radius: 1vh;
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+.registration-input:focus{
+    background-color: whitesmoke;
+}
+
+button {
+    padding: 10px;
+    background-color: #4caf50;
+    font-size: 20px;
+    font-family: 'Poppins', sans-serif;
+    color: whitesmoke;
+    cursor: pointer;
+    width: 25%;
+    margin-top: 20px;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+.button_sign_in {
+    background-color: black;
+    border-radius: 1vh;
+    width: 18vh;
+    height: 7vh;
+}
+
+.button_sign_in:active {
+    background-color: blueviolet;
+    border-radius: 1vh;
+}
+
+.button_sign_in:hover {
+    background-color: #021750;
+}
+
+
+
+

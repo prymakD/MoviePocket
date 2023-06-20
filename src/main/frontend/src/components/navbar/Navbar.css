@@ -1,22 +1,32 @@
 .Navbar{
-    padding: 15px 0;
+    padding: 1.5vh 15%;
     background-color: #171718;
-    color: #FFFFFF;
+    z-index: 1;
 }
-.Container{
-    margin: 0 auto;
-    padding: 0 15%;
-}
-.NavRow{
+
+.NavRow {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    column-gap: 40px;
-    row-gap: 20px;
     flex-wrap: wrap;
 }
-.NavBrand{
-    color: #FFFFFF;
-    font-size: 24px;
-    font-family: 'Poppins', sans-serif;
+
+.RightContainer {
+    margin-left: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    column-gap: 1vh;
+}
+
+.Username {
+    color: var(--primary-red);
+    font-size: 20px;
+}
+
+.LeftContainer {
+    margin-right: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    column-gap: 1vh;
 }
