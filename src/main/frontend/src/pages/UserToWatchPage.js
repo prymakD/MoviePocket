@@ -10,7 +10,7 @@ import ToWatchMovieButton from "../components/buttons/ToWatchMovieButton";
 import "./UserFavoritePage.css";
 import {UsernameContext} from "../App";
 
-const UserWatchedPage = () => {
+const UserToWatchPage = () => {
     const myUsername = useContext(UsernameContext);
     const {username} = useParams()
 
@@ -21,10 +21,10 @@ const UserWatchedPage = () => {
         check = true
     }
 
-    const getUserWatchedList = async () => {
+    const getUserToWatchList = async () => {
         try {
             const response = await getUser(username);
-            const movieList = response.watchedMovie;
+            const movieList = response.toWatchMovie;
             console.log(movieList);
             const favoriteListData = await Promise.all(
                 movieList.map(async (movie) => {
@@ -42,7 +42,7 @@ const UserWatchedPage = () => {
     };
 
     useEffect(() => {
-        getUserWatchedList().then()
+        getUserToWatchList().then()
     }, [username])
 
     return (
@@ -83,4 +83,4 @@ const UserWatchedPage = () => {
         </div>
     );
 }
-export default UserWatchedPage;
+export default UserToWatchPage;

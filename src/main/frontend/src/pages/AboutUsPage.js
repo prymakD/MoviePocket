@@ -38,12 +38,12 @@ const AboutUsPage = () => {
                             share them with others to discover people's different tastes in
                             movies.
                         </p>
-                    <p>
-                        It's important to say that users won't be able to watch movies on our
-                        platform, which we think helps keep our platform as social as
-                        possible, reducing distractions from other features that aren't
-                        connected to it. We also plan to add a review module.
-                    </p>
+                        <p>
+                            It's important to say that users won't be able to watch movies on our
+                            platform, which we think helps keep our platform as social as
+                            possible, reducing distractions from other features that aren't
+                            connected to it.
+                        </p>
                         <p>
                             People will be able to rate a video and leave a short review about it.
                             The target audience for our website will be people who want to connect

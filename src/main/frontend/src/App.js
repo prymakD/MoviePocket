@@ -20,6 +20,7 @@ import AboutUsPage from "./pages/AboutUsPage";
 
 
 import {ToastContainer} from "react-bootstrap";
+import UserToWatchPage from "./pages/UserToWatchPage";
 
 export const AuthContext = createContext(null)
 export const UsernameContext = createContext(null)
@@ -121,6 +122,10 @@ const App = () => {
                             <Route
                                 path='user/:username/watched'
                                 element={<UserWatchedPage/>}
+                            />
+                            <Route
+                                path='user/:username/towatch'
+                                element={<UserToWatchPage/>}
                             />
                         </Route>
                     </Routes>
