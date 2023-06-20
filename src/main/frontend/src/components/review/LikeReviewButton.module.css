@@ -2,8 +2,6 @@
     width: 4vh;
     height: 4vh;
     display: flex;
-    margin-left: auto;
-    margin-top: auto;
 }
 
 .default:hover {
