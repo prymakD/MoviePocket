@@ -12,6 +12,7 @@ import MoviePoster from "../components/poster/MoviePoster";
 import CreateReviewForm from "../components/review/CreateReviewForm";
 import {AuthContext} from "../App";
 import SingleReview from "../components/review/SingleReview";
+import RatingComponent from "../components/buttons/RatingComponent";
 
 const FilmPage = () => {
     const {id} = useParams();
@@ -96,6 +97,9 @@ const FilmPage = () => {
                                 idMovie={movie.id}
                                 className={styles.favorite}
                             />
+                            <RatingComponent/>
+
+
                         </div>
                     </div>
                     <div className="film-details">
