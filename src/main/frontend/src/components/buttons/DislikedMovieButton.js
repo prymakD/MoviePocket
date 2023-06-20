@@ -39,7 +39,7 @@ const DislikedMovieButton = ({idMovie, className}) => {
     };
 
     useEffect(() => {
-        getDislikedMovie().then()
+        getDislikedMovieState().then()
     }, [idMovie]);
 
     return (
