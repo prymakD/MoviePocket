@@ -1,0 +1,31 @@
+.dropdown-content {
+    margin-top: 5vh;
+    display: none;
+    position: absolute;
+    background-color: var(--secondary-yellow);
+    border-radius: 1.5vh;
+    z-index: 9999;
+}
+
+
+.dropdown-content a {
+    color: black;
+    padding: 1vh 2vh;
+    display: block;
+    border-bottom: 1px solid black;
+    border-radius: 1.5vh;
+}
+
+.dropdown-content a:last-child {
+    border-bottom: none;
+}
+
+.dropdown-content a:hover {
+    background-color: var(--primary-yellow);
+    border-radius: 1.5vh;
+    color: white;
+}
+
+.User:hover .dropdown-content {
+    display: block;
+}

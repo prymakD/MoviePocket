@@ -1,0 +1,147 @@
+.film-info-container{
+    padding-left: 12%;
+    padding-right: 12%;
+    color: whitesmoke;
+    display: flex;
+    flex-direction: column;
+    z-index: 1;
+}
+
+.film-header {
+    background-size: cover;
+    height: 60vh;
+    position: relative;
+    filter: blur(10px);
+    z-index: 0;
+}
+
+.movie-like-container{
+    z-index: 1;
+}
+
+.film-header::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background: linear-gradient(300deg, #000000 7.0%, rgba(0, 0, 0, 0) 40.0%),
+    linear-gradient(60deg, #000000 7.0%, rgba(0, 0, 0, 0) 40.0%),
+    linear-gradient(0deg, #000000 0%, rgba(0, 0, 0, 0) 40.0%);
+    z-index: 1;
+}
+.film-media-container {
+    display: flex;
+    padding: 10vh;
+    overflow: hidden;
+    column-gap: 5px;
+    margin-top: -40vh;
+    z-index: 2;
+}
+
+.h1 {
+    font-size: 30px;
+}
+
+.film-details {
+    margin-top: -10px;
+    margin-left: 10vh;
+    font-size: 20px;
+    height: 60vh;
+    width: 70vh;
+    z-index: 1;
+}
+
+.player-wrapper {
+
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+    padding-top: 56.25%; /* 16:9 aspect ratio */
+}
+
+.react-player {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100% !important;
+    height: 70% !important;
+}
+
+
+.review-container {
+    margin-top: 40px;
+}
+
+.single-review {
+    border: 2px solid var(--primary-yellow);
+    border-radius: 5vh;
+    margin-top: 3vh;
+    display: flex;
+    padding: 2vh;
+}
+
+.user-profile {
+    width: 7vh;
+    height: 7vh;
+    font-size: 40px;
+    line-height: 0.75;
+}
+
+.rating {
+    display: flex;
+    align-items: flex-end;
+}
+
+.rating_body {
+    position: relative;
+}
+
+.rating_body::before {
+    content: "★★★★★★★★★★";
+    display: block;
+}
+
+.rating_active {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+}
+
+.rating_active::before {
+    content: "★★★★★★★★★★";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    color: #F1B36E;
+}
+
+.rating_items {
+
+    display: flex;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+}
+
+.rating_item {
+    flex: 0 0 20%;
+    height: 100%;
+    opacity: 0;
+}
+
+.rating_value {
+    font-size: 50%;
+    line-height: 1;
+    padding-left: 10px;
+
+}

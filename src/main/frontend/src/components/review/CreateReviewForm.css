@@ -1,0 +1,70 @@
+.review-form-container {
+    border-radius: 5vh;
+    display: flex;
+    justify-content: center;
+    /*border: 2px solid #75FBE2;*/
+}
+
+
+.review-form-container h2 {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.review-form-container form {
+    display: flex;
+    flex-direction: column;
+    max-width: 500px;
+}
+
+.review-form-container input[type="text"],
+.review-form-container textarea {
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.review-form-container textarea {
+    height: 100px;
+}
+
+.button-submit {
+    border: 2px solid var(--primary-yellow);
+    width: 120px;
+    height: 50px;
+    border-radius: 1vh;
+    font-size: 12px;
+    background-color: transparent;
+}
+
+.button-submit:active {
+    border-color: var(--primary-blue) !important;
+}
+
+.button-submit:hover {
+    border-color: var(--primary-yellow) !important;
+    background-color: transparent;
+}
+
+
+.title-input {
+    width: 100vh;
+    border: 2px solid var(--primary-blue);
+    border-radius: 2vh;
+}
+
+.content-input {
+    width: 100vh;
+    border: 2px solid var(--primary-blue);
+    border-radius: 2vh;
+
+}
+
+.text-title {
+    color: var(--primary-yellow);
+    margin-top: -2vh;
+}
+
+
+
+

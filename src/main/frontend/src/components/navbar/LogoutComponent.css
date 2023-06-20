@@ -1,0 +1,11 @@
+.LogOut {
+    display: block;
+    color: black;
+    padding: 1vh 2vh;
+}
+
+.LogOut:hover {
+    background-color: var(--primary-red);
+    border-radius: 1.5vh;
+    color: white;
+}

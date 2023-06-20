@@ -1,19 +1,26 @@
 import './Navlist.css'
 import {Link} from "react-router-dom";
+import {useContext} from "react";
+import {AuthContext} from "../../App";
+import SearchComponent from "./SearchComponent";
+
 const Navlist = () => {
+    const isLoggedIn = useContext(AuthContext);
 
     return (
         <ul className="Navlist">
-            <div className="Search">
-                <input type="text" className="Round"/>
-                <input type="submit" className="Submit" value="+"/>
-            </div>
-            <li className="NavListItem"><Link to="#" className="NavListLink">SIGN IN</Link></li>
-            <li className="NavListItem"><Link to="#" className="NavListLink">CREATE ACCOUNT</Link></li>
-            <li className="NavListItem"><Link to="/film" className="NavListLink">FILMS</Link></li>
-            <li className="NavListItem"><Link to="#" className="NavListLink">COMMUNITY</Link></li>
+            <li><SearchComponent/></li>
+            {!isLoggedIn
+                &&
+                (<li><Link to="/login" className="NavListLink">SIGN IN</Link></li>)
+            }
+            {!isLoggedIn
+                &&
+                (<li><Link to="/registration" className="NavListLink">CREATE ACCOUNT</Link></li>)
+            }
+            <li><Link to="/films/1" className="NavListLink">FILMS</Link></li>
+            <li><Link to="/aboutUs" className="NavListLink">ABOUT US</Link></li>
         </ul>
-
     )
 }
 
