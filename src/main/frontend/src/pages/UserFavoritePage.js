@@ -1,6 +1,6 @@
 import {useParams} from "react-router-dom";
 import {getUser} from "../api/server/UserAPI";
-import {useEffect, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import {getMovieDetails} from "../api/tmdb/MovieAPI";
 import styles from './FilmsBrowsingPage.module.css';
 import MoviePoster from "../components/poster/MoviePoster";
@@ -8,11 +8,18 @@ import WatchMovieButton from "../components/buttons/WatchMovieButton";
 import FavoriteMovieButton from "../components/buttons/FavoriteMovieButton";
 import ToWatchMovieButton from "../components/buttons/ToWatchMovieButton";
 import "./UserFavoritePage.css";
+import {UsernameContext} from "../App";
 
 const UserFavoritePage = () => {
-    const {username} = useParams();
+    const myUsername = useContext(UsernameContext);
+    const {username} = useParams()
 
     const [favoriteList, setFavoriteList] = useState([])
+
+    let check = false
+    if (myUsername === username) {
+        check = true
+    }
 
     const getUserFavoriteList = async () => {
         try {
@@ -48,18 +55,27 @@ const UserFavoritePage = () => {
                             className={styles.browsingPoster}
                             responsible={true}/>
                         <div className="film-poster-buttons">
+                            {check
+                                &&
                             <WatchMovieButton
                                 idMovie={favoriteMovie.id}
                                 className={styles.watched}
                             />
+                            }
+                            {check
+                                &&
                             <FavoriteMovieButton
                                 idMovie={favoriteMovie.id}
                                 className={styles.favorite}
                             />
+                            }
+                            {check
+                                &&
                             <ToWatchMovieButton
                                 idMovie={favoriteMovie.id}
                                 className={styles.toWatch}
                             />
+                            }
                         </div>
                     </div>
                 </div>
