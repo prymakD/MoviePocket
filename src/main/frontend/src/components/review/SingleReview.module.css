@@ -14,9 +14,21 @@
     color: var(--primary-red);
 }
 
+.RightContainer {
+    display: flex;
+    flex-direction: column;
+    column-gap: 1vh;
+    margin-left: auto;
+}
+
 .RightBottomContainer {
     display: flex;
     column-gap: 1vh;
-    margin-left: auto;
     margin-top: auto;
+}
+
+.RightTopContainer {
+    display: flex;
+    column-gap: 1vh;
+    margin-bottom: auto;
 }
