@@ -32,6 +32,10 @@
     gap: 6px;
 }
 
+.h1 {
+    font-size: 30px;
+}
+
 
 .film-browser-title {
     color: whitesmoke;

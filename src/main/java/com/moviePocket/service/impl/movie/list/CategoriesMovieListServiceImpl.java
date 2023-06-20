@@ -16,6 +16,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.webjars.NotFoundException;
 
+import javax.transaction.Transactional;
+
 @Service
 public class CategoriesMovieListServiceImpl implements CategoriesMovieListService {
     @Autowired
@@ -27,6 +29,7 @@ public class CategoriesMovieListServiceImpl implements CategoriesMovieListServic
     @Autowired
     private UserRepository userRepository;
 
+    @Transactional
     public ResponseEntity<Void> setOrDelCategoryList(String email, Long idList, Long idCategory) throws NotFoundException {
         User user = userRepository.findByEmail(email);
         MovieList movieList = movieListRepository.getById(idList);

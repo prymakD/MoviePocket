@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,6 +22,7 @@ public class ToWatchMovieServiceImpl implements ToWatchMovieService {
 
     private final UserRepository userRepository;
 
+    @Transactional
     public ResponseEntity<Void> setOrDeleteToWatch(String email, Long idMovie) {
         User user = userRepository.findByEmail(email);
         if (user == null)

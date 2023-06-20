@@ -1,5 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {getRandomMovie} from "../api/tmdb/MovieAPI";
+import './SettingsPage.css';
+import './AboutUsPage.css';
 
 
 const AboutUsPage = () => {
@@ -24,7 +26,7 @@ const AboutUsPage = () => {
             className="image-login-container"
             style={{backgroundImage: `url(${backgroundImage})`}}
         >
-            <div className="about-us">
+            <div className="main">
                 <h1>About Us</h1>
                 <div className="about-content">
                     <p>
