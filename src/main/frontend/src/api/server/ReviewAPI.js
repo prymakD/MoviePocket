@@ -46,13 +46,13 @@ export const postReview = async (content, idMovie, title) => {
 export const postReviewLike = async (idReview, like) => {
 
     const params = {
-        id: idReview,
+        idReview: idReview,
         like: like
     }
 
     try {
         const response = await axios.post(
-            `http://localhost:8080/movies/review/setlike`,
+            `http://localhost:8080/movies/review/setLike`,
             queryString.stringify(params),
             {withCredentials: true},
         )

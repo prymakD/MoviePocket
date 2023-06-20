@@ -1,26 +1,34 @@
 import {useParams} from "react-router-dom";
 import {getUser} from "../api/server/UserAPI";
 import {useEffect, useState} from "react";
-import {getRandomMovie} from "../api/tmdb/MovieAPI";
+import {getMovieDetails} from "../api/tmdb/MovieAPI";
+import styles from './FilmsBrowsingPage.module.css';
+import MoviePoster from "../components/poster/MoviePoster";
+import WatchMovieButton from "../components/buttons/WatchMovieButton";
+import FavoriteMovieButton from "../components/buttons/FavoriteMovieButton";
+import ToWatchMovieButton from "../components/buttons/ToWatchMovieButton";
+import "./UserFavoritePage.css";
 
 const UserFavoritePage = () => {
     const {username} = useParams();
 
     const [favoriteList, setFavoriteList] = useState([])
-    const [backgroundImage, setBackgroundImage] = useState('');
 
-    const getRandomMovieImage = async () => {
-        try {
-            const response = await getRandomMovie();
-            setBackgroundImage(`https://image.tmdb.org/t/p/original${response.backdrop_path}`);
-        } catch (error) {
-            console.log(error);
-        }
-    };
     const getUserFavoriteList = async () => {
         try {
             const response = await getUser(username);
-            setFavoriteList(response.likeMovie);
+            const movieList = response.likeMovie;
+            console.log(movieList);
+            const favoriteListData = await Promise.all(
+                movieList.map(async (movie) => {
+                    const favoriteMovie = await getMovieDetails(movie);
+                    console.log(favoriteMovie);
+                    return {
+                        ...favoriteMovie,
+                    };
+                })
+            )
+            setFavoriteList(favoriteListData);
         } catch (error) {
             console.log(error);
         }
@@ -28,18 +36,34 @@ const UserFavoritePage = () => {
 
     useEffect(() => {
         getUserFavoriteList().then()
-        getRandomMovieImage().then()
     }, [username])
 
     return (
-        <div
-            style={{backgroundImage: `url(${backgroundImage})`}}>
-            <h1>Favorite Movies of {username}</h1>
-            <ul>
-                {favoriteList.map((movieId) => (
-                    <li key={movieId}>{movieId}</li>
-                ))}
-            </ul>
+        <div className="films-browser-list">
+            {favoriteList.map(favoriteMovie => (
+                <div className="film-browser-card" key={favoriteMovie.id}>
+                    <div className="film-browser-poster">
+                        <MoviePoster
+                            movie={favoriteMovie}
+                            className={styles.browsingPoster}
+                            responsible={true}/>
+                        <div className="film-poster-buttons">
+                            <WatchMovieButton
+                                idMovie={favoriteMovie.id}
+                                className={styles.watched}
+                            />
+                            <FavoriteMovieButton
+                                idMovie={favoriteMovie.id}
+                                className={styles.favorite}
+                            />
+                            <ToWatchMovieButton
+                                idMovie={favoriteMovie.id}
+                                className={styles.toWatch}
+                            />
+                        </div>
+                    </div>
+                </div>
+            ))}
         </div>
     );
 }

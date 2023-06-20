@@ -13,3 +13,10 @@
 .logoText {
     color: var(--primary-red);
 }
+
+.RightBottomContainer {
+    display: flex;
+    column-gap: 1vh;
+    margin-left: auto;
+    margin-top: auto;
+}

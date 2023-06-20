@@ -36,6 +36,7 @@ export const getMovieDetails = async (id) => {
             `https://api.themoviedb.org/3/movie/${id}`,
             options
         );
+        console.log(response)
         return response.data
     } catch (err) {
         console.log(err);

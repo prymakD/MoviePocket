@@ -1,10 +1,11 @@
-import React, {useContext} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import Userbar from "../navbar/Userbar";
 import styles from "./SingleReview.module.css";
 import ReviewDeleteButton from "./ReviewDeleteButton";
 import {UsernameContext} from "../../App";
 import PropTypes from "prop-types";
 import LikeReviewButton from "./LikeReviewButton";
+import {getReviewLike} from "../../api/server/ReviewAPI";
 
 const SingleReview = ({ review, updateReviews, className }) => {
     const username = useContext(UsernameContext);
@@ -31,9 +32,16 @@ const SingleReview = ({ review, updateReviews, className }) => {
                     updateReviews={updateReviews}
                 />
             }
-            <LikeReviewButton
-                idReview={review.id}
-            />
+            <div className={styles.RightBottomContainer}>
+                <LikeReviewButton
+                    idReview={review.id}
+                    up={false}
+                />
+                <LikeReviewButton
+                    idReview={review.id}
+                    up={true}
+                />
+            </div>
         </div>
     );
 };

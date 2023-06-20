@@ -1,18 +1,19 @@
-import {useContext, useEffect, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import {getReviewLike, postReviewLike} from "../../api/server/ReviewAPI";
 import styles from "./LikeReviewButton.module.css";
 import PropTypes from "prop-types";
 import {AuthContext} from "../../App";
 
-const LikeReviewButton = ({idReview, className}) => {
+const LikeReviewButton = ({idReview, className, up}) => {
     const isLoggedIn = useContext(AuthContext);
-    const [like, setLike] = useState(false);
     const [isHovered, setIsHovered] = useState(false);
+    const [like, setLike] = useState();
 
     const getLikeState = async () => {
         try {
             const response = await getReviewLike(idReview);
             setLike(response);
+            console.log(response);
         } catch (error) {
             console.log(error);
         }
@@ -20,9 +21,12 @@ const LikeReviewButton = ({idReview, className}) => {
 
     const handleClick = async () => {
         if (isLoggedIn) {
-            setLike(!like)
             try {
-                await postReviewLike(idReview);
+                setLike(!like);
+                if (up === false && like === undefined){
+                    setLike(false)
+                }
+                await postReviewLike(idReview, up);
             } catch (error) {
                 console.log(error);
             }
@@ -40,18 +44,29 @@ const LikeReviewButton = ({idReview, className}) => {
     };
 
     const getLikeImage = () => {
-        if (isHovered) {
-            return 'https://github.com/prymakD/MoviePocket/raw/4b60404ce52704d1c756c33139a4c58817bb4f6c/src/main/frontend/src/images/like_blue.png';
-        } else if (like) {
-            return 'https://github.com/prymakD/MoviePocket/raw/4b60404ce52704d1c756c33139a4c58817bb4f6c/src/main/frontend/src/images/like_logo.png';
+        if (up) {
+            if (isHovered) {
+                return 'https://github.com/prymakD/MoviePocket/raw/4b60404ce52704d1c756c33139a4c58817bb4f6c/src/main/frontend/src/images/like_blue.png';
+            } else if (like === true) {
+                return 'https://github.com/prymakD/MoviePocket/raw/4b60404ce52704d1c756c33139a4c58817bb4f6c/src/main/frontend/src/images/like_logo.png';
+            } else {
+                return 'https://github.com/prymakD/MoviePocket/raw/4b60404ce52704d1c756c33139a4c58817bb4f6c/src/main/frontend/src/images/like_yellow.png';
+            }
         } else {
-            return 'https://github.com/prymakD/MoviePocket/raw/4b60404ce52704d1c756c33139a4c58817bb4f6c/src/main/frontend/src/images/like_yellow.png';
+            if (isHovered) {
+                return 'https://github.com/prymakD/MoviePocket/raw/4b60404ce52704d1c756c33139a4c58817bb4f6c/src/main/frontend/src/images/dislike_blue.png';
+            } else if (like === false) {
+                return 'https://github.com/prymakD/MoviePocket/raw/4b60404ce52704d1c756c33139a4c58817bb4f6c/src/main/frontend/src/images/dislike_logo.png';
+            } else {
+                return 'https://github.com/prymakD/MoviePocket/raw/4b60404ce52704d1c756c33139a4c58817bb4f6c/src/main/frontend/src/images/dislike_yellow.png';
+            }
         }
     };
 
     useEffect(() => {
         getLikeState().then()
-    }, [idReview]);
+    }, [like]);
+
 
     return (
         <img
@@ -68,6 +83,7 @@ const LikeReviewButton = ({idReview, className}) => {
 LikeReviewButton.propTypes = {
     idReview: PropTypes.number.isRequired,
     className: PropTypes.string,
+    up: PropTypes.bool.isRequired
 };
 
 export default LikeReviewButton;
