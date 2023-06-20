@@ -1,7 +1,14 @@
 package com.moviePocket.controller.user;
 
+import com.moviePocket.controller.dto.UserDto;
+import com.moviePocket.entities.user.User;
 import com.moviePocket.service.UserService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -11,82 +18,92 @@ import javax.mail.MessagingException;
 
 
 @Controller
+@RestController
 @RequestMapping("/user/edit")
+@Api(value = "User edition controller", tags = "Bio, username, email or password edition")
 public class UserEditController {
 
     @Autowired
     private UserService userService;
 
-    @GetMapping("/")
-    public String editForm() {
-        return "user_edit";
+    @GetMapping("/getUserDto")
+    public ResponseEntity<UserDto> getUserDto() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User user = userService.findUserByEmail(authentication.getName());
+        return ResponseEntity.ok(new UserDto(
+                user.getUsername(),
+                user.getEmail(),
+                user.getBio()
+        ));
     }
 
-
-    @GetMapping("/delete")
-    public String deleteForm() {
-        return "delete";
-    }
-
+    @ApiOperation(value = "Delete a user", notes = "User set status deleted and stays in db")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Successfully deleted the user"),
+            @ApiResponse(code = 400, message = "Bad request")
+    })
     @PostMapping("/delete")
-    public String deleteUser(@RequestParam("password") String password) {
+    public ResponseEntity<Void> deleteUser(@RequestParam String password) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if(userService.deleteUser(authentication.getName(),password))
-            return "login";
-        else
-            return "delete";
+        return userService.deleteUser(authentication.getName(), password);
     }
 
+    @ApiOperation("Set a new password(password is validated")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Successfully set the new password"),
+            @ApiResponse(code = 400, message = "Password does not match the criteria"),
 
-    @GetMapping("/newpas")
-    public String newPasswordGetForm() {
-        return "set_new_pas";
-    }
-
-    @PostMapping("/newpas")
-    public String newPasswordPostForm(@RequestParam("passwordold") String passwordOld,
-                                      @RequestParam("password0") String passwordNew0,
-                                      @RequestParam("password1") String passwordNew1) {
-        if(passwordNew0.equals(passwordNew1) && !passwordOld.equals(passwordNew1)){
-            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-            userService.setNewPassword(authentication.getName(),passwordOld,passwordNew0);
-            return "user_edit";
-        }
-
-        return "set_new_pas";
-    }
-
-    @PostMapping("/newemail")
-    public String newEmailGetForm(@RequestParam("email") String email) throws MessagingException {
+    })
+    @PostMapping("/newPas")
+    public ResponseEntity<Void> newPasswordPostForm(
+            @RequestParam("passwordold") String passwordOld,
+            @RequestParam("password0") String passwordNew0,
+            @RequestParam("password1") String passwordNew1) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        userService.setTokenEmail(authentication.getName(),email);
-        return "user_edit";
+        return userService.setNewPassword(authentication.getName(), passwordOld, passwordNew0, passwordNew1);
     }
 
-    @GetMapping("/newemail/{token}")
-    public String activate(@PathVariable String token) {
-        userService.activateNewEmail(token);
-        return "user_edit";
-    }
-
-
-    @PostMapping("/newusername")
-    public String newSetNewUsername(@RequestParam("username") String username) {
+    @PostMapping("/newEmail")
+    @ApiOperation("Set a new email")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Successfully set the new email"),
+            @ApiResponse(code = 400, message = "Bad request")
+    })
+    public ResponseEntity<Void> newEmailGetForm(@RequestParam("email") String email) throws MessagingException {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        userService.setNewUsername(authentication.getName(),username);
-        return "user_edit";
+        return userService.setTokenEmail(authentication.getName(), email);
     }
 
+    @GetMapping("/activateNewEmail/{token}")
+    @ApiOperation("Activate a new email")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Successfully activated the new email")
+    })
+    public ResponseEntity<Void> activate(@PathVariable String token) {
+        return userService.activateNewEmail(token);
+    }
 
-    @PostMapping("/newbio")
-    public String newSetNewBio(@RequestParam("bio") String bio) {
+    @PostMapping("/newUsername")
+    @ApiOperation(value = "Set a new username", notes = "username should be unique and not empty")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Successfully set the new username"),
+            @ApiResponse(code = 400, message = "Bad request")
+    })
+    public ResponseEntity<Void> newSetNewUsername(@RequestParam("username") String username) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        userService.setNewBio(authentication.getName(),bio);
-        return "user_edit";
+        return userService.setNewUsername(authentication.getName(), username);
     }
 
 
-
-
+    @ApiOperation(value = "Set a new bio", notes = "username should be not empty")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Successfully set the new username"),
+            @ApiResponse(code = 400, message = "Bad request")
+    })
+    @PostMapping("/newBio")
+    public ResponseEntity<Void> newSetNewBio(@RequestParam("bio") String bio) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        return userService.setNewBio(authentication.getName(), bio);
+    }
 
 }

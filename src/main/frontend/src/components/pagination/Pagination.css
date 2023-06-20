@@ -1,0 +1,30 @@
+.pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.pagination-button {
+    background-color: transparent;
+    border: none;
+    color: whitesmoke;
+    font-size: 18px;
+    margin: 0 10px;
+    cursor: pointer;
+}
+
+.pagination-button:focus {
+    outline: none;
+}
+
+.pagination-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.pagination-info {
+    font-size: 16px;
+    color: whitesmoke;
+    margin: 0 10px;
+}

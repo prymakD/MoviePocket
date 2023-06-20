@@ -14,12 +14,12 @@ import lombok.Setter;
 public class MovieDto {
 
     private Long id;
-
-    private String title;
-
-    private String overview;
-
-    private Integer runtime;
+    private Double rating;
+    private Integer ratingCount;
+    private Integer dislikedCount;
+    private Integer favoriteCount;
+    private Integer toWatchCount;
+    private Integer watchedCount;
 
 }
 

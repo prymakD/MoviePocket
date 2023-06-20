@@ -15,6 +15,16 @@ public class UserDto {
 
     private String bio;
 
+
+    public UserDto(String username, String email, String bio) {
+        this.username = username;
+        this.email = email;
+        this.bio = bio;
+    }
+
+    public UserDto() {
+    }
+
     public User toUser() {
         User user = new User();
         user.setId(id);

@@ -1,10 +1,9 @@
 package com.moviePocket.service.movie.list;
 
-import java.util.List;
+import org.springframework.http.ResponseEntity;
 
 public interface CategoriesMovieListService {
 
-    void setOrDelCategoryList(String email, Long idList, Long idCategory);
+    ResponseEntity<Void> setOrDelCategoryList(String email, Long idList, Long idCategory);
 
-    List<Long> getAllCategoriesList(Long idList);
 }

@@ -1,0 +1,54 @@
+.user-page-container {
+    display: flex;
+    width: 100%;
+    height: 92vh;
+    background-size: cover;
+    position: relative;
+    justify-content: center;
+    z-index: 1;
+}
+
+.user-page-container::after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(300deg, #000000 8.0%, rgba(0, 0, 0, 0) 30.0%),
+    linear-gradient(60deg, #000000 8.0%, rgba(0, 0, 0, 0) 30.0%),
+    linear-gradient(0deg, #000000 2.0%, rgba(0, 0, 0, 0) 30.0%);
+    backdrop-filter: blur(20px);
+    background-color: rgba(0, 0, 0, 0.2);
+    z-index: -1;
+}
+
+.user-info-container {
+    height: 500px;
+    width: 500px;
+    background-color: rgba(0, 0, 0, 0.8);
+    border-radius: 3vh;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    margin-top: 10vh;
+}
+
+.text-info-container {
+    margin-left: 10vh;
+}
+
+
+.username-container {
+    color: var(--primary-red);
+}
+
+.user-page-container {
+
+}
+
+.blue-text {
+    color: var(--primary-blue);
+}
+
+.yellow-text {
+    color: var(--primary-yellow);
+}

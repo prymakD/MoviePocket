@@ -8,7 +8,11 @@ import com.moviePocket.repository.movie.list.MovieListRepository;
 import com.moviePocket.repository.user.UserRepository;
 import com.moviePocket.service.movie.list.LikeListService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+
+import javax.transaction.Transactional;
 
 @Service
 public class LikeListServiceImpl implements LikeListService {
@@ -19,11 +23,16 @@ public class LikeListServiceImpl implements LikeListService {
     @Autowired
     private UserRepository userRepository;
 
-    public void setLikeOrDisOrDel(String username, Long id, boolean likeOrDis) {
+    @Transactional
+    public ResponseEntity<Void> setLikeOrDisOrDel(String username, Long id, boolean likeOrDis) {
         MovieList movieList = movieListRepository.getById(id);
         User user = userRepository.findByEmail(username);
         LikeList likeList = likeListRepository.getByUserAndMovieList(user, movieList);
-        if (user != null) {
+        if (user == null)
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        else if (movieList == null)
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        else {
             if (likeList == null) {
                 likeListRepository.save(new LikeList(movieList, user, likeOrDis));
             } else if (likeList.isLickOrDis() == likeOrDis) {
@@ -33,27 +42,34 @@ public class LikeListServiceImpl implements LikeListService {
                 likeListRepository.save(likeList);
             }
         }
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    public boolean[] getLikeOrDis(String username, Long id) {
+    public ResponseEntity<boolean[]> getLikeOrDis(String username, Long id) {
         MovieList movieList = movieListRepository.getById(id);
         User user = userRepository.findByEmail(username);
         LikeList likeList = likeListRepository.getByUserAndMovieList(user, movieList);
+        if (user == null)
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        if (movieList == null)
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         if (likeList != null) {
-            return new boolean[]{likeList.isLickOrDis()};
-        } else
-            return new boolean[]{};
+            return ResponseEntity.ok(new boolean[]{likeList.isLickOrDis()});
+        } else {
+            return ResponseEntity.ok(new boolean[]{});
+        }
     }
 
-    public int[] getAllLikeAndDisByIdMovieReview(Long idMovieList) {
+    public ResponseEntity<int[]> getAllLikeAndDisByIdMovieReview(Long idMovieList) {
         MovieList movieList = movieListRepository.getById(idMovieList);
         if (movieList != null) {
-            return new int[]{
+            return ResponseEntity.ok(new int[]{
                     likeListRepository.countByMovieReviewAndLickOrDisIsTrue(movieList),
                     likeListRepository.countByMovieReviewAndLickOrDisIsFalse(movieList)
-            };
-        } else
-            return null;
+            });
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
 

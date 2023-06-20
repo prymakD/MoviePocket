@@ -8,10 +8,11 @@ import com.moviePocket.repository.movie.list.MovieListRepository;
 import com.moviePocket.repository.user.UserRepository;
 import com.moviePocket.service.movie.list.MovieInListService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
+import javax.transaction.Transactional;
 
 @Service
 public class MovieInListServiceImpl implements MovieInListService {
@@ -22,26 +23,24 @@ public class MovieInListServiceImpl implements MovieInListService {
     @Autowired
     private UserRepository userRepository;
 
-    public void addOrDelMovieFromList(String email, Long idList, Long idMovie) {
+    @Transactional
+    public ResponseEntity<Void> addOrDelMovieFromList(String email, Long idList, Long idMovie) {
         User user = userRepository.findByEmail(email);
         MovieList movieList = movieListRepository.getById(idList);
-        if (user != null && movieList != null && movieList.getUser() == user) {
+        if (user == null)
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        else if (movieList == null)
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        else if (movieList.getUser() != user) {
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        } else {
             MovieInList movieInList = movieInListRepository.findByMovieListAndIdMovie(movieList, idMovie);
             if (movieInList == null) {
                 movieInListRepository.save(new MovieInList(movieList, idMovie));
             } else {
                 movieInListRepository.delete(movieInList);
             }
+            return new ResponseEntity<>(HttpStatus.OK);
         }
-    }
-
-    public List<Long> getAllMovieFromMovieList(Long idList) {
-        MovieList movieList = movieListRepository.getById(idList);
-        List<MovieInList> movieListList = movieInListRepository.getAllByMovieList(movieList);
-        List<Long> idMovieList = new ArrayList<>();
-        for (MovieInList movieInList : movieListList) {
-            idMovieList.add(movieInList.getIdMovie());
-        }
-        return idMovieList;
     }
 }

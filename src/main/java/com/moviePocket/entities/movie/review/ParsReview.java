@@ -20,5 +20,6 @@ public class ParsReview {
     private Date dataUpdated;
     private Long idMovie;
     private Long id;
+    private int[] likes;
 
 }

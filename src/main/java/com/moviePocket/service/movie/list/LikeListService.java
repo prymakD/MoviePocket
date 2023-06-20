@@ -1,9 +1,11 @@
 package com.moviePocket.service.movie.list;
 
+import org.springframework.http.ResponseEntity;
+
 public interface LikeListService {
-    void setLikeOrDisOrDel(String username, Long id, boolean likeOrDis);
+    ResponseEntity<Void> setLikeOrDisOrDel(String username, Long id, boolean likeOrDis);
 
-    boolean[] getLikeOrDis(String username, Long id);
+    ResponseEntity<boolean[]> getLikeOrDis(String username, Long id);
 
-    int[] getAllLikeAndDisByIdMovieReview(Long idMovieList);
+    ResponseEntity<int[]> getAllLikeAndDisByIdMovieReview(Long idMovieList);
 }

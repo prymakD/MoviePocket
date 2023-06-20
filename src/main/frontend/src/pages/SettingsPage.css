@@ -1,0 +1,113 @@
+.settings-page-container {
+    position: relative;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    z-index: 1;
+}
+
+.settings-page-container::before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(0deg, #000000 2.0%, rgba(0, 0, 0, 0) 30.0%),
+    linear-gradient(90deg, #000000 0%, rgba(0, 0, 0, 0) 32.0%),
+    linear-gradient(270deg, #000000 0%, rgba(0, 0, 0, 0) 32.0%);
+    backdrop-filter: blur(8px);
+    z-index: -1;
+}
+
+
+.main {
+    padding-left: 15%;
+    padding-right: 15%;
+}
+
+.settings-container {
+    padding: 3vh;
+    display: flex;
+    flex-direction: column;
+
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+.password-container {
+    display: flex;
+    margin-top: auto;
+    padding: 3vh;
+    flex-direction: column;
+}
+
+.input-button {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.edit-container {
+    display: flex;
+    flex-direction: column;
+    padding-left: 3vh;
+    padding-top: 2vh;
+    margin: 0.5vh;
+}
+
+.button-update {
+    border: 2px solid var(--primary-yellow);
+    background-color: transparent;
+    width: 6vh;
+    height: 3vh;
+    font-size: 12px;
+    border-radius: 1vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: -0.09vh;
+    margin-left: 2vh;
+}
+
+
+
+.button-update:active {
+    border-color: var(--primary-blue);
+}
+
+.button-update:hover {
+    background-color: var(--primary-yellow);
+}
+
+.input-text0 {
+    border: 2px solid white;
+    width: 20vh;
+    height: 4vh;
+    border-radius: 1vh;
+    color: var(--primary-blue);
+}
+
+.input-text1 {
+    border: 2px solid white;
+    width: 600px;
+    height: 20vh;
+    border-radius: 1.5vh;
+    color: var(--primary-blue);
+}
+
+.blue-text {
+    color: var(--primary-blue);
+    font-size: 20px;
+}
+
+.yellow-text {
+    color: var(--primary-yellow);
+    font-size: 22px;
+}
+
+.white-text {
+    color: white;
+}
+
+.logo-text {
+    color: var(--primary-red);
+}

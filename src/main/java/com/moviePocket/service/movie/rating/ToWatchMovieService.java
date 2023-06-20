@@ -1,13 +1,17 @@
 package com.moviePocket.service.movie.rating;
 
+import org.springframework.http.ResponseEntity;
+
 import java.util.List;
 
 public interface ToWatchMovieService {
 
-    void setOrDeleteToWatch(String email, Long idMovie);
+    ResponseEntity<Void> setOrDeleteToWatch(String email, Long idMovie);
 
-    boolean getFromToWatch(String email, Long idMovie);
-    List<Long> getAllUserToWatch(String email);
-    int getAllCountByIdMovie(Long idMovie);
+    ResponseEntity<Boolean> getFromToWatch(String email, Long idMovie);
+
+    ResponseEntity<List<Long>> getAllUserToWatch(String email);
+
+    ResponseEntity<Integer> getAllCountByIdMovie(Long idMovie);
 
 }
