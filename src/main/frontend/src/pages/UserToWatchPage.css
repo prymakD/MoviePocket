@@ -1,0 +1,53 @@
+.films-browser-container {
+    padding-left: 12%;
+    padding-right: 12%;
+    color: whitesmoke;
+}
+
+.films-browser-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    flex-direction: row;
+}
+
+.film-browser-card {
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+}
+
+.film-browser-poster {
+    display: flex;
+    flex-direction: column;
+}
+
+.film-browser-poster {
+    position: relative;
+}
+
+.film-poster-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 6px;
+}
+
+
+.film-browser-title {
+    color: whitesmoke;
+    font-family: 'Poppins', sans-serif;
+    max-width: 20vh; /* Задайте желаемую максимальную ширину */
+    overflow: hidden;
+    text-overflow: ellipsis; /* Добавляет многоточие (...) в конце */
+    white-space: nowrap;
+    margin-bottom: 1px;
+    justify-content: space-between;
+}
+
+.film-browser-title p {
+    margin-bottom: 0%; /* Задайте желаемое расстояние между параграфами */
+}
+
+.film-browser-title a:hover {
+    color: #999999;
+}

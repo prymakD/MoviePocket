@@ -1,50 +1,79 @@
-.movie-carousel-container{
-    background-color: black;
-}
-.movie-card-container{
-    padding-left: 15%;
-    padding-right: 15%;
-    height: 750px;
-    background-color: black;
-}
-.movie-card{
+.main-container {
+    padding-left: 12%;
+    padding-right: 12%;
+    height: 100vh;
+    color: whitesmoke;
     display: flex;
-    background-repeat: no-repeat;
+    flex-direction: column;
+    z-index: 1;
+}
+
+.movie-card {
+    display: flex;
+    width: 100%;
+    height: 60vh;
+    justify-content: center;
+    background-size: cover;
+    position: relative;
+    z-index: 1;
+}
+
+.movie-card::before {
+    content: "";
+    position: absolute;
     width: 100%;
     height: 100%;
     background-size: cover;
-    justify-content: center;
-    background-image: radial-gradient(rgba(0,0,0,0), rgba(0,0,0,1)), var(--img);
+    z-index: 1;
 }
-.movie-detail{
-    top: 350px;
+
+.movie-card::after {
+    content: "";
     position: absolute;
-    text-align: center;
+    width: 110%;
+    height: 110%;
+    background: linear-gradient(300deg, #000000 10.0%, rgba(0, 0, 0, 0) 40.0%),
+    linear-gradient(60deg, #000000 10.0%, rgba(0, 0, 0, 0) 40.0%),
+    linear-gradient(0deg, #000000 10.0%, rgba(0, 0, 0, 0) 40.0%);
+    backdrop-filter: blur(20px);
+    z-index: 1;
 }
+
+.movie-detail {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+    height: 100vh;
+    margin-top: 13vh;
+}
+
 .movie-title{
+    margin-top: 4%;
+}
+
+.movie-title a {
     color: whitesmoke;
 }
-.movie-description{
+
+.movie-title a:hover {
+    color: #555555;
+}
+
+.movie-description {
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
-    margin-left: 30%;
-    width: 40%;
+    width: 100vh;
+    height: 20vh;
     color: whitesmoke;
 }
-.movie-poster-carousel{
-    position: absolute;
-    top: 550px;
-    display: flex;
-    justify-content: center;
-    width: 100%;
-}
-.movie-poster{
-    height: 200px;
-}
-.movie-poster > img{
-    height: 100%;
-    width: 100%;
+
+.movie-poster {
+    height: 36vh;
+    width: 24vh;
 }
