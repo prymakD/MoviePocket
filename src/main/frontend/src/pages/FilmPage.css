@@ -40,10 +40,14 @@
     z-index: 2;
 }
 
+.h1 {
+    font-size: 30px;
+}
 
 .film-details {
     margin-top: -10px;
     margin-left: 10vh;
+    font-size: 20px;
     height: 60vh;
     width: 70vh;
     z-index: 1;

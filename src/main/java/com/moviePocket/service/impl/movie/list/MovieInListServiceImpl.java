@@ -12,6 +12,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+
 @Service
 public class MovieInListServiceImpl implements MovieInListService {
     @Autowired
@@ -21,6 +23,7 @@ public class MovieInListServiceImpl implements MovieInListService {
     @Autowired
     private UserRepository userRepository;
 
+    @Transactional
     public ResponseEntity<Void> addOrDelMovieFromList(String email, Long idList, Long idMovie) {
         User user = userRepository.findByEmail(email);
         MovieList movieList = movieListRepository.getById(idList);

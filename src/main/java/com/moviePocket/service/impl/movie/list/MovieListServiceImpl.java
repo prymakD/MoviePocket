@@ -36,7 +36,7 @@ public class MovieListServiceImpl implements MovieListService {
     private final LikeListRepository likeListRepository;
 
     private final CategoriesMovieListRepository categoriesMovieListRepository;
-
+    @Transactional
     public ResponseEntity<Void> setMovieList(String email, String title, String content) throws NotFoundException {
         User user = userRepository.findByEmail(email);
         if (user == null)
@@ -46,6 +46,7 @@ public class MovieListServiceImpl implements MovieListService {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @Transactional
     public ResponseEntity<Void> updateMovieListTitle(String email, Long idMovieList, String title) {
         User user = userRepository.findByEmail(email);
         MovieList movieList = movieListRepository.getById(idMovieList);
@@ -62,6 +63,7 @@ public class MovieListServiceImpl implements MovieListService {
         }
     }
 
+    @Transactional
     public ResponseEntity<Void> updateMovieListContent(String email, Long idMovieList, String content) {
         User user = userRepository.findByEmail(email);
         MovieList movieList = movieListRepository.getById(idMovieList);

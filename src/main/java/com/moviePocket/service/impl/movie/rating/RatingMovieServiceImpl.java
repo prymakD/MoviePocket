@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
@@ -26,6 +27,7 @@ public class RatingMovieServiceImpl implements RatingMovieService {
     @Autowired
     WatchedMovieService watchedMovieService;
 
+    @Transactional
     public ResponseEntity<Void> setNewRatingMovie(String email, Long idMovie, int rating) {
         User user = userRepository.findByEmail(email);
         if (user == null)
@@ -43,6 +45,7 @@ public class RatingMovieServiceImpl implements RatingMovieService {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @Transactional
     public ResponseEntity<Void> removeFromRatingMovie(String email, Long idMovie) {
         User user = userRepository.findByEmail(email);
         if (user == null)

@@ -12,6 +12,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+
 @Service
 public class LikeListServiceImpl implements LikeListService {
     @Autowired
@@ -21,6 +23,7 @@ public class LikeListServiceImpl implements LikeListService {
     @Autowired
     private UserRepository userRepository;
 
+    @Transactional
     public ResponseEntity<Void> setLikeOrDisOrDel(String username, Long id, boolean likeOrDis) {
         MovieList movieList = movieListRepository.getById(id);
         User user = userRepository.findByEmail(username);
