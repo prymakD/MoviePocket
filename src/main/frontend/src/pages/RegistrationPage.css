@@ -6,7 +6,7 @@
     background-size: cover;
     position: relative;
     z-index: 1;
-
+    align-items: center;
 }
 
 .image-container::after {
@@ -28,6 +28,7 @@
     width: 42vh;
     background-color: rgba(0, 0, 0, 0.8);
     border-radius: 2vh;
+
 }
 
 .head {
